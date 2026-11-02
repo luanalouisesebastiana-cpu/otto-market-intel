@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T13:36:20.587Z",
+  "generatedAt": "2026-11-02T13:53:51.266Z",
   "opportunities": [
     {
       "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
@@ -15,7 +15,7 @@
       "symbol": "RAY",
       "dex": "raydium",
       "liqUsd": 2069709654.57,
-      "vol24Usd": 131637.82,
+      "vol24Usd": 131637.5,
       "priceUsd": 2.07,
       "change24h": null
     },
@@ -59,55 +59,55 @@
       "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
       "symbol": "PYUSD",
       "dex": "orca",
-      "liqUsd": 16779655.62,
-      "vol24Usd": 3304617.86,
+      "liqUsd": 16779652.69,
+      "vol24Usd": 3304641.27,
       "priceUsd": 0.9998,
-      "change24h": -0.03
+      "change24h": -0.01
     },
     {
       "mint": "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82",
       "symbol": "BOME",
       "dex": "raydium",
-      "liqUsd": 12150540.11,
-      "vol24Usd": 264175.46,
-      "priceUsd": 0.0005784,
-      "change24h": -5.94
+      "liqUsd": 12324838.83,
+      "vol24Usd": 269453.14,
+      "priceUsd": 0.0005889,
+      "change24h": -3.94
     },
     {
       "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs",
       "symbol": "WETH",
       "dex": "orca",
-      "liqUsd": 6471137.62,
-      "vol24Usd": 6234077.78,
-      "priceUsd": 2277.7,
-      "change24h": 0.54
+      "liqUsd": 6510692.64,
+      "vol24Usd": 6427699.72,
+      "priceUsd": 2286.27,
+      "change24h": 0.9
     },
     {
       "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
       "symbol": "PENGU",
       "dex": "orca",
-      "liqUsd": 3196994.82,
-      "vol24Usd": 160502.65,
-      "priceUsd": 0.007112,
-      "change24h": -3.02
+      "liqUsd": 3200695.16,
+      "vol24Usd": 163833.37,
+      "priceUsd": 0.00714,
+      "change24h": -2.59
     },
     {
       "mint": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
       "symbol": "PUMP",
       "dex": "orca",
-      "liqUsd": 2304762.65,
-      "vol24Usd": 3098287.66,
-      "priceUsd": 0.004065,
-      "change24h": -5.12
+      "liqUsd": 2337426.92,
+      "vol24Usd": 3282253.37,
+      "priceUsd": 0.004137,
+      "change24h": -3.09
     },
     {
       "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
       "symbol": "RAY",
       "dex": "raydium",
-      "liqUsd": 1999078.7,
-      "vol24Usd": 1411474.94,
+      "liqUsd": 2010847.05,
+      "vol24Usd": 1417122.71,
       "priceUsd": 1.58,
-      "change24h": -1.65
+      "change24h": -1.01
     },
     {
       "mint": "5vJmAfBjsS6wEHcgQGNm69P3fbyPmUU1dVfE5j1rraVZ",
@@ -122,64 +122,64 @@
       "mint": "KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS",
       "symbol": "KMNO",
       "dex": "orca",
-      "liqUsd": 1878679.11,
-      "vol24Usd": 2535835.9,
-      "priceUsd": 0.03188,
-      "change24h": -2.68
+      "liqUsd": 1886233.12,
+      "vol24Usd": 2657043.06,
+      "priceUsd": 0.03209,
+      "change24h": -1.83
     },
     {
       "mint": "3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh",
       "symbol": "WBTC",
       "dex": "orca",
-      "liqUsd": 1791752.38,
-      "vol24Usd": 4261233.91,
-      "priceUsd": 77611.57,
-      "change24h": -1.38
+      "liqUsd": 1803314.42,
+      "vol24Usd": 4331692.77,
+      "priceUsd": 77866.49,
+      "change24h": 0.14
     },
     {
       "mint": "PRVT6TB7uss3FrUd2D9xs2zqDBsa3GbMJMwCQsgmeta",
       "symbol": "UMBRA",
       "dex": "metadao",
-      "liqUsd": 1588917.72,
-      "vol24Usd": 365911.69,
-      "priceUsd": 0.5259,
-      "change24h": -11.21
+      "liqUsd": 1595586.68,
+      "vol24Usd": 362842.19,
+      "priceUsd": 0.5303,
+      "change24h": -10.42
     },
     {
       "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
       "symbol": "STONK",
       "dex": "orca",
-      "liqUsd": 1561818.88,
-      "vol24Usd": 436017.58,
-      "priceUsd": 0.1135,
-      "change24h": -11.03
+      "liqUsd": 1590754.11,
+      "vol24Usd": 468134.81,
+      "priceUsd": 0.1159,
+      "change24h": -9.12
     },
     {
       "mint": "3ZLekZYq2qkZiSpnSvabjit34tUkjSwD1JFuW9as9wBG",
       "symbol": "NEAR",
       "dex": "orca",
-      "liqUsd": 891294.27,
-      "vol24Usd": 631672.05,
-      "priceUsd": 4.059,
-      "change24h": -7.85
+      "liqUsd": 894083.37,
+      "vol24Usd": 669587.52,
+      "priceUsd": 4.072,
+      "change24h": -7
     },
     {
       "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
       "symbol": "Fartcoin ",
       "dex": "orca",
-      "liqUsd": 859423.93,
-      "vol24Usd": 145363.56,
-      "priceUsd": 0.1194,
-      "change24h": -2.77
+      "liqUsd": 868195.12,
+      "vol24Usd": 149163.59,
+      "priceUsd": 0.1206,
+      "change24h": -1.72
     },
     {
       "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
       "symbol": "JUP",
       "dex": "orca",
-      "liqUsd": 633089.57,
-      "vol24Usd": 551005.45,
-      "priceUsd": 0.2503,
-      "change24h": -3.37
+      "liqUsd": 637356.57,
+      "vol24Usd": 574532.89,
+      "priceUsd": 0.2519,
+      "change24h": -2.51
     }
   ]
 }
