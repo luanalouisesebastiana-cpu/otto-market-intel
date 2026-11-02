@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Otto — Solana Market Intelligence API (x402)</title>
+<meta name="description" content="Autonomous Solana market-intelligence agent by Kovantu Digital. Risk-filtered trading signals and on-chain-verified market data, sold via x402 (USDC, pay-per-call).">
+<meta property="og:title" content="Otto — Solana Market Intelligence API">
+<meta property="og:description" content="Risk-filtered signals + on-chain-verified market data via x402. USDC on Solana, pay-per-call.">
+<meta property="og:type" content="website">
+</head>
+<body>
+<header>
+  <h1>Otto</h1>
+  <p class="tag">Solana Market Intelligence API · <strong>x402</strong> · USDC pay-per-call</p>
+  <p class="vendor">by Kovantu Digital</p>
+</header>
+
+<main>
+<section>
+  <h2>What Otto sells</h2>
+  <p>Risk-filtered trading signals and on-chain-verified market data. No account, no API key — just USDC. Payment is verified <strong>on-chain</strong> before any data is delivered.</p>
+  <table>
+    <tr><th>Endpoint</th><th>Method</th><th>Price</th><th>Returns</th></tr>
+    <tr><td>/v1/opportunities</td><td>POST</td><td>50¢</td><td>Full approved signal list</td></tr>
+    <tr><td>/v1/macro</td><td>GET</td><td>25¢</td><td>BTC / ETH / SOL macro snapshot</td></tr>
+    <tr><td>/v1/report</td><td>GET</td><td>100¢</td><td>Full scan + signals + policy</td></tr>
+    <tr><td>/v1/summary</td><td>GET</td><td>free</td><td>Top 3 approved signals</td></tr>
+    <tr><td>/v1/trial</td><td>GET</td><td>free</td><td>1 sample signal</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Payment (x402)</h2>
+  <ul>
+    <li><strong>Network:</strong> Solana mainnet</li>
+    <li><strong>Asset:</strong> USDC (<code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code>)</li>
+    <li><strong>Scheme:</strong> exact</li>
+    <li><strong>Pay to:</strong> <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code></li>
+  </ul>
+  <p><strong>Flow:</strong> request a paid endpoint → receive HTTP 402 with an <code>accepts</code> object → send a USDC transfer → re-request with <code>X-Payment: {"payload":{"signature":"&lt;tx&gt;","network":"solana"}}</code> → Otto verifies the on-chain delta and delivers the data.</p>
+</section>
+
+<section>
+  <h2>Risk filters (all must pass)</h2>
+  <ul>
+    <li>Liquidity &gt; $50,000</li>
+    <li>24h volume &gt; $100,000</li>
+    <li>Estimated slippage &lt; 1.0%</li>
+    <li>Position ≤ 10–15% of free capital; lot &lt; 0.010 SOL</li>
+    <li>Untouchable reserve: 0.0100 SOL</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Self-host</h2>
+  <pre>git clone https://github.com/luanalouisesebastiana-cpu/otto-market-intel
+cd otto-market-intel
+node public-service.mjs</pre>
+</section>
+</main>
+
+<footer>
+  <p>Source: <a href="https://github.com/luanalouisesebastiana-cpu/otto-market-intel">github.com/luanalouisesebastiana-cpu/otto-market-intel</a></p>
+</footer>
+</body>
+</html>
