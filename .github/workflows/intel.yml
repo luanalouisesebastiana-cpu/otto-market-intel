@@ -18,6 +18,7 @@ jobs:
       - name: Generate dated report (once per day)
         run: |
           node scripts/treasury.mjs
+          node scripts/trackrecord.mjs
           node scripts/journal.mjs
           node scripts/webhook.mjs
           node scripts/backtest.mjs
