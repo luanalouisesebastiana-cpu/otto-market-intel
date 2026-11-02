@@ -1,0 +1,254 @@
+{
+  "generatedAt": "2026-11-02T13:36:20.587Z",
+  "macro": {
+    "btc": {
+      "usd": 77565,
+      "chg24h": -0.4985310754759399
+    },
+    "eth": {
+      "usd": 2276.68,
+      "chg24h": 0.4440846800499315
+    },
+    "sol": {
+      "usd": 93.66,
+      "chg24h": -1.4316470072067986
+    }
+  },
+  "opportunities": [
+    {
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "symbol": "SOL",
+      "dex": "raydium",
+      "liqUsd": 2191052962.59,
+      "vol24Usd": 337308.85,
+      "priceUsd": 104.35,
+      "change24h": null
+    },
+    {
+      "mint": "FJkTpy5rTZYCAUn3FXDzz9hgJYHYwBsxGm5ee75rAZNC",
+      "symbol": "RAY",
+      "dex": "raydium",
+      "liqUsd": 2069709654.57,
+      "vol24Usd": 131637.82,
+      "priceUsd": 2.07,
+      "change24h": null
+    },
+    {
+      "mint": "2ZbaN9Dkj5HPyYUeij82PcZgHJYZ8747Ca69qdcvCh5C",
+      "symbol": "SOL",
+      "dex": "raydium",
+      "liqUsd": 1627150126.17,
+      "vol24Usd": 143567.16,
+      "priceUsd": 77.49,
+      "change24h": null
+    },
+    {
+      "mint": "5vhw96LZoKA4K8kbBkTJXBYvJSN1RWJzJgJbYEorBChv",
+      "symbol": "SOL",
+      "dex": "raydium",
+      "liqUsd": 1597167486.43,
+      "vol24Usd": 143554.57,
+      "priceUsd": 76.064,
+      "change24h": null
+    },
+    {
+      "mint": "F3sCvPfmh1oX1mxPCm2gS7ChTJ5F8mWJu1khwYXWem1w",
+      "symbol": "ERC20-USDT",
+      "dex": "raydium",
+      "liqUsd": 209901013.45,
+      "vol24Usd": 117110.65,
+      "priceUsd": 1.0001,
+      "change24h": null
+    },
+    {
+      "mint": "G8KhLpeBPRhM6tMroEVC72H4Fv23KtwYzU1LZK6YE4rR",
+      "symbol": "ERC20-USDC",
+      "dex": "raydium",
+      "liqUsd": 48923809.64,
+      "vol24Usd": 117110.65,
+      "priceUsd": 1.0002,
+      "change24h": -0.01
+    },
+    {
+      "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+      "symbol": "PYUSD",
+      "dex": "orca",
+      "liqUsd": 16779655.62,
+      "vol24Usd": 3304617.86,
+      "priceUsd": 0.9998,
+      "change24h": -0.03
+    },
+    {
+      "mint": "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82",
+      "symbol": "BOME",
+      "dex": "raydium",
+      "liqUsd": 12150540.11,
+      "vol24Usd": 264175.46,
+      "priceUsd": 0.0005784,
+      "change24h": -5.94
+    },
+    {
+      "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs",
+      "symbol": "WETH",
+      "dex": "orca",
+      "liqUsd": 6471137.62,
+      "vol24Usd": 6234077.78,
+      "priceUsd": 2277.7,
+      "change24h": 0.54
+    },
+    {
+      "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+      "symbol": "PENGU",
+      "dex": "orca",
+      "liqUsd": 3196994.82,
+      "vol24Usd": 160502.65,
+      "priceUsd": 0.007112,
+      "change24h": -3.02
+    },
+    {
+      "mint": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+      "symbol": "PUMP",
+      "dex": "orca",
+      "liqUsd": 2304762.65,
+      "vol24Usd": 3098287.66,
+      "priceUsd": 0.004065,
+      "change24h": -5.12
+    },
+    {
+      "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+      "symbol": "RAY",
+      "dex": "raydium",
+      "liqUsd": 1999078.7,
+      "vol24Usd": 1411474.94,
+      "priceUsd": 1.58,
+      "change24h": -1.65
+    },
+    {
+      "mint": "5vJmAfBjsS6wEHcgQGNm69P3fbyPmUU1dVfE5j1rraVZ",
+      "symbol": "USDC",
+      "dex": "raydium",
+      "liqUsd": 1979825.5,
+      "vol24Usd": 117110.97,
+      "priceUsd": 0.9999,
+      "change24h": null
+    },
+    {
+      "mint": "KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS",
+      "symbol": "KMNO",
+      "dex": "orca",
+      "liqUsd": 1878679.11,
+      "vol24Usd": 2535835.9,
+      "priceUsd": 0.03188,
+      "change24h": -2.68
+    },
+    {
+      "mint": "3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh",
+      "symbol": "WBTC",
+      "dex": "orca",
+      "liqUsd": 1791752.38,
+      "vol24Usd": 4261233.91,
+      "priceUsd": 77611.57,
+      "change24h": -1.38
+    },
+    {
+      "mint": "PRVT6TB7uss3FrUd2D9xs2zqDBsa3GbMJMwCQsgmeta",
+      "symbol": "UMBRA",
+      "dex": "metadao",
+      "liqUsd": 1588917.72,
+      "vol24Usd": 365911.69,
+      "priceUsd": 0.5259,
+      "change24h": -11.21
+    },
+    {
+      "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+      "symbol": "STONK",
+      "dex": "orca",
+      "liqUsd": 1561818.88,
+      "vol24Usd": 436017.58,
+      "priceUsd": 0.1135,
+      "change24h": -11.03
+    },
+    {
+      "mint": "3ZLekZYq2qkZiSpnSvabjit34tUkjSwD1JFuW9as9wBG",
+      "symbol": "NEAR",
+      "dex": "orca",
+      "liqUsd": 891294.27,
+      "vol24Usd": 631672.05,
+      "priceUsd": 4.059,
+      "change24h": -7.85
+    },
+    {
+      "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+      "symbol": "Fartcoin ",
+      "dex": "orca",
+      "liqUsd": 859423.93,
+      "vol24Usd": 145363.56,
+      "priceUsd": 0.1194,
+      "change24h": -2.77
+    },
+    {
+      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+      "symbol": "JUP",
+      "dex": "orca",
+      "liqUsd": 633089.57,
+      "vol24Usd": 551005.45,
+      "priceUsd": 0.2503,
+      "change24h": -3.37
+    }
+  ],
+  "arb": [
+    {
+      "symbol": "Bonk",
+      "spreadPct": 219.91,
+      "buyOn": "meteora",
+      "sellOn": "meteora",
+      "liqUsd": 2857.99
+    },
+    {
+      "symbol": "SRM",
+      "spreadPct": 9.63,
+      "buyOn": "raydium",
+      "sellOn": "orca",
+      "liqUsd": 0.52
+    },
+    {
+      "symbol": "PYTH",
+      "spreadPct": 6.86,
+      "buyOn": "orca",
+      "sellOn": "meteora",
+      "liqUsd": 457.79
+    },
+    {
+      "symbol": "JUP",
+      "spreadPct": 3.18,
+      "buyOn": "meteora",
+      "sellOn": "meteora",
+      "liqUsd": 11836.6
+    },
+    {
+      "symbol": "RAY",
+      "spreadPct": 1.27,
+      "buyOn": "raydium",
+      "sellOn": "raydium",
+      "liqUsd": 1023.21
+    },
+    {
+      "symbol": "USDT",
+      "spreadPct": 0.47,
+      "buyOn": "raydium",
+      "sellOn": "raydium",
+      "liqUsd": 35627.32
+    },
+    {
+      "symbol": "PUMP",
+      "spreadPct": 0.34,
+      "buyOn": "orca",
+      "sellOn": "orca",
+      "liqUsd": 138750.7
+    }
+  ],
+  "summary": {
+    "opportunities": 20,
+    "arbSpreads": 7
+  }
+}

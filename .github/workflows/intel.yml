@@ -1,0 +1,24 @@
+name: Refresh Market Intel
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate intel data
+        run: node scripts/ci-refresh.mjs
+      - name: Commit + push
+        run: |
+          git config user.name "Otto CI"
+          git config user.email "otto@kovantu.digital"
+          git add data/
+          git diff --staged --quiet || git commit -m "ci: refresh market intel $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push

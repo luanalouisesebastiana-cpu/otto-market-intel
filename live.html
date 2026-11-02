@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Otto — Painel Ao Vivo (Solana Intel)</title>
-<meta name="description" content="Painel ao vivo: macro, oportunidades, spreads de arbitragem e safety flags. Dados reais DexScreener + CoinGecko.">
+<meta name="description" content="Painel ao vivo: macro, oportunidades, spreads de arbitragem. Dados reais DexScreener + CoinGecko, atualizado por CI a cada 15min.">
 <style>:root{--bg:#070b16;--card:#0f1830;--txt:#e6edf7;--mut:#8b9bb4;--acc:#38bdf8;--hi:#f59e0b;--ok:#34d399;--bad:#ef4444}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55}
 .wrap{max-width:1080px;margin:0 auto;padding:26px 18px}h1{font-size:1.45rem;margin:0 0 2px}
@@ -12,10 +12,10 @@ table{width:100%;border-collapse:collapse;font-size:.83rem}th,td{text-align:left
 .spread{font-weight:700;color:var(--hi)}.up{color:var(--ok)}.down{color:var(--bad)}
 .btn{display:inline-block;padding:10px 18px;background:var(--acc);color:#04121f;border-radius:8px;font-weight:700;text-decoration:none;margin:4px 8px 4px 0}
 a{color:var(--acc)}.muted{color:var(--mut);font-size:.82rem}footer{margin-top:22px;color:var(--mut);font-size:.78rem}
-h2{font-size:1rem;margin:0 0 8px}</style></head>
+h2{font-size:1rem;margin:0 0 8px}.stamp{font-size:.75rem;color:var(--mut)}</style></head>
 <body><div class="wrap">
 <h1>Painel Ao Vivo — Inteligência de Mercado</h1>
-<p class="sub">Macro + oportunidades + arbitragem + safety flags. Atualiza sozinho a cada 60s. Dados reais.</p>
+<p class="sub">Macro + oportunidades + arbitragem. Dados reais, atualizado por CI a cada 15 min. <span class="stamp" id="stamp"></span></p>
 <div class="grid">
 <div class="kpi"><span>BTC</span><b id="btc">—</b></div>
 <div class="kpi"><span>ETH</span><b id="eth">—</b></div>
@@ -26,21 +26,29 @@ h2{font-size:1rem;margin:0 0 8px}</style></head>
 <div class="card"><h2>Spreads de Arbitragem (cross-DEX)</h2>
 <table><thead><tr><th>Token</th><th>Spread</th><th>Comprar</th><th>Vender</th><th>Liq US$</th></tr></thead><tbody id="arb"><tr><td colspan="5" class="muted">carregando...</td></tr></tbody></table></div>
 <div class="card"><h2>Top Oportunidades (filtros de risco aplicados)</h2>
-<table><thead><tr><th>Token</th><th>DEX</th><th>Liq US$</th><th>Vol 24h</th><th>Veredito</th></tr></thead><tbody id="opp"><tr><td colspan="5" class="muted">carregando...</td></tr></tbody></table></div>
+<table><thead><tr><th>Token</th><th>DEX</th><th>Liq US$</th><th>Vol 24h</th><th>Δ24h</th></tr></thead><tbody id="opp"><tr><td colspan="5" class="muted">carregando...</td></tr></tbody></table></div>
 <div class="card"><h2>Monetização</h2>
-<p class="muted">Relatorios completos via x402 (USDC): <a href="/v1/intel">/v1/intel</a> (100c) · <a href="/v1/arb">/v1/arb</a> (50c) · <a href="/x402-manifest.json">manifest</a></p>
-<a class="btn" href="/fund.html">Financiar o Otto</a><a class="btn" href="/intel.html" style="background:#1b2745;color:#e6edf7">Feed unificado</a>
+<p class="muted">Relatórios completos via x402 (USDC): <a href="/x402-manifest.json">manifest</a> · <a href="/openapi.json">openapi</a> · <a href="/for-agents.html">for-agents</a></p>
+<a class="btn" href="/fund.html">Financiar o Otto</a><a class="btn" href="/for-agents.html" style="background:#1b2745;color:#e6edf7">API para Agentes</a>
 </div>
-<footer>Otto · Kovantu Digital · Solana · auto-refresh 60s · dados: CoinGecko + DexScreener</footer></div>
+<footer>Otto · Kovantu Digital · Solana · dados: CoinGecko + DexScreener · CI refresh 15min</footer></div>
 <script>
-const jup='https://api.dexscreener.com/latest/dex/search?q=';
-async function cg(){try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');const j=await r.json();document.getElementById('btc').textContent='$'+j.bitcoin.usd;document.getElementById('eth').textContent='$'+j.ethereum.usd;document.getElementById('sol').textContent='$'+j.solana.usd;}catch(e){}}
-async function arb(){try{let rows=[];for(const q of ['SOL','JUP','PYTH','WIF','BONK']){const r=await fetch(jup+q);const j=await r.json();const byMint={};for(const p of (j.pairs||[]).filter(x=>x.chainId==='solana'&&x.liquidity?.usd>50000)){const m=p.baseToken.address;if(!byMint[m])byMint[m]={s:p.baseToken.symbol,v:[]};byMint[m].v.push({d:p.dexId,pr:+p.priceUsd,l:p.liquidity.usd});}
-for(const m of Object.values(byMint)){if(m.v.length<2)continue;const pr=m.v.map(v=>v.pr).filter(x=>x>0);const mn=Math.min(...pr),mx=Math.max(...pr);const sp=((mx-mn)/mn)*100;if(sp>0.3){const c=m.v.find(v=>v.pr===mn),r=m.v.find(v=>v.pr===mx);rows.push({s:m.s,sp,c:c.d,r:r.d,l:Math.min(c.l,r.l)});}}}
-rows.sort((a,b)=>b.sp-a.sp);document.getElementById('narb').textContent=rows.length;
-document.getElementById('arb').innerHTML=rows.slice(0,8).map(o=>`<tr><td>${o.s}</td><td class="spread">+${o.sp.toFixed(2)}%</td><td>${o.c}</td><td>${o.r}</td><td>${(o.l/1000).toFixed(0)}k</td></tr>`).join('')||'<tr><td colspan="5" class="muted">sem spreads</td></tr>';}catch(e){}}
-async function opp(){try{const r=await fetch(jup+'SOL');const j=await r.json();const ps=(j.pairs||[]).filter(p=>p.chainId==='solana'&&p.liquidity?.usd>50000&&p.volume?.h24>100000);document.getElementById('nopp').textContent=ps.length;
-document.getElementById('opp').innerHTML=ps.slice(0,8).map(p=>`<tr><td>${p.baseToken.symbol}</td><td>${p.dexId}</td><td>$${(p.liquidity.usd/1000).toFixed(0)}k</td><td>$${(p.volume.h24/1000).toFixed(0)}k</td><td class="up">aprovado</td></tr>`).join('')||'<tr><td colspan="5" class="muted">nenhum</td></tr>';}catch(e){}}
-async function all(){await Promise.all([cg(),arb(),opp()]);}
-all();setInterval(all,60000);
+const fmt=n=>n>=1e9?'$'+(n/1e9).toFixed(2)+'B':n>=1e6?'$'+(n/1e6).toFixed(1)+'M':n>=1e3?'$'+(n/1e3).toFixed(0)+'k':'$'+n;
+async function load(){
+  try{
+    const r=await fetch('data/intel.json',{cache:'no-store'});
+    const d=await r.json();
+    document.getElementById('stamp').textContent='atualizado '+new Date(d.generatedAt).toLocaleString('pt-BR');
+    const m=d.macro||{};
+    document.getElementById('btc').textContent=m.btc?.usd?'$'+m.btc.usd.toLocaleString():'—';
+    document.getElementById('eth').textContent=m.eth?.usd?'$'+m.eth.usd.toLocaleString():'—';
+    document.getElementById('sol').textContent=m.sol?.usd?'$'+m.sol.usd.toLocaleString():'—';
+    const opps=d.opportunities||[], arbs=d.arb||[];
+    document.getElementById('nopp').textContent=opps.length;
+    document.getElementById('narb').textContent=arbs.length;
+    document.getElementById('arb').innerHTML=arbs.slice(0,8).map(o=>`<tr><td>${o.symbol}</td><td class="spread">+${o.spreadPct.toFixed(2)}%</td><td>${o.buyOn}</td><td>${o.sellOn}</td><td>${fmt(o.liqUsd)}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">sem spreads</td></tr>';
+    document.getElementById('opp').innerHTML=opps.slice(0,10).map(o=>{const c=o.change24h;const cls=c==null?'':c>=0?'up':'down';return `<tr><td>${o.symbol}</td><td>${o.dex}</td><td>${fmt(o.liqUsd)}</td><td>${fmt(o.vol24Usd)}</td><td class="${cls}">${c==null?'—':(c>=0?'+':'')+c.toFixed(1)+'%'}</td></tr>`;}).join('')||'<tr><td colspan="5" class="muted">nenhum</td></tr>';
+  }catch(e){console.warn('intel.json falhou',e);}
+}
+load();
 </script></body></html>

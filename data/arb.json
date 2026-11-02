@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-11-02T13:36:20.587Z",
+  "opportunities": [
+    {
+      "symbol": "Bonk",
+      "spreadPct": 219.91,
+      "buyOn": "meteora",
+      "sellOn": "meteora",
+      "liqUsd": 2857.99
+    },
+    {
+      "symbol": "SRM",
+      "spreadPct": 9.63,
+      "buyOn": "raydium",
+      "sellOn": "orca",
+      "liqUsd": 0.52
+    },
+    {
+      "symbol": "PYTH",
+      "spreadPct": 6.86,
+      "buyOn": "orca",
+      "sellOn": "meteora",
+      "liqUsd": 457.79
+    },
+    {
+      "symbol": "JUP",
+      "spreadPct": 3.18,
+      "buyOn": "meteora",
+      "sellOn": "meteora",
+      "liqUsd": 11836.6
+    },
+    {
+      "symbol": "RAY",
+      "spreadPct": 1.27,
+      "buyOn": "raydium",
+      "sellOn": "raydium",
+      "liqUsd": 1023.21
+    },
+    {
+      "symbol": "USDT",
+      "spreadPct": 0.47,
+      "buyOn": "raydium",
+      "sellOn": "raydium",
+      "liqUsd": 35627.32
+    },
+    {
+      "symbol": "PUMP",
+      "spreadPct": 0.34,
+      "buyOn": "orca",
+      "sellOn": "orca",
+      "liqUsd": 138750.7
+    }
+  ]
+}
