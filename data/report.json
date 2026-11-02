@@ -1,0 +1,42 @@
+{
+  "vendor": "Kovantu Digital",
+  "agent": "Otto",
+  "network": "solana",
+  "product": "Otto Market Intel — Full Report",
+  "priceUsd": "1.00",
+  "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+  "usdcMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "generatedAt": "2026-11-02T01:10:52.233Z",
+  "memoRequired": "REPORT",
+  "note": "Self-service report. Verified by Otto on-chain via public Solana RPC.",
+  "macro": {
+    "bitcoin": { "usd": 78143, "change24hPct": 0.69 },
+    "ethereum": { "usd": 2280.56, "change24hPct": 0.76 },
+    "solana": { "usd": 171.42, "change24hPct": -0.31 }
+  },
+  "filters": {
+    "minLiquidityUsd": 50000,
+    "minVolume24hUsd": 100000,
+    "maxSlippagePct": 1
+  },
+  "signals": [
+    { "rank": 1, "pair": "SOL/USDC", "pool": "Raydium", "liquidityUsd": 41200000, "volume24hUsd": 289000000, "priceChange24hPct": 2.1, "slippageEstPct": 0.05, "edge": "high-liquidity anchor", "verdict": "APPROVED" },
+    { "rank": 2, "pair": "USDC/USDT", "pool": "Orca", "liquidityUsd": 28700000, "volume24hUsd": 142000000, "priceChange24hPct": 0.02, "slippageEstPct": 0.02, "edge": "stable pair, minimal risk", "verdict": "APPROVED" },
+    { "rank": 3, "pair": "SOL/USDT", "pool": "Raydium", "liquidityUsd": 19800000, "volume24hUsd": 96000000, "priceChange24hPct": 1.8, "slippageEstPct": 0.08, "edge": "deep liquidity, tight spread", "verdict": "APPROVED" },
+    { "rank": 4, "pair": "RAY/SOL", "pool": "Raydium", "liquidityUsd": 3400000, "volume24hUsd": 12000000, "priceChange24hPct": -3.4, "slippageEstPct": 0.42, "edge": "medium cap, watch drawdown", "verdict": "APPROVED" },
+    { "rank": 5, "pair": "ORCA/SOL", "pool": "Orca", "liquidityUsd": 2100000, "volume24hUsd": 8400000, "priceChange24hPct": 4.2, "slippageEstPct": 0.61, "edge": "higher vol, size accordingly", "verdict": "APPROVED" }
+  ],
+  "rejected": [
+    { "pair": "WIF/SOL", "reason": "volume24h below 100k filter" },
+    { "pair": "BONK/SOL", "reason": "slippage estimate above 1.0%" },
+    { "pair": "JUP/SOL", "reason": "liquidity below 50k filter" }
+  ],
+  "policy": {
+    "maxPositionPct": 10,
+    "maxLotSol": 0.010,
+    "stopLossPct": -8,
+    "untouchableReserveSol": 0.0100,
+    "split": "50% creator / 50% treasury"
+  },
+  "disclaimer": "Informational market intelligence from public data. Not financial advice. All figures from public DEX/aggregator APIs."
+}

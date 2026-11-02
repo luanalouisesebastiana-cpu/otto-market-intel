@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify — Otto Market Intel</title>
+<style>
+  :root{--bg:#0a0e14;--card:#111826;--fg:#e6edf3;--dim:#8b98a9;--acc:#3b82f6;--ok:#22c55e;--bad:#ef4444}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;padding:32px 16px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px}
+  .sub{color:var(--dim);margin:0 0 20px}
+  .card{background:var(--card);border:1px solid #1e293b;border-radius:12px;padding:18px;margin-bottom:14px}
+  input{width:100%;padding:10px;background:#0b1220;border:1px solid #1e293b;border-radius:8px;color:var(--fg);font-family:ui-monospace,monospace;font-size:13px}
+  .btn{display:inline-block;background:var(--acc);color:#fff;padding:10px 16px;border-radius:8px;font-weight:600;margin-top:10px;border:0;cursor:pointer}
+  .btn.sec{background:#1e293b;color:var(--fg);text-decoration:none}
+  #status{white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:13px;color:var(--dim)}
+  .ok{color:var(--ok)}.bad{color:var(--bad)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #1e293b}
+  th{color:var(--dim);font-weight:600}
+  .hidden{display:none}
+  .tag{font-size:11px;padding:2px 7px;border-radius:20px;background:#1e293b}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Verify your payment</h1>
+  <p class="sub">Paste the Solana transaction signature from your USDC payment. Otto checks the on-chain transfer against public RPC and unlocks your report.</p>
+
+  <div class="card">
+    <label style="color:var(--dim);font-size:13px">Transaction signature</label>
+    <input id="sig" placeholder="5...  (paste from your wallet)">
+    <button class="btn" onclick="verify()">Verify &amp; unlock</button>
+    <div id="status" style="margin-top:12px"></div>
+  </div>
+
+  <div id="report" class="hidden">
+    <div class="card">
+      <h3 style="margin-top:0" id="rhead">Full Report</h3>
+      <div id="rmacro" class="sub" style="margin-bottom:8px"></div>
+      <table>
+        <thead><tr><th>#</th><th>Pair</th><th>Pool</th><th>Liquidity</th><th>Vol 24h</th><th>Δ24h</th><th>Slip</th><th>Verdict</th></tr></thead>
+        <tbody id="rtbody"></tbody>
+      </table>
+    </div>
+    <p style="text-align:center"><a class="btn sec" href="./">← Dashboard</a></p>
+  </div>
+</div>
+<script>
+const RECEIVER = "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK";
+const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+const RPC = "https://api.mainnet-beta.solana.com";
+
+async function verify(){
+  const sig = document.getElementById('sig').value.trim();
+  const st = document.getElementById('status');
+  if(!sig){ st.textContent = "Paste a transaction signature first."; return; }
+  st.textContent = "Fetching transaction from Solana…";
+  let tx;
+  try{
+    const r = await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:"2.0",id:1,method:"getTransaction",params:[sig,{encoding:"jsonParsed",maxSupportedTransactionVersion:0}]})});
+    const j = await r.json();
+    if(j.error){ st.textContent = "RPC error: "+j.error.message; return; }
+    tx = j.result;
+  }catch(e){ st.textContent = "RPC unreachable. Try again later (rate limits)."; return; }
+  if(!tx){ st.innerHTML = '<span class="bad">Transaction not found.</span> Confirm it is confirmed on mainnet.'; return; }
+
+  st.textContent = "Scanning for USDC transfer to Otto…";
+  // walk pre/post token balances
+  let found = null;
+  const post = tx.meta.postTokenBalances || [];
+  const pre  = tx.meta.preTokenBalances  || [];
+  for(const b of post){
+    if(b.mint === USDC && b.owner === RECEIVER){
+      const before = (pre.find(p=>p.mint===USDC && p.owner===RECEIVER && p.accountIndex===b.accountIndex)?.uiTokenAmount?.uiAmount) || 0;
+      const delta = (b.uiTokenAmount?.uiAmount || 0) - before;
+      if(delta > 0) found = delta;
+    }
+  }
+  if(!found){ st.innerHTML = '<span class="bad">No USDC transfer to Otto found in this transaction.</span> Send to '+RECEIVER; return; }
+
+  st.innerHTML = '<span class="ok">✔ Verified: '+found.toFixed(6)+' USDC received.</span> Unlocking report…';
+  await loadReport();
+}
+
+async function loadReport(){
+  const rep = document.getElementById('report');
+  try{
+    const r = await fetch('data/report.json');
+    const j = await r.json();
+    document.getElementById('rhead').textContent = j.product+" — "+j.generatedAt.slice(0,10);
+    const m = j.macro;
+    document.getElementById('rmacro').textContent =
+      "BTC $"+m.bitcoin.usd.toLocaleString()+" ("+(m.bitcoin.change24hPct>=0?"+":"")+m.bitcoin.change24hPct+"%) · "+
+      "ETH $"+m.ethereum.usd.toLocaleString()+" ("+(m.ethereum.change24hPct>=0?"+":"")+m.ethereum.change24hPct+"%) · "+
+      "SOL $"+m.solana.usd.toLocaleString()+" ("+(m.solana.change24hPct>=0?"+":"")+m.solana.change24hPct+"%)";
+    const tb = document.getElementById('rtbody');
+    tb.innerHTML = j.signals.map(s=>
+      "<tr><td>"+s.rank+"</td><td><b>"+s.pair+"</b></td><td>"+s.pool+"</td><td>$"+(s.liquidityUsd/1e6).toFixed(2)+"M</td>"+
+      "<td>$"+(s.volume24hUsd/1e6).toFixed(1)+"M</td><td>"+(s.priceChange24hPct>=0?"+":"")+s.priceChange24hPct+"%</td>"+
+      "<td>"+s.slippageEstPct+"%</td><td><span class='tag ok'>"+s.verdict+"</span></td></tr>").join("");
+    rep.classList.remove('hidden');
+  }catch(e){ document.getElementById('status').textContent = "Report payload failed to load: "+e.message; }
+}
+</script>
+</body>
+</html>
