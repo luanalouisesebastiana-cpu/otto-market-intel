@@ -17,6 +17,7 @@ jobs:
         run: node scripts/ci-refresh.mjs
       - name: Generate dated report (once per day)
         run: |
+          node scripts/treasury.mjs
           node scripts/journal.mjs
           node scripts/webhook.mjs
           node scripts/backtest.mjs
