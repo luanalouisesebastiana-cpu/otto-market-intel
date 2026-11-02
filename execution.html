@@ -1,0 +1,36 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Execute + Verify</title>
+<meta name="description" content="Final half of the genesis Jev loop: executes a validated ENTER via the real swap executor, verifies on-chain bank change.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px;margin:14px 0}
+.dec{font-size:22px;font-weight:800}.ok{color:#4ade80}.skip{color:#fbbf24}.no{color:#f87171}
+pre{background:#0b1020;padding:14px;border-radius:8px;overflow:auto;font-size:12px;color:#cbd5e1}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+</style></head><body><div class="wrap">
+<h1>Otto — Execute + Verify</h1>
+<p style="color:#94a3b8;font-size:14px">Final half of the genesis Jev loop. Executes a validated ENTER through the real Solana swap executor, then verifies the on-chain bank change. Default is dry-run (no funds moved).</p>
+<div class="card"><div id="dec" class="dec">loading…</div><div id="reason" style="color:#94a3b8;margin-top:6px"></div></div>
+<div class="card"><h3 style="color:#94a3b8;margin-top:0">Last execution record</h3><pre id="rec">loading…</pre></div>
+<div class="card"><h3 style="color:#94a3b8;margin-top:0">Execution history</h3><table><thead><tr><th>Cycle</th><th>Decision</th><th>Acted</th><th class="num">Δ SOL</th><th>Tx</th></tr></thead><tbody id="hist"><tr><td colspan="5" style="color:#64748b">loading…</td></tr></tbody></table></div>
+<p style="color:#64748b;font-size:12px">Source: data/execution.json + data/executions.jsonl (CI every 15 min) · <button onclick="load()">refresh</button></p>
+<script>
+async function load(){
+  const r=await fetch('data/execution.json',{cache:'no-store'});const d=await r.json();
+  const dec=document.getElementById('dec');
+  dec.textContent=d.acted?'EXECUTED':(d.executeEnabled?'SKIPPED':'DRY-RUN');
+  dec.className='dec '+(d.acted?'ok':(d.executeEnabled?'skip':'skip'));
+  document.getElementById('reason').textContent=d.reason+' · pre='+d.preBalanceSol+' SOL · post='+d.postBalanceSol+' SOL · Δ='+(d.deltaSol??0)+' SOL';
+  document.getElementById('rec').textContent=JSON.stringify(d,null,2);
+  try{const h=await fetch('data/executions.jsonl',{cache:'no-store'});
+    const lines=(await h.text()).trim().split('\n').filter(Boolean).slice(-12);
+    document.getElementById('hist').innerHTML=lines.map(l=>{const e=JSON.parse(l);
+      return `<tr><td>${new Date(e.cycle).toLocaleString()}</td><td>${e.decision}</td><td>${e.acted?'<span class="ok">YES</span>':'<span class="skip">no</span>'}</td><td class="num">${e.deltaSol??0}</td><td>${e.txSignature?`<a href="https://solscan.io/tx/${e.txSignature}" style="color:#38bdf8">view</a>`:'—'}</td></tr>`;}).join('');
+  }catch(e){document.getElementById('hist').innerHTML='<tr><td colspan="5" style="color:#64748b">no history yet</td></tr>';}
+}
+load();
+</script></div></body></html>

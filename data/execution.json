@@ -1,0 +1,12 @@
+{
+  "cycle": "2026-11-02T20:38:42.987Z",
+  "decision": "OBSERVE",
+  "executeEnabled": false,
+  "acted": false,
+  "reason": "decision is not a validated ENTER — nothing to execute",
+  "preBalanceSol": 0.029251726,
+  "postBalanceSol": 0.029251726,
+  "deltaSol": 0,
+  "txSignature": null,
+  "verified": true
+}
