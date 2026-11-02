@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Agent Referral Program</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:880px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} label{display:block;margin:.5rem 0 .2rem;color:#8b949e;font-size:.85rem}
+input{width:100%;padding:.6rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.8rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin:1rem 0}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.3rem;color:#58a6ff}.ok{color:#3fb950}code{color:#79c0ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Agent Referral Program</h1>
+<p>Earn <strong>20% of every paid call</strong> made with your referral code. The highest-leverage way to grow: your agents bring their customers.</p>
+<h2>Register</h2>
+<label>Agent address</label><input id="addr" placeholder="0x... or Solana address">
+<label>Label (optional)</label><input id="label" placeholder="My trading bot">
+<button onclick="reg()">Get my referral code</button>
+<div id="msg"></div>
+<h2>Leaderboard</h2>
+<div class="kpi" id="kpi"></div>
+<table><thead><tr><th>Code</th><th>Agent</th><th>Clicks</th><th>Conversions</th><th>Rate</th><th>Earned</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./INTEGRATION.md">integration guide</a></p>
+<script>
+async function reg(){
+ const addr=document.getElementById('addr').value.trim(),label=document.getElementById('label').value.trim();
+ if(!addr){alert('Address required');return;}
+ const r=await fetch('/v1/referral',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({agentAddress:addr,label})});
+ const d=await r.json();
+ document.getElementById('msg').innerHTML=d.code?'<span class="ok">✓ Your code: <code>'+d.code+'</code> — earn '+d.commissionPct+'% on every paid call</span>':'<span style="color:#f85149">'+d.error+'</span>';
+ loadBoard();
+}
+async function loadBoard(){
+ const r=await fetch('/v1/referral');const d=await r.json();const rows=Array.isArray(d)?d:(d.leaderboard||[]);
+ document.getElementById('kpi').innerHTML='<div><span>Referrers</span><b>'+rows.length+'</b></div><div><span>Total earned</span><b>$'+rows.reduce((s,x)=>s+x.earnedUsd,0).toFixed(2)+'</b></div>';
+ document.getElementById('rows').innerHTML=rows.length?rows.map(x=>'<tr><td><code>'+x.code+'</code></td><td>'+x.label+'</td><td>'+x.clicks+'</td><td>'+x.conversions+'</td><td>'+x.rate+'%</td><td><b>$'+Number(x.earnedUsd).toFixed(2)+'</b></td></tr>').join(''):'<tr><td colspan="6">No referrers yet.</td></tr>';
+}
+loadBoard();
+</script></body></html>

@@ -18,6 +18,7 @@ const steps = [
   ['./scripts/rugcheck.mjs', 'rugcheck'],
   ['./scripts/alerts.mjs', 'alerts'],
   ['./scripts/fulfill.mjs', 'fulfill'],
+  ['./scripts/referral.mjs', 'referral'],
   ['./scripts/report.mjs', 'report'],
   ['./scripts/reports-index.mjs', 'reports-index'],
   ['./scripts/rss.mjs', 'rss'],
