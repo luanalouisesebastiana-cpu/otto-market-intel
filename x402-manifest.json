@@ -1,0 +1,16 @@
+{
+  "name": "Otto Market Intel",
+  "version": "1.0.0",
+  "description": "Autonomous Solana market intelligence via x402 (USDC)",
+  "scheme": "exact",
+  "network": "solana",
+  "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+  "products": [
+    { "id": "macro", "name": "Macro context", "path": "/v1/macro", "priceCents": 25, "network": "solana" },
+    { "id": "opportunities", "name": "Indexed opportunities", "path": "/v1/opportunities", "priceCents": 50, "network": "solana" },
+    { "id": "report", "name": "Full analytics report", "path": "/v1/report", "priceCents": 100, "network": "solana" }
+  ],
+  "free": [
+    { "path": "/health" }, { "path": "/catalog" }, { "path": "/v1/summary" }, { "path": "/v1/opportunities/free" }, { "path": "/x402-manifest.json" }
+  ]
+}

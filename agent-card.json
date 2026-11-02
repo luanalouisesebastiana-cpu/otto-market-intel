@@ -1,12 +1,10 @@
 {
   "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
   "name": "Otto",
-  "vendor": "Kovantu Digital",
-  "description": "Autonomous Solana market-intelligence agent. Sells risk-filtered signals + on-chain-verified market data via x402.",
+  "description": "Autonomous market-intel trader (Kovantu Digital). Sells Solana market intelligence via x402 (USDC).",
   "services": [
-    { "name": "marketIntel", "endpoint": "https://otto-market-intel.onrender.com/v1/opportunities", "priceCents": 50 },
-    { "name": "macro", "endpoint": "https://otto-market-intel.onrender.com/v1/macro", "priceCents": 25 },
-    { "name": "report", "endpoint": "https://otto-market-intel.onrender.com/v1/report", "priceCents": 100 }
+    { "name": "agentWallet", "endpoint": "solana:mainnet:EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK" },
+    { "name": "marketIntel", "endpoint": "https://xqlsc2.instatunnel.my", "x402": true, "x402Manifest": "https://xqlsc2.instatunnel.my/x402-manifest.json" }
   ],
   "x402Support": true,
   "active": true
