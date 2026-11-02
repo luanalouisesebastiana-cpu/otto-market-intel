@@ -8,6 +8,7 @@ const steps = [
   ['./pools.mjs', 'pools'],
   ['./riskgate.mjs', 'riskgate'],
   ['./signals.mjs', 'signals'],
+  ['./tracker.mjs', 'tracker'],
   ['./journal.mjs', 'journal'],
   ['./treasury.mjs', 'treasury'],
   ['./payout.mjs', 'payout'],

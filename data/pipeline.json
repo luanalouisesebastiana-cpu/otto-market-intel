@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T18:56:14.862Z",
+  "generatedAt": "2026-11-02T20:31:43.602Z",
   "ok": 20,
   "total": 23,
   "results": [
@@ -16,54 +16,54 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 3443
+      "ms": 1057
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 16
+      "ms": 10
     },
     {
       "step": "signals",
       "ok": false,
-      "ms": 2,
+      "ms": 8,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "journal",
       "ok": false,
-      "ms": 6,
+      "ms": 9,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "treasury",
       "ok": true,
-      "ms": 4
+      "ms": 10
     },
     {
       "step": "payout",
       "ok": true,
-      "ms": 8
+      "ms": 5
     },
     {
       "step": "backtest",
       "ok": true,
-      "ms": 861
+      "ms": 1205
     },
     {
       "step": "trackrecord",
       "ok": true,
-      "ms": 5
+      "ms": 9
     },
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 1
+      "ms": 12
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 2
+      "ms": 6
     },
     {
       "step": "position",
@@ -73,53 +73,53 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 81
+      "ms": 144
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 9740
+      "ms": 9856
     },
     {
       "step": "alerts",
       "ok": true,
-      "ms": 5
+      "ms": 16
     },
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 4
+      "ms": 18
     },
     {
       "step": "referral",
       "ok": true,
-      "ms": 1
+      "ms": 10
     },
     {
       "step": "subscribe",
       "ok": true,
-      "ms": 4
+      "ms": 19
     },
     {
       "step": "trial",
       "ok": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "step": "report",
       "ok": true,
-      "ms": 9
+      "ms": 31
     },
     {
       "step": "reports-index",
       "ok": false,
-      "ms": 0,
+      "ms": 8,
       "error": "Cannot find module '/home/hatch/.automaton/storefront/scripts/scripts/reports-index.mjs' imported from /home/hatch/.automaton/storefront/scripts/pipeline.mjs\nDid you mean to import \"./reports-index.mjs\"?"
     },
     {
       "step": "rss",
       "ok": true,
-      "ms": 2
+      "ms": 15
     }
   ]
 }
