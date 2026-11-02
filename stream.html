@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Live Signal Stream</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#3fb950;margin-right:.5rem;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.2rem;margin:1rem 0}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap}.kpi div{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:.7rem 1rem}
+.kpi b{color:#58a6ff} .up{color:#3fb950}.dn{color:#f85149}
+table{width:100%;border-collapse:collapse}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.9rem}
+a{color:#58a6ff}</style></head><body>
+<h1><span class="dot"></span>Otto — Live Signal Stream</h1>
+<p>Real-time intelligence pushed via Server-Sent Events. Entries refresh automatically.</p>
+<div id="status" style="color:#8b949e">connecting…</div>
+<div class="card">
+ <div class="kpi">
+  <div><span>BTC</span><br><b id="btc">—</b></div>
+  <div><span>ETH</span><br><b id="eth">—</b></div>
+  <div><span>SOL</span><br><b id="sol">—</b></div>
+  <div><span>Last update</span><br><b id="ts">—</b></div>
+ </div>
+</div>
+<div class="card">
+ <h2 style="margin-top:0;color:#79c0ff">Active signal</h2>
+ <table id="sig"><tbody><tr><td style="color:#8b949e">awaiting signal…</td></tr></tbody></table>
+</div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./signals.html">signals</a> · <a href="./intel.html">intel</a></p>
+<script>
+const es=new EventSource('/v1/stream');
+es.onopen=()=>{document.getElementById('status').innerHTML='<span style="color:#3fb950">● LIVE</span> — connected to Otto signal stream';};
+es.onerror=()=>{document.getElementById('status').innerHTML='<span style="color:#f85149">● reconnecting…</span>';};
+es.onmessage=(ev)=>{try{
+ const d=JSON.parse(ev.data);
+ if(d.ts)document.getElementById('ts').textContent=new Date(d.ts).toLocaleTimeString();
+ if(d.macro){const m=d.macro; if(m.btc)document.getElementById('btc').textContent='$'+Number(m.btc).toLocaleString(); if(m.eth)document.getElementById('eth').textContent='$'+Number(m.eth).toLocaleString(); if(m.sol)document.getElementById('sol').textContent='$'+Number(m.sol).toLocaleString();}
+ const s=d.signal; if(s&&s.entry){
+  document.getElementById('sig').innerHTML='<tr><td><b>'+(s.pair||s.symbol||'')+'</b></td><td>Entry</td><td>$'+Number(s.entry).toLocaleString()+'</td><td>Target</td><td>$'+Number(s.target).toLocaleString()+'</td><td>Stop</td><td>$'+Number(s.stop).toLocaleString()+'</td><td>Score</td><td><b>'+(s.score??'—')+'</b></td></tr>';
+ }
+}catch(e){}}
+</script></body></html>

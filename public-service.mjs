@@ -99,6 +99,22 @@ async function handle(req,res){
   if (p==='/v1/rugcheck') { try { const mint=url.searchParams.get('mint'); if(!mint){res.writeHead(400,{'content-type':'application/json'});return res.end('{"error":"mint required"}');} const m=await import('./scripts/rugcheck.mjs'); const r=await m.rugCheck(mint); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(r)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,score:0,verdict:'UNKNOWN'})); } }
   if (p==='/v1/position') { try { const mint=url.searchParams.get('mint'); const sym=url.searchParams.get('symbol'); if(!mint&&!sym){ const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/position.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } const m=await import('./scripts/position.mjs'); const live=await m.livePrice({mint,symbol:sym}); if(!live){res.writeHead(200,{'content-type':'application/json'});return res.end(JSON.stringify({error:'no price'}));} const e=parseFloat(url.searchParams.get('entry')), t=parseFloat(url.searchParams.get('target')), st=parseFloat(url.searchParams.get('stop')); const r=m.track({entry:e,target:t,stop:st,sizeUsd:parseFloat(url.searchParams.get('sizeUsd')||'0'),live:live.price}); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({...r,liveSource:live.source})); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message})); } }
   if (p==='/v1/papertrade') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/papertrade.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,trades:[]})); } }
+  if (p==='/v1/stream') {
+    // Server-Sent Events: live signal/intel stream (heartbeat + snapshot every 15s)
+    res.writeHead(200, {'content-type':'text/event-stream','cache-control':'no-cache','connection':'keep-alive'});
+    res.write('retry: 5000\n\n');
+    const send = async () => {
+      try {
+        const sig = JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/signal.json', import.meta.url),'utf8')));
+        const intel = await import('node:fs').then(m=>JSON.parse(m.readFileSync(new URL('./data/intel.json', import.meta.url),'utf8'))).catch(()=>({}));
+        res.write('data: '+JSON.stringify({ ts:new Date().toISOString(), signal:sig.signal||sig, macro:intel.macro||null })+'\n\n');
+      } catch(e){ res.write('data: '+JSON.stringify({ts:new Date().toISOString(),error:e.message})+'\n\n'); }
+    };
+    send();
+    const iv = setInterval(send, 15000);
+    req.on('close', () => clearInterval(iv));
+    return;
+  }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files
