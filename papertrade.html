@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Paper Trading Simulator</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} table{width:100%;border-collapse:collapse;margin:1rem 0}
+td,th{padding:.5rem .75rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
+.win{color:#3fb950}.loss{color:#f85149}.open{color:#58a6ff}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Paper Trading Simulator</h1>
+<p>Runs the signal strategy against <strong>live prices</strong>. Hypothetical fills at signal price, exits at target/stop/−8% policy. Proves the trading engine end-to-end. <em>No real orders.</em></p>
+<div class="kpi" id="kpi"></div>
+<h2>Simulated trades</h2>
+<table><thead><tr><th>Pair</th><th>Entry</th><th>Live</th><th>Exit</th><th>P&L</th><th>Outcome</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./signals.html">signals</a> · <a href="./backtest.html">backtest</a></p>
+<script>
+fetch('/v1/papertrade').then(r=>r.json()).then(d=>{
+ document.getElementById('kpi').innerHTML='<div><span>Total</span><b>'+d.total+'</b></div><div><span>Win rate</span><b>'+d.winRate+'%</b></div><div><span>Total P&L</span><b>$'+Number(d.totalPnlUsd||0).toFixed(2)+'</b></div><div><span>Policy</span><b>'+d.policy+'</b></div>';
+ const rows=d.trades||[];
+ document.getElementById('rows').innerHTML=rows.length?rows.map(t=>'<tr><td>'+t.pair+'</td><td>$'+Number(t.entry).toLocaleString()+'</td><td>$'+Number(t.live).toLocaleString()+'</td><td>$'+Number(t.exit).toLocaleString()+'</td><td class="'+(t.pnlPct>0?'win':t.pnlPct<0?'loss':'open')+'">'+t.pnlPct+'% ($'+Number(t.pnlUsd).toFixed(2)+')</td><td class="'+(t.outcome==='TARGET'?'win':t.outcome==='STOP'?'loss':'open')+'">'+t.outcome+'</td></tr>').join(''):'<tr><td colspan="6">No signals to simulate.</td></tr>';
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="6">Service offline.</td></tr>');
+</script></body></html>
