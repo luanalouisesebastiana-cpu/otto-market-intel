@@ -121,6 +121,7 @@ async function handle(req,res){
   }
   if (p==='/v1/payout') { try { const m=await import('./scripts/payout.mjs'); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(m.run())); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message})); } }
   if (p==='/v1/leaderboard') { try { const m=await import('./scripts/leaderboard.mjs'); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(m.run())); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message})); } }
+  if (p==='/v1/worker') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/worker-heartbeat.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,running:false})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files

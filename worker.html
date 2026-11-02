@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Worker Daemon</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:860px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}
+pre{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:1rem;font-size:.82rem;overflow:auto;max-height:400px}
+.ok{color:#3fb950}.bad{color:#f85149}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Worker Daemon</h1>
+<p>Persistent autonomous process: refreshes intel data, checks price alerts (fires webhooks), broadcasts new signals. Runs continuously alongside the HTTP service.</p>
+<div class="kpi" id="kpi"></div>
+<h2>Latest cycle</h2><pre id="cyc">loading…</pre>
+<h2>Run logs</h2><pre id="log">loading…</pre>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./pipeline.html">pipeline</a> · <a href="./alerts.html">alerts</a></p>
+<script>
+async function load(){
+ try{ const d=await (await fetch('/v1/worker')).json();
+  document.getElementById('kpi').innerHTML='<div><span>Running</span><b>'+(d.intervalMs?'✓':'—')+'</b></div><div><span>Interval</span><b>'+Math.round((d.intervalMs||0)/1000)+'s</b></div><div><span>Alerts fired</span><b>'+(d.firedAlerts??0)+'</b></div><div><span>Signals</span><b>'+(d.signals??0)+'</b></div>';
+  document.getElementById('cyc').textContent=JSON.stringify(d,null,2);
+ }catch(e){document.getElementById('cyc').textContent='worker status unavailable';}
+}
+load();setInterval(load,15000);
+</script></body></html>

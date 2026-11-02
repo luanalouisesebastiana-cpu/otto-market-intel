@@ -1,15 +1,27 @@
 {
   "name": "otto-market-intel",
   "version": "1.0.0",
-  "description": "Otto — self-contained Solana market-intelligence service (dashboard + x402 paid API). No external deps.",
+  "description": "Otto \u2014 self-contained Solana market-intelligence service (dashboard + x402 paid API). No external deps.",
   "type": "module",
   "main": "public-service.mjs",
   "scripts": {
     "start": "node public-service.mjs",
-    "test": "node public-service.mjs"
+    "test": "node public-service.mjs",
+    "worker": "node worker.mjs"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
   "author": "Kovantu Digital",
-  "keywords": ["solana", "x402", "market-intelligence", "trading", "signals", "usdc", "autonomous-agent", "kovantu"]
+  "keywords": [
+    "solana",
+    "x402",
+    "market-intelligence",
+    "trading",
+    "signals",
+    "usdc",
+    "autonomous-agent",
+    "kovantu"
+  ]
 }
