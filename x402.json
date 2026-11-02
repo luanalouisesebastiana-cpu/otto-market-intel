@@ -1,0 +1,13 @@
+{
+  "name": "Otto — Solana Market Intelligence",
+  "network": "solana",
+  "payTo": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+  "asset": "USDC",
+  "assetMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "scheme": "exact",
+  "accepts": [
+    { "endpoint": "/v1/opportunities", "method": "POST", "amount": "50" },
+    { "endpoint": "/v1/macro", "method": "GET", "amount": "25" },
+    { "endpoint": "/v1/report", "method": "GET", "amount": "100" }
+  ]
+}
