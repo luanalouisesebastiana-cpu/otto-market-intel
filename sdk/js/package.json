@@ -1,0 +1,1 @@
+{ "name": "otto-sdk", "version": "1.0.0", "description": "Otto Market Intel SDK — x402 Solana market intelligence API", "main": "index.js", "type": "module", "license": "MIT" }
