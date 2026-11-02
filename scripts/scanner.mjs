@@ -4,7 +4,7 @@ import { execFile } from 'node:child_process';
 import fs from 'node:fs';
 
 const DECISIONS='/root/market-intel/decisions.jsonl';
-const REPORT='/root/market-intel/opportunities.json';
+const REPORT=new URL('../data/opportunities.json', import.meta.url).pathname;
 const PROXY='http://hatch-egress-proxy:3128';
 
 async function curl(url){
@@ -32,14 +32,19 @@ export async function scan(){
     const vol=(p.volume?.h24||0);
     const ageH=((Date.now()-new Date(p.pairCreatedAt||0))/3.6e6)||0;
     const priceImpact=(p.priceChange?.h1||0);
-    const passes = liq>F.minLiq && vol>F.minVol && Math.abs(priceImpact)<50;
+    // real slippage: constant-product approximation for a $1000 reference trade
+    const REF_TRADE_USD = 1000;
+    const slipPct = liq > 0 ? (REF_TRADE_USD / (liq + REF_TRADE_USD)) * 100 : 999;
+    const passSlip = slipPct <= (F.maxSlippagePct ?? 1);
+    const passes = liq>F.minLiq && vol>F.minVol && passSlip && Math.abs(priceImpact)<50;
     candidates.push({
       mint, symbol:p.baseToken?.symbol, dex:p.dexId,
       liqUsd:Math.round(liq), vol24Usd:Math.round(vol), ageHours:Math.round(ageH),
       priceChangeH1:priceImpact,
-      passLiq:liq>F.minLiq, passVol:vol>F.minVol,
+      slippagePct:+slipPct.toFixed(3), slippageUsd:REF_TRADE_USD,
+      passLiq:liq>F.minLiq, passVol:vol>F.minVol, passSlip,
       verdict: passes?'approved':'rejected',
-      reason: !passes?('liq:'+(liq>F.minLiq)+' vol:'+(vol>F.minVol)):'ok'
+      reason: !passes?('liq:'+(liq>F.minLiq)+' vol:'+(vol>F.minVol)+' slip:'+passSlip):'ok'
     });
   }
   candidates.sort((a,b)=>b.liqUsd-a.liqUsd);
