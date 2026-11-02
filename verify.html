@@ -100,7 +100,7 @@ async function loadReport(){
     const tb = document.getElementById('rtbody');
     tb.innerHTML = j.signals.map(s=>
       "<tr><td>"+s.rank+"</td><td><b>"+s.pair+"</b></td><td>"+s.pool+"</td><td>$"+(s.liquidityUsd/1e6).toFixed(2)+"M</td>"+
-      "<td>$"+(s.volume24hUsd/1e6).toFixed(1)+"M</td><td>"+(s.priceChange24hPct>=0?"+":"")+s.priceChange24hPct+"%</td>"+
+      "<td>$"+(s.volume24hUsd/1e6).toFixed(1)+"M</td><td>"+(s.change24hPct>=0?"+":"")+s.change24hPct+"%</td>"+
       "<td>"+s.slippageEstPct+"%</td><td><span class='tag ok'>"+s.verdict+"</span></td></tr>").join("");
     rep.classList.remove('hidden');
   }catch(e){ document.getElementById('status').textContent = "Report payload failed to load: "+e.message; }
