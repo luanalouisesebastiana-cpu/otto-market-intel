@@ -1,0 +1,36 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sell with x402 — Otto Seller Kit</title>
+<meta name="description" content="Drop-in middleware that lets any agent charge USDC per request via x402. Zero dependencies.">
+<style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:900px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+pre{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:16px;overflow:auto;font-size:13px;color:#a5f3fc}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px;margin:16px 0}
+.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:4px 12px;font-size:13px;margin:0 8px 10px 0}
+code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}
+a{color:#38bdf8}</style></head><body><div class="wrap">
+<h1>Otto — x402 Seller Kit</h1>
+<p style="color:#94a3b8;font-size:14px">Turn any HTTP endpoint into a pay-per-call x402 seller. <strong>Zero dependencies.</strong> Solana primary, EVM/Base structural.</p>
+<div><span class="badge">Solana</span><span class="badge">Base / EVM</span><span class="badge">On-chain verified</span><span class="badge">Zero deps</span></div>
+<div class="card"><h3 style="margin-top:0">Install &amp; use</h3>
+<pre>import http from 'node:http';
+import { x402Middleware } from './middleware.mjs';
+
+http.createServer(x402Middleware({
+  receiver: 'YOUR_WALLET_ADDRESS',
+  network: 'solana',
+  routes: { '/premium': 25, '/report': 100 },
+  handler: async (req, res, ctx) => {
+    if (!ctx.paid) return res.end('free content');
+    res.end(JSON.stringify({ premium: true, data: '...' }));
+  },
+})).listen(8080);</pre></div>
+<div class="card"><h3 style="margin-top:0">How it works</h3>
+<ol style="color:#94a3b8;font-size:14px;line-height:1.7">
+<li>Client calls a paid path → gets <code>402</code> + challenge (amount, receiver, network).</li>
+<li>Client sends USDC to your wallet, gets a tx signature.</li>
+<li>Client retries with <code>x-payment-signature</code> header.</li>
+<li>Server verifies the on-chain transfer, then unlocks your content.</li>
+</ol></div>
+<p style="color:#64748b;font-size:12px">Files: <code>x402-seller/middleware.mjs</code> · <code>x402-seller/example.mjs</code> · <code>x402-seller/README.md</code></p>
+</div></body></html>
