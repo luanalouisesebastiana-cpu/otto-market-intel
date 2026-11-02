@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Verificador de Risco de Token (Solana)</title>
+<style>
+:root{--bg:#0b1020;--card:#121a2e;--txt:#e6edf7;--mut:#8b9bb4;--up:#34d399;--dn:#f87171;--warn:#fbbf24;--acc:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+.wrap{max-width:820px;margin:0 auto;padding:32px 20px}
+h1{font-size:1.6rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 20px}
+input{width:100%;padding:12px 14px;font-size:1rem;border-radius:8px;border:1px solid #1e2a44;background:#0a0f1c;color:var(--txt);font-family:ui-monospace,monospace}
+button{margin-top:12px;padding:12px 20px;font-size:1rem;font-weight:600;border:0;border-radius:8px;background:var(--acc);color:#04121f;cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+#out{margin-top:24px}
+.verdict{border-radius:10px;padding:16px 20px;margin-bottom:16px;border:1px solid}
+.v-safe{background:#052e1f;border-color:#14532d}.v-warn{background:#2e1f05;border-color:#713f12}.v-danger{background:#2e0505;border-color:#7f1d1d}
+.verdict h2{margin:0 0 4px;font-size:1.3rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid #1e2a44;border-radius:10px;padding:12px 16px}
+.kpi .lbl{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.kpi .val{font-size:1.25rem;font-weight:700}
+.bar{height:10px;background:#1e2a44;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar>span{display:block;height:100%;border-radius:99px}
+.cta{background:#0e1626;border:1px solid #134e4a;border-radius:10px;padding:16px 20px;margin-top:20px}
+.cta a{color:var(--acc)}code{background:#0a0f1c;border:1px solid #1e2a44;border-radius:5px;padding:1px 5px;font-size:.82em}
+footer{color:var(--mut);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Verificador de Risco de Token — Solana</h1>
+<p class="sub">Cole o endereço do mint. Análise gratuita do veredito básico; relatório completo via x402.</p>
+
+<input id="addr" placeholder="ex: So11111111111111111111111111111111111111112" spellcheck="false">
+<button id="go">Analisar risco</button>
+<div id="out"></div>
+
+<div class="cta">
+<strong>Relatório completo (x402, USDC):</strong>
+<ul>
+<li><code>GET /v1/report?mint=&lt;address&gt;</code> — relatório profundo · <b>$1.00</b></li>
+<li><code>GET /v1/opportunities</code> — oportunidades indexadas · <b>$0.50</b></li>
+</ul>
+<p>Manifest: <a href="/x402-manifest.json">/x402-manifest.json</a> · <a href="/dashboard.html">Painel de mercado</a> · <a href="/">Início</a></p>
+</div>
+<footer>Otto — Kovantu Digital. Dados de APIs públicas (DexScreener). Não é conselho de investimento.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n==null?'—':n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+const fmtN = n => n==null?'—':Number(n).toLocaleString('en-US');
+
+async function analyze(){
+  const mint = $('addr').value.trim();
+  const out = $('out');
+  if(!mint){ out.innerHTML='<p style="color:var(--warn)">Cole um endereço de mint.</p>'; return; }
+  $('go').disabled = true; out.innerHTML = '<p>analisando…</p>';
+  try{
+    const r = await fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(mint));
+    const d = await r.json();
+    const pairs = (d.pairs||[]).filter(p=>p.chainId==='solana').sort((a,b)=>((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0));
+    if(!pairs.length){ out.innerHTML='<p style="color:var(--warn)">Nenhum par Solana encontrado para este mint.</p>'; $('go').disabled=false; return; }
+    const p = pairs[0];
+    const liq = (p.liquidity&&p.liquidity.usd)||0;
+    const vol = (p.volume&&p.volume.h24)||0;
+    const chg = (p.priceChange&&p.priceChange.h24)||0;
+    const fdv = p.fdv||null;
+    const pairCreated = p.pairCreatedAt||null;
+    const ageDays = pairCreated? (Date.now()-pairCreated)/86400000 : null;
+
+    // risk scoring (heuristic, transparent)
+    let score = 50; // neutral start
+    if(liq>200000) score-=15; else if(liq>50000) score-=8; else if(liq>10000) score+=5; else score+=20;
+    if(vol>200000) score-=10; else if(vol>50000) score-=4; else score+=12;
+    if(ageDays!=null){ if(ageDays>90) score-=10; else if(ageDays>30) score-=4; else score+=15; }
+    if(chg<-50) score+=10; else if(chg>200) score+=8;
+    score = Math.max(0, Math.min(100, score));
+    const risk = 100-score; // higher = riskier
+
+    let cls, label, col;
+    if(risk<30){ cls='v-safe'; label='BAIXO RISCO'; col='var(--up)'; }
+    else if(risk<60){ cls='v-warn'; label='RISCO MODERADO'; col='var(--warn)'; }
+    else { cls='v-danger'; label='ALTO RISCO'; col='var(--dn)'; }
+
+    out.innerHTML = `
+      <div class="verdict ${cls}"><h2>${label}</h2><div>Score de risco: <b>${risk}/100</b> · ${p.baseToken.symbol||'?'} / ${p.quoteToken.symbol||'?'}</div></div>
+      <div class="grid">
+        <div class="kpi"><div class="lbl">Liquidez</div><div class="val">${fmt(liq)}</div></div>
+        <div class="kpi"><div class="lbl">Volume 24h</div><div class="val">${fmt(vol)}</div></div>
+        <div class="kpi"><div class="lbl">Variação 24h</div><div class="val" style="color:${chg>=0?'var(--up)':'var(--dn)'}">${chg==null?'—':(chg>=0?'+':'')+chg.toFixed(2)+'%'}</div></div>
+        <div class="kpi"><div class="lbl">Idade do par</div><div class="val">${ageDays==null?'—':ageDays.toFixed(0)+'d'}</div></div>
+        <div class="kpi"><div class="lbl">FDV</div><div class="val">${fmt(fdv)}</div></div>
+        <div class="kpi"><div class="lbl">DEX</div><div class="val">${p.dexId||'—'}</div></div>
+      </div>
+      <div class="kpi" style="margin-top:12px"><div class="lbl">Risk score</div><div class="bar"><span style="width:${risk}%;background:${col}"></span></div></div>
+      <p style="color:var(--mut);font-size:.85rem;margin-top:12px">Veredito básico gratuito. Para relatório profundo (holders, profundidade de liquidez, sinais de honeypot, histórico), use <code>/v1/report</code> via x402.</p>
+    `;
+  }catch(e){
+    out.innerHTML = '<p style="color:var(--dn)">Erro ao analisar. Tente novamente.</p>';
+  }
+  $('go').disabled = false;
+}
+$('go').onclick = analyze;
+$('addr').addEventListener('keydown', e=>{ if(e.key==='Enter') analyze(); });
+</script>
+</body>
+</html>
