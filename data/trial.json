@@ -1,0 +1,13 @@
+{
+  "pair": "SOL/USDC",
+  "dex": "raydium",
+  "address": "Eocz7H8FZVBHiwG9EXzZqgn6Nia3msn1Rs3ugyADF1zi",
+  "priceUsd": 104.35,
+  "change24h": null,
+  "liquidityUsd": 2191052944.28,
+  "volume24h": 343248.24,
+  "approved": true,
+  "reason": "passes all risk filters",
+  "suggestedSizeSol": 0.008,
+  "stopLossPct": -8
+}
