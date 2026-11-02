@@ -1,0 +1,91 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Command Center</title>
+<meta name="description" content="Otto's live trader command center: market health, Jev journal, open positions, paper track record, treasury, and edge proof in one cockpit.">
+<style>
+body{font-family:system-ui;background:#070b16;color:#e2e8f0;margin:0;padding:20px}
+.wrap{max-width:1200px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px}
+.sub{color:#94a3b8;font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:14px}
+.card h3{margin:0 0 10px;color:#94a3b8;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.big{font-size:34px;font-weight:900;line-height:1}
+.kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e293b;font-size:13px}
+.kv:last-child{border-bottom:0}.kv span:first-child{color:#64748b}
+.up{color:#4ade80}.down{color:#f87171}.hold{color:#fbbf24}.neut{color:#94a3b8}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 4px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#64748b;font-size:10px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700}
+.b-enter{background:#4ade8022;color:#4ade80}.b-observe{background:#94a3b822;color:#94a3b8}
+.b-stop{background:#f8717122;color:#f87171}.b-target{background:#38bdf822;color:#38bdf8}
+button{background:#38bdf8;color:#070b16;border:0;border-radius:8px;padding:8px 14px;font-weight:800;cursor:pointer;font-size:12px}
+.footer{color:#64748b;font-size:11px;margin-top:14px}
+</style></head><body><div class="wrap">
+<h1>Otto — Command Center</h1>
+<div class="sub">Autonomous Solana market-intelligence &amp; trading agent · Kovantu Digital · live data via CI (15 min)</div>
+<div class="grid" id="grid"></div>
+<div class="footer"><button onclick="loadAll()">refresh</button> · sources: data/health.json · journal.json · positions.json · paper-state.json · treasury.json · trackrecord.json · signal.json</div>
+<script>
+const fmt$=v=>v==null?'—':'$'+(+v).toLocaleString();
+const cls=v=>v==null?'neut':v>=0?'up':'down';
+async function j(f){ try{ return await (await fetch('data/'+f,{cache:'no-store'})).json(); }catch(e){ return null; } }
+function card(title,inner){ return `<div class="card"><h3>${title}</h3>${inner}</div>`; }
+function kv(k,v,c){ return `<div class="kv"><span>${k}</span><span class="${c||''}">${v}</span></div>`; }
+
+async function loadAll(){
+  const [h,jn,pos,paper,tr,tk,sig]=await Promise.all([
+    j('health.json'),j('journal.json'),j('positions.json'),j('paper-state.json'),j('treasury.json'),j('trackrecord.json'),j('signal.json')]);
+
+  // HEALTH
+  const hc = h?`<div class="big ${h.score<=40?'down':h.score<=60?'neut':'up'}">${h.score}</div><div class="neut" style="font-size:13px;margin:4px 0 10px">${h.band}</div>`:'';
+  if(h) hc += Object.entries(h.components||{}).map(([k,v])=>kv(k,v,cls(v-50))).join('');
+  const health = card('Market Health', hc||'<span class="neut">loading…</span>');
+
+  // JOURNAL
+  let journal='<table style="font-size:11px"><thead><tr><th>Cycle</th><th>Decision</th><th>Reason</th></tr></thead><tbody>';
+  const dec=(jn&&(jn.decisions||jn.entries))||[];
+  const recent=dec.slice(-6).reverse();
+  if(recent.length) journal+=recent.map(d=>`<tr><td class="num">${d.cycle||'—'}</td><td><span class="badge ${d.decision==='ENTER'?'b-enter':'b-observe'}">${d.decision}</span></td><td style="color:#64748b">${(d.reason||'').slice(0,60)}</td></tr>`).join('');
+  else journal+='<tr><td colspan="3" class="neut">no decisions yet</td></tr>';
+  journal+='</tbody></table>';
+  const journalCard = card('Jev Journal', journal);
+
+  // POSITIONS
+  let pcard = pos&&pos.positions&&pos.positions.length ? pos.positions.map(p=>kv(p.pair||p.mint?.slice(0,8), `${fmt$(p.entry)} → ${fmt$(p.livePrice)} (${p.pnlPct==null?'—':(p.pnlPct>0?'+':'')+p.pnlPct+'%'})`, p.action==='STOP_LOSS'?'down':p.action==='TARGET_HIT'?'up':'hold')).join('') : '<span class="neut">no open positions</span>';
+  if(pos&&pos.alerts&&pos.alerts.length) pcard = pos.alerts.map(a=>`<div class="badge ${a.action==='TARGET_HIT'?'b-target':'b-stop'}" style="margin-bottom:6px">${a.action} ${a.pair}</div>`).join('') + pcard;
+  const positions = card('Positions', pcard);
+
+  // PAPER
+  let pc = '<span class="neut">no data</span>';
+  if(paper&&paper.stats){ const s=paper.stats;
+    pc = kv('Equity', fmt$(s.equity), cls(s.returnPct)) + kv('Return', (s.returnPct||0)+'%', cls(s.returnPct))
+       + kv('Win rate', (s.winRate||0)+'%','') + kv('Closed', s.closed||0,'') + kv('Open', s.open||0,'');
+  }
+  const paperCard = card('Paper Track Record', pc);
+
+  // TREASURY
+  let tc='<span class="neut">no data</span>';
+  if(tr){ tc = kv('Accumulated profit', fmt$(tr.accumulatedUsd??tr.accumulated),'')
+            + kv('Creator split (50%)', fmt$(tr.creatorSplitUsd??tr.creatorSplit),'')
+            + kv('Retained (50%)', fmt$(tr.retainedUsd??tr.retained),'')
+            + kv('Trigger', tr.triggerUsd??'$1.8','') ; }
+  const treasury = card('Treasury (50/50 split)', tc);
+
+  // EDGE PROOF
+  let ec='<span class="neut">no data</span>';
+  if(tk){ ec = kv('Avg backtest return', (tk.avgBacktestReturnPct??tk.edge??'—')+'%','up')
+            + kv('Assets', tk.assetsCount??tk.assets??'—','')
+            + kv('Approved opps', tk.opportunities??tk.approved??'—','')
+            + kv('Strategy', tk.strategy??'+3% / −8%','') ; }
+  const edge = card('Edge Proof', ec);
+
+  // SIGNALS
+  let sc='<span class="neut">no data</span>';
+  if(sig){ const arr=Array.isArray(sig)?sig:(sig.signals||[]);
+    sc = arr.length?arr.slice(0,4).map(s=>kv(s.pair||s.symbol||s.mint?.slice(0,8), (s.entry?fmt$(s.entry):'')+' → '+(s.target?fmt$(s.target):''), '')).join(''):'<span class="neut">no signals</span>'; }
+  const signals = card('Live Signals', sc);
+
+  document.getElementById('grid').innerHTML = health+journalCard+positions+paperCard+treasury+edge+signals;
+}
+loadAll();
+</script></div></body></html>
