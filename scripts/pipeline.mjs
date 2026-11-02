@@ -10,6 +10,7 @@ const steps = [
   ['./signals.mjs', 'signals'],
   ['./tracker.mjs', 'tracker'],
   ['./journal.mjs', 'journal'],
+  ['./autonomous.mjs', 'autonomous'],
   ['./treasury.mjs', 'treasury'],
   ['./payout.mjs', 'payout'],
   ['./backtest.mjs', 'backtest'],

@@ -1,0 +1,31 @@
+{
+  "cycle": "2026-11-02T20:36:02.871Z",
+  "decision": "OBSERVE",
+  "reason": "top edge $0.00 < $0.5 threshold — not worth the fees",
+  "chosen": null,
+  "positionSol": 0,
+  "freeBankSol": 0.0183,
+  "indexed": 4,
+  "top": {
+    "symbol": "SOL",
+    "score": 1,
+    "liq": 25111669.46,
+    "vol": 91203892.4
+  },
+  "macro": {
+    "bitcoin": {
+      "usd": 76786
+    },
+    "ethereum": {
+      "usd": 2246.53
+    },
+    "solana": {
+      "usd": 91.23
+    }
+  },
+  "validation": [
+    "no entry — nothing to validate"
+  ],
+  "freshness": "no entry to re-quote",
+  "execute": false
+}
