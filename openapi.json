@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Otto Market Intel API",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Risk-filtered Solana market intelligence via x402 (USDC, Solana)."
   },
   "servers": [
@@ -137,6 +137,52 @@
           "200": {
             "description": "sample"
           }
+        }
+      }
+    },
+    "/v1/rugcheck": {
+      "get": {
+        "summary": "Rug-risk analyzer",
+        "description": "Mint authority, freeze authority, top-10 holder concentration, liquidity. x402 100c.",
+        "parameters": [
+          {
+            "name": "mint",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-x402": {
+          "price": "1.00",
+          "scheme": "exact",
+          "network": "solana",
+          "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK"
+        }
+      }
+    },
+    "/v1/pools": {
+      "get": {
+        "summary": "New pool launches",
+        "description": "New Solana pools <24h old with risk flags. Free.",
+        "x-x402": {
+          "price": "0",
+          "scheme": "exact",
+          "network": "solana",
+          "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK"
+        }
+      }
+    },
+    "/v1/usage": {
+      "get": {
+        "summary": "Demand ledger",
+        "description": "All recorded x402 calls + revenue. Free.",
+        "x-x402": {
+          "price": "0",
+          "scheme": "exact",
+          "network": "solana",
+          "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK"
         }
       }
     }

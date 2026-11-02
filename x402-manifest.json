@@ -1,58 +1,35 @@
 {
   "name": "Otto Market Intel",
-  "version": "1.0.0",
-  "description": "Risk-filtered Solana market intelligence + on-chain-verified reports. Pay-per-call via x402 (USDC on Solana).",
-  "scheme": "exact",
-  "network": "solana",
-  "host": "https://otto-market-intel.onrender.com",
-  "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
-  "assets": [
-    {
-      "name": "Unified Intel Feed",
-      "path": "/v1/intel",
-      "price": 100,
-      "unit": "USDC",
-      "description": "macro + opportunities + arb + safety"
-    },
-    {
-      "name": "Deep Token Report",
-      "path": "/v1/report",
-      "price": 100,
-      "unit": "USDC"
-    },
-    {
-      "name": "Opportunities",
-      "path": "/v1/opportunities",
-      "price": 50,
-      "unit": "USDC"
-    },
-    {
-      "name": "Arb Spreads",
-      "path": "/v1/arb",
-      "price": 50,
-      "unit": "USDC"
-    },
-    {
-      "name": "Macro",
-      "path": "/v1/macro",
-      "price": 25,
-      "unit": "USDC"
-    },
-    {
-      "name": "Entry/Target/Stop Signals",
-      "path": "/v1/signals",
-      "price": 50,
-      "unit": "USDC"
-    }
+  "version": "2.0.0",
+  "description": "Real-time Solana market intelligence: opportunities, arbitrage, new pools, rug-risk analysis, signals, backtests. Pay-per-call in USDC via x402.",
+  "provider": {
+    "name": "Otto (Kovantu Digital)",
+    "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+    "network": "solana"
+  },
+  "services": [
+    { "path": "/v1/opportunities/free", "price": "0", "tier": "free", "description": "Top approved opportunities" },
+    { "path": "/v1/opportunities", "price": "0.50", "tier": "paid", "description": "Full ranked opportunity list" },
+    { "path": "/v1/macro", "price": "0.25", "tier": "paid", "description": "BTC/ETH/SOL macro snapshot" },
+    { "path": "/v1/report?mint=", "price": "1.00", "tier": "paid", "description": "Deep token report" },
+    { "path": "/v1/safety?mint=", "price": "1.00", "tier": "paid", "description": "Token safety verdict (honeypot heuristic)" },
+    { "path": "/v1/rugcheck?mint=", "price": "1.00", "tier": "paid", "description": "Rug-risk: mint authority, holder concentration, liquidity" },
+    { "path": "/v1/arb", "price": "0.50", "tier": "paid", "description": "Cross-DEX arbitrage spreads" },
+    { "path": "/v1/intel", "price": "1.00", "tier": "paid", "description": "Unified intelligence feed" },
+    { "path": "/v1/signals", "price": "0.50", "tier": "paid", "description": "Entry/target/stop signals" },
+    { "path": "/v1/pools", "price": "0", "tier": "free", "description": "New pool launches (<24h)" },
+    { "path": "/v1/usage", "price": "0", "tier": "free", "description": "Demand ledger" }
   ],
-  "free": [
-    {
-      "name": "Summary",
-      "path": "/v1/summary"
-    },
-    {
-      "name": "Free Opportunities",
-      "path": "/v1/opportunities/free"
-    }
-  ]
+  "payment": {
+    "scheme": "exact",
+    "network": "solana",
+    "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+    "token": "USDC",
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+  },
+  "discovery": {
+    "agentCard": "./agent-card.json",
+    "openapi": "./openapi.json",
+    "dashboard": "./live.html"
+  }
 }
