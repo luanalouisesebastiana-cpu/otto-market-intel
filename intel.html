@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Feed Unificado de Inteligencia (Solana)</title>
+<meta name="description" content="Macro + oportunidades + spreads de arbitragem + flags de seguranca. Um endpoint, o quadro completo do mercado.">
+<style>:root{--bg:#070b16;--card:#0f1830;--txt:#e6edf7;--mut:#8b9bb4;--acc:#38bdf8;--hi:#f59e0b;--ok:#34d399}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px}h1{font-size:1.5rem;margin:0 0 4px}h2{font-size:1.05rem;margin:20px 0 8px}
+.sub{color:var(--mut);margin:0 0 18px}.card{background:var(--card);border:1px solid #1b2745;border-radius:12px;padding:16px 18px;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:8px;border-bottom:1px solid #1b2745}th{color:var(--mut);font-weight:600}
+.spread{font-weight:700;color:var(--hi)}.btn{display:inline-block;padding:11px 20px;background:var(--acc);color:#04121f;border-radius:8px;font-weight:700;text-decoration:none;margin:6px 8px 6px 0}
+a{color:var(--acc)}.muted{color:var(--mut);font-size:.85rem}.paid{background:#7f1d1d;color:#fecaca;padding:10px 18px;text-align:center;font-weight:600;font-size:.85rem;border-radius:8px}
+.kpi{display:inline-block;background:#0e1626;border:1px solid #1b2745;border-radius:8px;padding:8px 14px;margin:4px 8px 4px 0;font-size:.85rem}
+footer{margin-top:24px;color:var(--mut);font-size:.8rem}</style></head>
+<body><div class="wrap">
+<h1>Feed Unificado de Inteligencia</h1>
+<p class="sub">Uma chamada = macro (BTC/ETH/SOL) + oportunidades filtradas + spreads de arbitragem + flags de seguranca. O quadro completo do mercado Solana.</p>
+<div class="card"><div class="paid">⚠ Feed completo disponivel via x402 — 100 cents USDC por chamada.</div>
+<p style="margin:12px 0 4px"><a class="btn" href="#" onclick="alert('Use um cliente x402 apontando para /v1/intel. Manifest: /x402-manifest.json');return false">Pagar 100c USDC</a>
+<a class="btn" href="/x402-manifest.json" style="background:#1b2745;color:#e6edf7">Manifest x402</a></p>
+<p class="muted">Endpoint: <code>/v1/intel</code>. Retorna macro CoinGecko + top oportunidades + spreads + safety flags.</p></div>
+<div class="card"><h2 style="margin-top:0">Macro (amostra gratuita)</h2>
+<span class="kpi" id="btc">BTC —</span><span class="kpi" id="eth">ETH —</span><span class="kpi" id="sol">SOL —</span>
+<p class="muted" id="ts"></p></div>
+<div class="card"><h2 style="margin-top:0">Spreads de arbitragem (amostra)</h2>
+<table><thead><tr><th>Token</th><th>Spread</th><th>Comprar</th><th>Vender</th></tr></thead><tbody id="arb"><tr><td colspan="4" class="muted">carregando...</td></tr></tbody></table></div>
+<footer>Otto · Kovantu Digital · Solana. Dados: CoinGecko + DexScreener. Pagamento: x402 (USDC).</footer></div>
+<script>
+async function load(){try{
+const r=await fetch('/v1/intel');
+if(r.status===402){document.getElementById('arb').innerHTML='<tr><td colspan="4" class="muted">🔒 Pago — desbloqueie o feed completo.</td></tr>';return;}
+const j=await r.json();
+if(j.macro){const m=j.macro;document.getElementById('btc').textContent='BTC $'+m.btc.usd;document.getElementById('eth').textContent='ETH $'+m.eth.usd;document.getElementById('sol').textContent='SOL $'+m.sol.usd;}
+const ops=j.arbSpreads||[];
+document.getElementById('arb').innerHTML=ops.slice(0,6).map(o=>`<tr><td>${o.symbol}</td><td class="spread">+${o.spreadPct}%</td><td>${o.buyOn}</td><td>${o.sellOn}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">sem spreads</td></tr>';
+document.getElementById('ts').textContent='Atualizado: '+(j.generatedAt||'');
+}catch(e){document.getElementById('arb').innerHTML='<tr><td colspan="4" class="muted">servico indisponivel</td></tr>';}}
+load();
+</script></body></html>
