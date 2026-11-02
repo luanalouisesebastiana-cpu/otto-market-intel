@@ -1,0 +1,37 @@
+{
+  "bank": 100,
+  "cash": 87.5,
+  "positions": [
+    {
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "pair": "SOL",
+      "dex": "raydium",
+      "entry": 104.35,
+      "sizeUSD": 12.5,
+      "target": 107.4805,
+      "stop": 96.002,
+      "openedAt": "2026-11-02T21:04:11.425Z",
+      "status": "OPEN",
+      "sourceScore": null
+    }
+  ],
+  "closed": [],
+  "cycle": 1,
+  "equity": [
+    {
+      "t": "2026-11-02T21:04:11.413Z",
+      "v": 100
+    }
+  ],
+  "startedAt": "2026-11-02T21:04:11.389Z",
+  "stats": {
+    "cycle": 1,
+    "open": 1,
+    "closed": 0,
+    "winRate": 0,
+    "totalPnlUSD": 0,
+    "equity": 100,
+    "returnPct": 0,
+    "startedAt": "2026-11-02T21:04:11.389Z"
+  }
+}

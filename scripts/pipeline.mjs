@@ -9,6 +9,7 @@ const steps = [
   ['./perp.mjs', 'perp'],
   ['./health.mjs', 'health'],
   ['./positions.mjs', 'positions'],
+  ['./paper.mjs', 'paper'],
   ['./arb.mjs', 'arb'],
   ['./pools.mjs', 'pools'],
   ['./riskgate.mjs', 'riskgate'],

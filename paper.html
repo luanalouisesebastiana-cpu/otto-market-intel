@@ -1,0 +1,36 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Paper Trading</title>
+<meta name="description" content="Live paper-trading track record: the Jev loop running on real market data under the inviolable risk policy.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+.stat{background:#111827;border:1px solid #1e293b;border-radius:10px;padding:14px;text-align:center}
+.stat .v{font-size:26px;font-weight:900}.stat .l{font-size:11px;color:#94a3b8;text-transform:uppercase;margin-top:4px}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.up{color:#4ade80}.down{color:#f87171}.hold{color:#fbbf24}
+.empty{color:#64748b;font-size:13px;padding:16px;text-align:center}
+button{background:#38bdf8;color:#0b1020;border:0;border-radius:8px;padding:9px 16px;font-weight:800;cursor:pointer}
+.note{color:#64748b;font-size:12px}
+</style></head><body><div class="wrap">
+<h1>Otto — Paper Trading</h1>
+<p style="color:#94a3b8;font-size:14px">The Jev decision loop running on <strong>live market data</strong> under the inviolable risk policy. Virtual bank, real prices — a verifiable simulated track record.</p>
+<div class="stats" id="stats"></div>
+<div class="card"><h3 style="margin-top:0;color:#94a3b8">Open Positions</h3><table><thead><tr><th>Pair</th><th class="num">Entry</th><th class="num">Live</th><th class="num">P&amp;L</th><th>Status</th></tr></thead><tbody id="open"><tr><td colspan="5" class="empty">loading…</td></tr></tbody></table></div>
+<div class="card"><h3 style="margin-top:0;color:#94a3b8">Closed Trades</h3><table><thead><tr><th>Pair</th><th class="num">Size</th><th class="num">Exit %</th><th class="num">P&amp;L</th><th>Result</th></tr></thead><tbody id="closed"><tr><td colspan="5" class="empty">none yet</td></tr></tbody></table></div>
+<p class="note">Source: data/paper-state.json · risk: stop −8% · target +3% · max pos 12.5% · min liq $50k · min vol $100k · start $100 · <button onclick="load()">refresh</button></p>
+<script>
+async function load(){
+  const r=await fetch('data/paper-state.json',{cache:'no-store'});const d=await r.json();const s=d.stats||{};
+  document.getElementById('stats').innerHTML=[
+    ['Equity','$'+s.equity,'#'+((s.returnPct||0)>=0?'up':'down')],['Return',(s.returnPct||0)+'%',((s.returnPct||0)>=0)?'up':'down'],
+    ['Win rate',(s.winRate||0)+'%','hold'],['Closed',s.closed||0,''],['Open',s.open||0,'']
+  ].map(([l,v,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="l">${l}</div></div>`).join('');
+  document.getElementById('open').innerHTML=(d.positions||[]).length?d.positions.map(p=>`<tr><td><strong>${p.pair}</strong></td><td class="num">$${p.entry}</td><td class="num">$${p.livePrice??'—'}</td><td class="num ${p.pnlPct>=0?'up':'down'}">${p.pnlPct==null?'—':(p.pnlPct>0?'+':'')+p.pnlPct+'%'}</td><td class="hold">${p.status}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">No open positions.</td></tr>';
+  document.getElementById('closed').innerHTML=(d.closed||[]).length?d.closed.map(p=>`<tr><td><strong>${p.pair}</strong></td><td class="num">$${p.sizeUSD}</td><td class="num ${p.exitPct>=0?'up':'down'}">${p.exitPct>0?'+':''}${p.exitPct}%</td><td class="num ${p.sizeUSD*(p.exitPct/100)>=0?'up':'down'}">$${(p.sizeUSD*(p.exitPct/100)).toFixed(2)}</td><td class="${p.exitPct>=0?'up':'down'}">${p.status}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">No closed trades yet.</td></tr>';
+}
+load();
+</script></div></body></html>
