@@ -11,7 +11,7 @@ t('position capped by pct', positionSize({freeBankUsd:1000,solPrice:1000}) <= 12
 t('blocks entry below edge', !shouldEnter({edgePct:1,openCount:0}).enter);
 t('allows entry at edge', shouldEnter({edgePct:3,openCount:0}).enter);
 t('blocks entry at capacity', !shouldEnter({edgePct:5,openCount:2}).enter);
-t('valid plan passes', validatePlan({entry:100,target:103,stop:92,sizeUSD:5,freeBankUsd:100,solPrice:100}).valid);
+t('valid plan passes', validatePlan({entry:100,target:103,stop:92,sizeUSD:1,freeBankUsd:100,solPrice:100}).valid);
 t('rejects inverted target/stop', !validatePlan({entry:100,target:97,stop:92,sizeUSD:5,freeBankUsd:100,solPrice:100}).valid);
 t('rejects oversize vs fuse', !validatePlan({entry:100,target:103,stop:92,sizeUSD:100,freeBankUsd:100000,solPrice:100}).valid);
 t('netAfterFees < size', netAfterFees(100,0.5) < 100);

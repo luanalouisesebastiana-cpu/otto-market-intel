@@ -9,7 +9,8 @@ import { dirname, join } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, '..', 'data');
 fs.mkdirSync(DATA, { recursive: true });
-const POLICY = { stopPct:-8, targetPct:3, minLiqUsd:50000, minVol24Usd:100000, maxSlipPct:1.0, maxPosPct:0.125, maxLotSOL:0.01 };
+import { POLICY as P } from './riskgate.mjs';
+const POLICY = { stopPct:P.stopPct, targetPct:P.targetPct, minLiqUsd:P.minLiqUsd, minVol24Usd:P.minVol24Usd, maxSlipPct:P.maxSlipPct, maxPosPct:P.maxPosPct, maxLotSOL:P.maxLotSOL };
 const START_BANK = 100; // virtual USD
 const STATE_FILE = join(DATA,'paper-state.json');
 

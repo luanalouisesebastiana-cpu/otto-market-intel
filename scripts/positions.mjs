@@ -9,7 +9,8 @@ import { dirname, join } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, '..', 'data');
 fs.mkdirSync(DATA, { recursive: true });
-const RISK = { stopPct: 8, targetPct: 3 };
+import { POLICY as P } from './riskgate.mjs';
+const RISK = { stopPct: Math.abs(P.stopPct), targetPct: P.targetPct };
 
 async function priceOf(mint) {
   try {
