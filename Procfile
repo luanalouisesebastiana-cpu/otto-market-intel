@@ -1,1 +1,1 @@
-node public-service.mjs
+web: node public-service.mjs
