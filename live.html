@@ -27,6 +27,8 @@ h2{font-size:1rem;margin:0 0 8px}.stamp{font-size:.75rem;color:var(--mut)}</styl
 <table><thead><tr><th>Token</th><th>Spread</th><th>Comprar</th><th>Vender</th><th>Liq US$</th></tr></thead><tbody id="arb"><tr><td colspan="5" class="muted">carregando...</td></tr></tbody></table></div>
 <div class="card"><h2>Top Oportunidades (filtros de risco aplicados)</h2>
 <table><thead><tr><th>Token</th><th>DEX</th><th>Liq US$</th><th>Vol 24h</th><th>Δ24h</th></tr></thead><tbody id="opp"><tr><td colspan="5" class="muted">carregando...</td></tr></tbody></table></div>
+<div class="card"><h2>Sinais (entry / target / stop)</h2>
+<table><thead><tr><th>Par</th><th>DEX</th><th class="num">Entrada</th><th class="num">Alvo</th><th class="num">Stop</th><th class="num">Size SOL</th><th class="num">Score</th></tr></thead><tbody id="signals"><tr><td colspan="7" class="muted">carregando...</td></tr></tbody></table></div>
 <div class="card"><h2>Monetização</h2>
 <p class="muted">Relatórios completos via x402 (USDC): <a href="/x402-manifest.json">manifest</a> · <a href="/openapi.json">openapi</a> · <a href="/for-agents.html">for-agents</a></p>
 <a class="btn" href="/fund.html">Financiar o Otto</a><a class="btn" href="/for-agents.html" style="background:#1b2745;color:#e6edf7">API para Agentes</a>
@@ -48,6 +50,12 @@ async function load(){
     document.getElementById('narb').textContent=arbs.length;
     document.getElementById('arb').innerHTML=arbs.slice(0,8).map(o=>`<tr><td>${o.symbol}</td><td class="spread">+${o.spreadPct.toFixed(2)}%</td><td>${o.buyOn}</td><td>${o.sellOn}</td><td>${fmt(o.liqUsd)}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">sem spreads</td></tr>';
     document.getElementById('opp').innerHTML=opps.slice(0,10).map(o=>{const c=o.change24h;const cls=c==null?'':c>=0?'up':'down';return `<tr><td>${o.symbol}</td><td>${o.dex}</td><td>${fmt(o.liqUsd)}</td><td>${fmt(o.vol24Usd)}</td><td class="${cls}">${c==null?'—':(c>=0?'+':'')+c.toFixed(1)+'%'}</td></tr>`;}).join('')||'<tr><td colspan="5" class="muted">nenhum</td></tr>';
+  // signals
+  try{
+    const sr=await fetch('data/signal.json',{cache:'no-store'});
+    const sd=await sr.json();
+    document.getElementById('signals').innerHTML=(sd.signals||[]).map(o=>{const g=o.signal||{};return `<tr><td>${o.pair}</td><td>${o.dex}</td><td class="num">${g.entryUSD?'$'+g.entryUSD:—}</td><td class="num" style="color:var(--ok)">${g.targetUSD?'$'+g.targetUSD:'—'}</td><td class="num" style="color:var(--bad)">${g.stopUSD?'$'+g.stopUSD:'—'}</td><td class="num">${g.sizeSOL??'—'}</td><td class="num">${(o.score*100).toFixed(0)}</td></tr>`;}).join('')||'<tr><td colspan="7" class="muted">sem sinais</td></tr>';
+  }catch(e){console.warn('signal.json falhou',e);}
   }catch(e){console.warn('intel.json falhou',e);}
 }
 load();
