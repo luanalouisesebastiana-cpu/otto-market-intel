@@ -1,16 +1,144 @@
 {
   "openapi": "3.0.0",
-  "info": { "title": "Otto Market Intel API", "version": "1.0.0", "description": "Risk-filtered Solana market intelligence via x402 (USDC, Solana)." },
-  "servers": [ { "url": "https://otto-market-intel.onrender.com" } ],
-  "x-x402": { "scheme": "exact", "network": "solana", "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK" },
+  "info": {
+    "title": "Otto Market Intel API",
+    "version": "1.0.0",
+    "description": "Risk-filtered Solana market intelligence via x402 (USDC, Solana)."
+  },
+  "servers": [
+    {
+      "url": "https://otto-market-intel.onrender.com"
+    }
+  ],
+  "x-x402": {
+    "scheme": "exact",
+    "network": "solana",
+    "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK"
+  },
   "paths": {
-    "/health": { "get": { "summary": "Health", "responses": { "200": { "description": "ok" } } } },
-    "/v1/summary": { "get": { "summary": "Free sample", "responses": { "200": { "description": "summary" } } } },
-    "/v1/opportunities/free": { "get": { "summary": "Free opportunities", "responses": { "200": { "description": "list" } } } },
-    "/v1/opportunities": { "post": { "summary": "Paid 50c", "x-x402-price": 50, "responses": { "200": { "description": "paid" }, "402": { "description": "payment required" } } } },
-    "/v1/arb": { "get": { "summary": "Paid 50c", "x-x402-price": 50, "responses": { "200": { "description": "paid" }, "402": { "description": "payment required" } } } },
-    "/v1/macro": { "get": { "summary": "Paid 25c", "x-x402-price": 25, "responses": { "200": { "description": "paid" }, "402": { "description": "payment required" } } } },
-    "/v1/intel": { "get": { "summary": "Paid 100c", "x-x402-price": 100, "responses": { "200": { "description": "paid" }, "402": { "description": "payment required" } } } },
-    "/v1/report": { "get": { "summary": "Paid 100c", "x-x402-price": 100, "responses": { "200": { "description": "paid" }, "402": { "description": "payment required" } } } }
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/v1/summary": {
+      "get": {
+        "summary": "Free sample",
+        "responses": {
+          "200": {
+            "description": "summary"
+          }
+        }
+      }
+    },
+    "/v1/opportunities/free": {
+      "get": {
+        "summary": "Free opportunities",
+        "responses": {
+          "200": {
+            "description": "list"
+          }
+        }
+      }
+    },
+    "/v1/opportunities": {
+      "post": {
+        "summary": "Paid 50c",
+        "x-x402-price": 50,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/arb": {
+      "get": {
+        "summary": "Paid 50c",
+        "x-x402-price": 50,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/macro": {
+      "get": {
+        "summary": "Paid 25c",
+        "x-x402-price": 25,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/intel": {
+      "get": {
+        "summary": "Paid 100c",
+        "x-x402-price": 100,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/report": {
+      "get": {
+        "summary": "Paid 100c",
+        "x-x402-price": 100,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/signals": {
+      "get": {
+        "summary": "Paid 50c \u2014 entry/target/stop signals",
+        "x-x402-price": 50,
+        "responses": {
+          "200": {
+            "description": "paid"
+          },
+          "402": {
+            "description": "payment required"
+          }
+        }
+      }
+    },
+    "/v1/signals/sample": {
+      "get": {
+        "summary": "Free signal sample",
+        "responses": {
+          "200": {
+            "description": "sample"
+          }
+        }
+      }
+    }
   }
 }
