@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, '..', 'data');
 const JOURNAL = join(DATA, 'decisions.jsonl');
+import { evaluate as gateEval } from './riskgate.mjs';
 
 const intel = JSON.parse(fs.readFileSync(join(DATA, 'intel.json'), 'utf8'));
 const signal = JSON.parse(fs.readFileSync(join(DATA, 'signal.json'), 'utf8'));
@@ -38,6 +39,15 @@ for (const d of past) {
 // --- 2. make ONE decision this cycle ---
 let decision, reason, chosen = null;
 const top = sigs[0];
+// --- RISK GATE: an ENTER is only legal if it passes the inviolable policy ---
+if (top && top.signal) {
+  const g = gateEval({
+    symbol: (top.pair||'').split('/')[0], sizeSOL: top.signal.sizeSOL,
+    entryUSD: top.signal.entryUSD, targetUSD: top.signal.targetUSD, stopUSD: top.signal.stopUSD,
+    liquidityUSD: top.filters?.liqUsd, volume24USD: top.filters?.vol24Usd, slipPct: top.filters?.slipPct
+  }, { walletSOL: 0.029252, freeBankUsd: 2.75 });
+  if (!g.approved) { console.log(`JOURNAL GATE REJECT ${top.pair}: ${g.violations.join('; ')}`); top._gateBlocked = g.violations; }
+}
 if (!top) {
   decision = 'OBSERVE'; reason = 'no approved signals this cycle';
 } else {

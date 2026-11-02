@@ -1,22 +1,14 @@
 {
-  "generatedAt": "2026-11-02T14:04:05.132Z",
+  "generatedAt": "2026-11-02T14:45:24.033Z",
   "lastDecision": {
-    "ts": "2026-11-02T14:04:05.132Z",
-    "cycle": 1,
-    "decision": "ENTER",
-    "reason": "score 1 ≥ 0.8, liq $2191053k, no open position — edge confirmed",
-    "pair": "SOL/USDC",
-    "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
-    "dex": "raydium",
-    "entryUSD": 104.35,
-    "targetUSD": 107.4805,
-    "stopUSD": 96.002,
-    "sizeSOL": 0.01,
-    "score": 1,
+    "ts": "2026-11-02T14:45:24.033Z",
+    "cycle": 2,
+    "decision": "OBSERVE",
+    "reason": "already in 1 open position(s) — no new entry",
     "bank": {
-      "freeBankUsd": 100,
+      "freeBankUsd": 1.82,
       "reserveSOL": 0.01,
-      "maxPositionUsd": 12.5
+      "maxPositionUsd": 0.2275
     },
     "policy": {
       "maxPosPct": 0.125,
@@ -25,17 +17,51 @@
       "minLiqUsd": 50000,
       "minVol24Usd": 100000,
       "maxSlipPct": 1,
-      "freeBankUsd": 100,
-      "solPrice": 93
+      "freeBankUsd": 1.82,
+      "solPrice": 94.43
     }
   },
   "stats": {
-    "total": 1,
+    "total": 2,
     "enters": 1,
-    "observes": 0,
+    "observes": 1,
     "targets": 0,
     "stops": 0,
-    "open": 0
+    "open": 1
   },
-  "history": []
+  "history": [
+    {
+      "ts": "2026-11-02T14:04:05.132Z",
+      "cycle": 1,
+      "decision": "ENTER",
+      "reason": "score 1 ≥ 0.8, liq $2191053k, no open position — edge confirmed",
+      "pair": "SOL/USDC",
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "dex": "raydium",
+      "entryUSD": 104.35,
+      "targetUSD": 107.4805,
+      "stopUSD": 96.002,
+      "sizeSOL": 0.01,
+      "score": 1,
+      "bank": {
+        "freeBankUsd": 100,
+        "reserveSOL": 0.01,
+        "maxPositionUsd": 12.5
+      },
+      "policy": {
+        "maxPosPct": 0.125,
+        "maxLotSOL": 0.01,
+        "stopPct": -0.08,
+        "minLiqUsd": 50000,
+        "minVol24Usd": 100000,
+        "maxSlipPct": 1,
+        "freeBankUsd": 100,
+        "solPrice": 93
+      },
+      "outcome": "OPEN",
+      "pnlPct": 0,
+      "currentUSD": 104.35,
+      "settledAt": "2026-11-02T14:45:24.033Z"
+    }
+  ]
 }
