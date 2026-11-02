@@ -1,0 +1,216 @@
+{
+  "generatedAt": "2026-11-02T13:52:40.292Z",
+  "policy": {
+    "maxPosPct": 0.125,
+    "maxLotSOL": 0.01,
+    "stopPct": -0.08,
+    "minLiqUsd": 50000,
+    "minVol24Usd": 100000,
+    "maxSlipPct": 1,
+    "freeBankUsd": 100,
+    "solPrice": 93
+  },
+  "bank": {
+    "freeBankUsd": 100,
+    "reserveSOL": 0.01,
+    "maxPositionUsd": 12.5
+  },
+  "stats": {
+    "scanned": 20,
+    "approved": 10
+  },
+  "signals": [
+    {
+      "pair": "SOL/USDC",
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 104.35,
+        "targetUSD": 107.4805,
+        "stopUSD": 96.002,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 2191052962.59,
+        "vol24Usd": 337308.85,
+        "slipPct": 0.001
+      }
+    },
+    {
+      "pair": "RAY/USDC",
+      "mint": "FJkTpy5rTZYCAUn3FXDzz9hgJYHYwBsxGm5ee75rAZNC",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 2.07,
+        "targetUSD": 2.1321,
+        "stopUSD": 1.9044,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 2069709654.57,
+        "vol24Usd": 131637.82,
+        "slipPct": 0.001
+      }
+    },
+    {
+      "pair": "SOL/USDC",
+      "mint": "2ZbaN9Dkj5HPyYUeij82PcZgHJYZ8747Ca69qdcvCh5C",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 77.49,
+        "targetUSD": 79.8147,
+        "stopUSD": 71.2908,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 1627150126.17,
+        "vol24Usd": 143567.16,
+        "slipPct": 0.002
+      }
+    },
+    {
+      "pair": "SOL/USDC",
+      "mint": "5vhw96LZoKA4K8kbBkTJXBYvJSN1RWJzJgJbYEorBChv",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 76.064,
+        "targetUSD": 78.34592,
+        "stopUSD": 69.97888,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 1597167486.43,
+        "vol24Usd": 143554.57,
+        "slipPct": 0.002
+      }
+    },
+    {
+      "pair": "ERC20-USDT/USDC",
+      "mint": "F3sCvPfmh1oX1mxPCm2gS7ChTJ5F8mWJu1khwYXWem1w",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 1.0001,
+        "targetUSD": 1.030103,
+        "stopUSD": 0.920092,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 209901013.45,
+        "vol24Usd": 117110.65,
+        "slipPct": 0.012
+      }
+    }
+  ],
+  "top": [
+    {
+      "pair": "SOL/USDC",
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 104.35,
+        "targetUSD": 107.4805,
+        "stopUSD": 96.002,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 2191052962.59,
+        "vol24Usd": 337308.85,
+        "slipPct": 0.001
+      }
+    },
+    {
+      "pair": "RAY/USDC",
+      "mint": "FJkTpy5rTZYCAUn3FXDzz9hgJYHYwBsxGm5ee75rAZNC",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 2.07,
+        "targetUSD": 2.1321,
+        "stopUSD": 1.9044,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 2069709654.57,
+        "vol24Usd": 131637.82,
+        "slipPct": 0.001
+      }
+    },
+    {
+      "pair": "SOL/USDC",
+      "mint": "2ZbaN9Dkj5HPyYUeij82PcZgHJYZ8747Ca69qdcvCh5C",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 77.49,
+        "targetUSD": 79.8147,
+        "stopUSD": 71.2908,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 1627150126.17,
+        "vol24Usd": 143567.16,
+        "slipPct": 0.002
+      }
+    },
+    {
+      "pair": "SOL/USDC",
+      "mint": "5vhw96LZoKA4K8kbBkTJXBYvJSN1RWJzJgJbYEorBChv",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 76.064,
+        "targetUSD": 78.34592,
+        "stopUSD": 69.97888,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 1597167486.43,
+        "vol24Usd": 143554.57,
+        "slipPct": 0.002
+      }
+    },
+    {
+      "pair": "ERC20-USDT/USDC",
+      "mint": "F3sCvPfmh1oX1mxPCm2gS7ChTJ5F8mWJu1khwYXWem1w",
+      "dex": "raydium",
+      "verdict": "APPROVED",
+      "score": 1,
+      "signal": {
+        "entryUSD": 1.0001,
+        "targetUSD": 1.030103,
+        "stopUSD": 0.920092,
+        "sizeSOL": 0.01,
+        "stopPct": -0.08
+      },
+      "filters": {
+        "liqUsd": 209901013.45,
+        "vol24Usd": 117110.65,
+        "slipPct": 0.012
+      }
+    }
+  ]
+}
