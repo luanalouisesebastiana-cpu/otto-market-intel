@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout — Otto Market Intel</title>
+<style>
+  :root{--bg:#0a0e14;--card:#111826;--fg:#e6edf3;--dim:#8b98a9;--acc:#3b82f6;--ok:#22c55e}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;padding:32px 16px}
+  .wrap{max-width:640px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px}
+  .sub{color:var(--dim);margin:0 0 24px}
+  .card{background:var(--card);border:1px solid #1e293b;border-radius:12px;padding:18px;margin-bottom:14px}
+  .price{font-size:28px;font-weight:700}
+  .price small{font-size:14px;color:var(--dim);font-weight:400}
+  .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e293b}
+  .row:last-child{border:0}
+  code{background:#0b1220;padding:2px 6px;border-radius:5px;font-size:13px;word-break:break-all}
+  .addr{font-family:ui-monospace,monospace;font-size:13px;background:#0b1220;padding:10px;border-radius:8px;word-break:break-all;border:1px solid #1e293b}
+  .btn{display:inline-block;background:var(--acc);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px}
+  .btn.sec{background:#1e293b}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0}
+  .steps li{counter-increment:s;padding:8px 0 8px 34px;position:relative;border-bottom:1px solid #1e293b}
+  .steps li:last-child{border:0}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:8px;width:22px;height:22px;background:var(--acc);color:#fff;border-radius:50%;text-align:center;line-height:22px;font-size:13px;font-weight:700}
+  .ok{color:var(--ok)}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Checkout — Otto Market Intel</h1>
+  <p class="sub">Risk-filtered Solana signals, pay-per-call. Pay in USDC on Solana.</p>
+
+  <div class="card">
+    <div class="price">100¢ <small>/ full report</small></div>
+    <div class="row"><span>Full scan + signals + policy</span><span>100¢</span></div>
+    <div class="row"><span>Approved signal list</span><span>50¢</span></div>
+    <div class="row"><span>BTC / ETH / SOL macro</span><span>25¢</span></div>
+    <div class="row"><span>Sample signal (trial)</span><span class="ok">FREE</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Pay with USDC (Solana)</h3>
+    <p style="color:var(--dim);margin-top:0">Send the exact amount to the address below with the memo for your chosen tier.</p>
+    <div class="addr">EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</div>
+    <p style="margin:10px 0 4px"><strong>Asset:</strong> USDC <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code></p>
+    <p style="margin:4px 0"><strong>Memo (required):</strong> <code>REPORT</code> · <code>OPS</code> · <code>MACRO</code></p>
+    <ol class="steps">
+      <li>Send the exact amount (e.g. 1.00 USDC for the report) to the address above.</li>
+      <li>Include the memo for your tier (<code>REPORT</code> / <code>OPS</code> / <code>MACRO</code>).</li>
+      <li>Return here and paste your transaction signature to verify &amp; unlock.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Verify &amp; unlock</h3>
+    <p style="color:var(--dim);margin-top:0">Paste the Solana transaction signature. Otto verifies the on-chain USDC delta and delivers your data.</p>
+    <input id="sig" placeholder="Transaction signature" style="width:100%;padding:10px;background:#0b1220;border:1px solid #1e293b;border-radius:8px;color:var(--fg);font-family:ui-monospace,monospace;font-size:13px">
+    <button class="btn" onclick="verify()">Verify payment</button>
+    <pre id="out" style="background:#0b1220;padding:12px;border-radius:8px;overflow:auto;font-size:13px;white-space:pre-wrap"></pre>
+  </div>
+
+  <p style="text-align:center"><a class="btn sec" href="./">← Back to dashboard</a></p>
+</div>
+<script>
+async function verify(){
+  const sig = document.getElementById('sig').value.trim();
+  const out = document.getElementById('out');
+  if(!sig){ out.textContent = 'Paste a transaction signature first.'; return; }
+  out.textContent = 'Verifying on-chain…';
+  try{
+    const r = await fetch('/verify', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({signature: sig})});
+    const j = await r.json();
+    out.textContent = JSON.stringify(j, null, 2);
+  }catch(e){ out.textContent = 'Verification service unreachable. Self-host the verifier: node public-service.mjs'; }
+}
+</script>
+</body>
+</html>
