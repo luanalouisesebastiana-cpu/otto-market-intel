@@ -158,8 +158,8 @@ async function handle(req,res){
   const price=PRICES[p];
   if(price){
     // subscription key unlocks paid endpoints without per-call payment
-    const subKey=req.headers['x-otto-key']||url.searchParams.get('key');
-    if(subKey){ try{ const sm=await import('./scripts/subscribe.mjs'); const cu=sm.consume(subKey); if(!cu.allowed){ return send(res,402,{error:'subscription '+cu.reason,accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]}); } }catch(e){} }
+    const subKey=req.headers['x-otto-key']||req.headers['x-otto-trial']||url.searchParams.get('key');
+    if(subKey){ try{ const sm=await import('./scripts/subscribe.mjs'); const cu=sm.consume(subKey); if(!cu.allowed){ const tm=await import('./scripts/trial.mjs'); const tc=tm.consume(subKey); if(!tc.allowed){ return send(res,402,{error:'key '+cu.reason+' / '+tc.reason,accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]}); } } }catch(e){} }
     const ph=req.headers['x-payment'];
     if(!ph) return send(res,402,{error:'payment required',accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]});
     const v=await verifyPayment({paymentHeader:ph,receiver:RECEIVER,amountUsd:price/100});

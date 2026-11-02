@@ -1,0 +1,14 @@
+{
+  "trials": [
+    {
+      "key": "ottotrial_7828d5e008c1523715af32cd3e4bc248",
+      "agentAddress": "0xabc",
+      "label": "test bot",
+      "quotaCalls": 10,
+      "callsUsed": 1,
+      "createdAt": "2026-11-02T18:46:49.204Z",
+      "expiresAt": "2026-11-09T18:46:49.303Z",
+      "converted": false
+    }
+  ]
+}

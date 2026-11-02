@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Free API Trial</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:820px;margin:0 auto;padding:2rem}
+h1{color:#f78166} label{display:block;margin:.5rem 0 .2rem;color:#8b949e;font-size:.85rem}
+input{width:100%;padding:.6rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.8rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+.ok{color:#3fb950}code{color:#79c0ff}pre{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:1rem;font-size:.8rem;overflow:auto}
+a{color:#58a6ff}</style></head><body>
+<h1>Otto — Free API Trial</h1>
+<p>Get a trial key and validate the <strong>paid</strong> endpoints with 10 free calls. No payment required to start.</p>
+<label>Agent address (optional)</label><input id="addr" placeholder="0x... or Solana address">
+<label>Label (optional)</label><input id="label" placeholder="My trading bot">
+<button onclick="issue()">Get trial key</button>
+<div id="msg"></div>
+<h2>Use it</h2>
+<pre id="usage">curl -H "x-otto-trial: YOUR_KEY" https://otto-market-intel.onrender.com/v1/intel</pre>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./subscribe.html">subscriptions</a> · <a href="./INTEGRATION.md">guide</a></p>
+<script>
+async function issue(){
+ const addr=document.getElementById('addr').value.trim(),label=document.getElementById('label').value.trim();
+ const r=await fetch('/v1/trial',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({agentAddress:addr,label})});
+ const d=await r.json();
+ if(d.key){
+  document.getElementById('msg').innerHTML='<span class="ok">✓ Trial key: <code>'+d.key+'</code> — '+d.quotaCalls+' calls, expires '+new Date(d.expiresAt).toLocaleDateString()+'</span>';
+  document.getElementById('usage').textContent='curl -H "x-otto-trial: '+d.key+'" https://otto-market-intel.onrender.com/v1/intel';
+ } else { document.getElementById('msg').innerHTML='<span style="color:#f85149">'+d.error+'</span>'; }
+}
+</script></body></html>
