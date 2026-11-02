@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Novos Tokens Solana (ao vivo)</title>
+<style>
+:root{--bg:#0b1020;--card:#121a2e;--txt:#e6edf7;--mut:#8b9bb4;--up:#34d399;--dn:#f87171;--warn:#fbbf24;--acc:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:32px 20px}
+h1{font-size:1.6rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 20px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filters label{font-size:.8rem;color:var(--mut)}
+.filters input{width:90px;padding:6px 8px;background:#0a0f1c;color:var(--txt);border:1px solid #1e2a44;border-radius:6px;font-size:.85rem}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid #1e2a44;border-radius:10px;overflow:hidden;font-size:.85rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #1e2a44}th{background:#0e1626;color:var(--mut);font-weight:600}
+tr:last-child td{border-bottom:none}
+.age{color:var(--up);font-weight:600}.old{color:var(--mut)}
+.cta{background:#0e1626;border:1px solid #134e4a;border-radius:10px;padding:16px 20px;margin-top:20px}
+.cta a{color:var(--acc)}code{background:#0a0f1c;border:1px solid #1e2a44;border-radius:5px;padding:1px 5px;font-size:.82em}
+footer{color:var(--mut);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Novos Tokens — Solana</h1>
+<p class="sub">Pares criados nas últimas 6h via DexScreener. Atualiza a cada 60s.</p>
+
+<div class="filters">
+  <label>Idade máx (min) <input id="maxAge" type="number" value="360" min="5" max="1440"></label>
+  <label>Liquidez mín (USD) <input id="minLiq" type="number" value="5000" min="0"></label>
+  <button id="apply" style="padding:6px 14px;background:var(--acc);color:#04121f;border:0;border-radius:6px;font-weight:600;cursor:pointer">Aplicar</button>
+</div>
+
+<table><thead><tr><th>Token</th><th>Idade</th><th>Liquidez</th><th>Volume 24h</th><th>Variação</th><th>DEX</th><th></th></tr></thead>
+<tbody id="rows"><tr><td colspan=7>carregando…</td></tr></tbody></table>
+
+<div class="cta">
+<strong>Alertas + relatório completo (x402, USDC):</strong>
+<ul>
+<li><code>GET /v1/opportunities</code> — oportunidades indexadas · <b>$0.50</b></li>
+<li><code>GET /v1/report?mint=&lt;addr&gt;</code> — risco profundo · <b>$1.00</b></li>
+</ul>
+<p><a href="/x402-manifest.json">Manifest x402</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/token-check.html">Verificador de risco</a> · <a href="/dashboard.html">Painel</a></p>
+</div>
+<footer>Otto — Kovantu Digital. Dados DexScreener. Alto risco: tokens novos podem ser rug/honeypot. Faça sua própria análise.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n==null?'—':n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+const now = Date.now();
+function ageStr(ms){ if(!ms) return '—'; const m=(now-ms)/60000; if(m<60) return Math.floor(m)+'m'; const h=Math.floor(m/60); if(h<24) return h+'h'+Math.floor(m%60)+'m'; return Math.floor(h/24)+'d'; }
+
+async function load(){
+  const maxAge = parseInt($('maxAge').value)||360;
+  const minLiq = parseFloat($('minLiq').value)||0;
+  $('rows').innerHTML = '<tr><td colspan=7>carregando…</td></tr>';
+  try{
+    const r = await fetch('https://api.dexscreener.com/latest/dex/search?q=Solana');
+    const d = await r.json();
+    const seen = new Set(); const out = [];
+    for(const p of (d.pairs||[])){
+      if(p.chainId!=='solana') continue;
+      const sym = p.baseToken?.symbol||'?';
+      if(seen.has(sym)) continue; seen.add(sym);
+      const liq = (p.liquidity&&p.liquidity.usd)||0;
+      const vol = (p.volume&&p.volume.h24)||0;
+      const chg = (p.priceChange&&p.priceChange.h24)||0;
+      const created = p.pairCreatedAt||null;
+      const ageMin = created? (now-created)/60000 : 99999;
+      if(ageMin>maxAge) continue;
+      if(liq<minLiq) continue;
+      const cls = ageMin<60?'age':'old';
+      out.push(`<tr>
+        <td><b>${sym}</b></td>
+        <td class="${cls}">${ageStr(created)}</td>
+        <td>${fmt(liq)}</td>
+        <td>${fmt(vol)}</td>
+        <td style="color:${chg>=0?'var(--up)':'var(--dn)'}">${chg==null?'—':(chg>=0?'+':'')+chg.toFixed(1)+'%'}</td>
+        <td>${p.dexId||'—'}</td>
+        <td><a href="/token-check.html#${p.baseToken?.address||''}" style="color:var(--acc)">risco</a></td>
+      </tr>`);
+    }
+    $('rows').innerHTML = out.length?out.join(''):'<tr><td colspan=7>nenhum par novo nos filtros</td></tr>';
+  }catch(e){ $('rows').innerHTML = '<tr><td colspan=7>erro ao carregar</td></tr>'; }
+}
+$('apply').onclick = load;
+load(); setInterval(load, 60000);
+</script>
+</body>
+</html>
