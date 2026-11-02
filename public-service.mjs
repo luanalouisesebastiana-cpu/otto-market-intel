@@ -115,6 +115,7 @@ async function handle(req,res){
     req.on('close', () => clearInterval(iv));
     return;
   }
+  if (p==='/v1/audit') { try { const m=await import('./scripts/audit.mjs'); const a=m.buildAudit(); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(a)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files

@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Audit Trail</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:980px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} table{width:100%;border-collapse:collapse;margin:1rem 0}
+td,th{padding:.45rem .6rem;border-bottom:1px solid #21262d;text-align:left;font-size:.82rem}
+.win{color:#3fb950}.loss{color:#f85149}.open{color:#58a6ff}
+.kpi{display:flex;gap:1.2rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.7rem 1.1rem}
+.kpi b{display:block;font-size:1.3rem;color:#58a6ff}
+.policy{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#8b949e}
+a{color:#58a6ff} code{color:#79c0ff}</style></head><body>
+<h1>Otto — Audit Trail</h1>
+<p>Complete, verifiable decision record: signals → journal decisions → payouts → performance. Every operation auditable, per the trader constitution.</p>
+<div class="kpi" id="kpi"></div>
+<div class="policy" id="policy"></div>
+<h2>Decision journal (latest 50)</h2>
+<table><thead><tr><th>When</th><th>Action</th><th>Pair</th><th>Entry</th><th>Target</th><th>Stop</th><th>Outcome</th><th>Reason</th></tr></thead><tbody id="rows"><tr><td colspan="8">loading…</td></tr></tbody></table>
+<h2>Trail files</h2><p id="trail" style="font-size:.85rem;color:#8b949e"></p>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./journal.html">journal</a> · <a href="./trackrecord.html">track record</a></p>
+<script>
+fetch('/v1/audit').then(r=>r.json()).then(a=>{
+ document.getElementById('kpi').innerHTML='<div><span>Decisions</span><b>'+a.counts.decisions+'</b></div><div><span>Closed</span><b>'+a.counts.closed+'</b></div><div><span>Win rate</span><b>'+a.winRate+'%</b></div><div><span>Target hits</span><b>'+(a.outcomes.TARGET_HIT||0)+'</b></div><div><span>Stop hits</span><b>'+(a.outcomes.STOP_HIT||0)+'</b></div><div><span>Paid to creator</span><b>'+(a.treasury.paidToCreator??'0')+' SOL</b></div>';
+ document.getElementById('policy').innerHTML='<strong>Risk policy (inviolable):</strong> max position '+a.policy.maxPositionPct+'% · stop '+a.policy.stopPct+'% · min liquidity $'+a.policy.minLiqUsd.toLocaleString()+' · min 24h vol $'+a.policy.minVol24Usd.toLocaleString()+' · max slippage '+a.policy.maxSlippagePct+'% · reserve '+a.policy.reserveSol+' SOL';
+ const rows=a.decisions||[];
+ document.getElementById('rows').innerHTML=rows.length?rows.map(d=>'<tr><td>'+new Date(d.ts).toLocaleString()+'</td><td>'+d.action+'</td><td>'+(d.pair||d.symbol||'—')+'</td><td>'+(d.entry?'$'+Number(d.entry).toLocaleString():'—')+'</td><td>'+(d.target?'$'+Number(d.target).toLocaleString():'—')+'</td><td>'+(d.stop?'$'+Number(d.stop).toLocaleString():'—')+'</td><td class="'+(d.outcome==='TARGET_HIT'?'win':d.outcome==='STOP_HIT'?'loss':'open')+'">'+d.outcome+'</td><td style="max-width:220px;color:#8b949e">'+(d.reason||'').slice(0,90)+'</td></tr>').join(''):'<tr><td colspan="8">No decisions recorded yet.</td></tr>';
+ document.getElementById('trail').innerHTML=Object.entries(a.trail||{}).map(([k,v])=>k+': <code>'+v+'</code>').join(' · ');
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="8">Service offline.</td></tr>');
+</script></body></html>
