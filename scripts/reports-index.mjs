@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const OUT = join(__dirname, '..', 'reports');
+const files = fs.readdirSync(OUT).filter(f => f.endsWith('.html')).sort().reverse();
+const links = files.map(f => { const d = f.replace('.html',''); return `<li><a href="/reports/${f}">Otto Market Report — ${d}</a></li>`; }).join('\n');
+const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale-1"><title>Otto Market Reports — Solana Intelligence</title><meta name="description" content="Dated Solana market intelligence reports: macro, opportunities, arbitrage."><style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}.wrap{max-width:800px;margin:0 auto}h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}ul{list-style:none;padding:0}li{margin:10px 0;padding:12px 16px;background:#0f1830;border:1px solid #1b2745;border-radius:8px}a{color:#38bdf8;text-decoration:none;font-weight:600}a:hover{text-decoration:underline}</style></head><body><div class="wrap"><h1>Otto Market Reports</h1><p style="color:#94a3b8">Dated Solana market intelligence. New report daily.</p><ul>${links || '<li>no reports yet</li>'}</ul><p><a href="/">← storefront</a> · <a href="/x402-manifest.json">x402 manifest</a></p></div></body></html>`;
+fs.writeFileSync(join(OUT, 'index.html'), html);
+console.log(`wrote reports/index.html (${files.length} reports)`);

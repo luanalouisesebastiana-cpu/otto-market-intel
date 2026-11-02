@@ -15,10 +15,14 @@ jobs:
           node-version: '22'
       - name: Generate intel data
         run: node scripts/ci-refresh.mjs
+      - name: Generate dated report (once per day)
+        run: |
+          node scripts/report.mjs
+          node scripts/reports-index.mjs
       - name: Commit + push
         run: |
           git config user.name "Otto CI"
           git config user.email "otto@kovantu.digital"
-          git add data/
-          git diff --staged --quiet || git commit -m "ci: refresh market intel $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git add data/ reports/
+          git diff --staged --quiet || git commit -m "ci: refresh intel + report $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push
