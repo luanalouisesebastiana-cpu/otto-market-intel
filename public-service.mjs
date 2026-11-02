@@ -119,6 +119,18 @@ async function handle(req,res){
   if(p==='/v1/trial'){ const o=(intel.opportunities||[])[0]||null; return send(res,200,{generatedAt:intel.generatedAt,trial:o,paid:{'/v1/opportunities':50}}); }
   const signal=readSignal();
   const journal=readJournal();
+  if(p==='/v1/subscribe' && req.method==='POST'){
+    let body=''; req.on('data',c=>body+=c); req.on('end',()=>{
+      try{ const j=JSON.parse(body||'{}'); const url=j.url||'';
+        if(!/^https?:\/\//.test(url)) return send(res,400,{error:'invalid url'});
+        const id='sub_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+        const dir=join(DATA,'subscribers'); fs.mkdirSync(dir,{recursive:true});
+        fs.writeFileSync(join(dir,id+'.json'), JSON.stringify({id,url,secret:j.secret||'',createdAt:new Date().toISOString(),paused:false}));
+        return send(res,200,{id,url,status:'subscribed'});
+      }catch(e){ return send(res,400,{error:'bad json'}); }
+    });
+    return;
+  }
   if(p==='/v1/journal') return send(res,200,{generatedAt:journal.generatedAt,lastDecision:journal.lastDecision,stats:journal.stats,history:(journal.history||[]).slice(0,12)});
   if(p==='/v1/signals/sample'){ const sg=(signal.signals||[])[0]||null; return send(res,200,{generatedAt:signal.generatedAt,sample:sg,policy:signal.policy,bank:signal.bank,paid:{'/v1/signals':50}}); }
   // paid endpoints

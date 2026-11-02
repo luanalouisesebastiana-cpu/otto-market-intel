@@ -18,6 +18,7 @@ jobs:
       - name: Generate dated report (once per day)
         run: |
           node scripts/journal.mjs
+          node scripts/webhook.mjs
           node scripts/backtest.mjs
           node scripts/signals.mjs
           node scripts/report.mjs
