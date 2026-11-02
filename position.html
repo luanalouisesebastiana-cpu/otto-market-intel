@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Position Tracker</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:820px;margin:0 auto;padding:2rem}
+h1{color:#f78166} label{display:block;margin:.5rem 0 .2rem;color:#8b949e;font-size:.85rem}
+input{width:100%;padding:.6rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.8rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+.dec{font-size:1.4rem;font-weight:700;margin:.5rem 0}
+.d-HOLD{color:#58a6ff}.d-EXIT-STOP{color:#f85149}.d-EXIT-TARGET{color:#3fb950}.d-TRAIL-STOP{color:#f0883e}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.3rem;color:#58a6ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Position Tracker & Exit Planner</h1>
+<p>Track an open position against live price. Applies the inviolable −8% stop policy. Companion to the <a href="./signals.html">signals</a> engine.</p>
+<label>Mint address (Solana) — or — Symbol (e.g. solana)</label>
+<input id="mint" placeholder="mint or symbol">
+<label>Entry price (USD)</label><input id="entry" type="number" step="any" placeholder="0.00">
+<label>Target price (USD)</label><input id="target" type="number" step="any" placeholder="0.00">
+<label>Stop price (USD)</label><input id="stop" type="number" step="any" placeholder="0.00">
+<label>Position size (USD)</label><input id="size" type="number" step="any" placeholder="0">
+<button onclick="track()">Track position</button>
+<div id="out"><p style="color:#8b949e">Enter entry/target/stop to track.</p></div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./signals.html">signals</a></p>
+<script>
+async function track(){
+ const mint=document.getElementById('mint').value.trim();
+ const e=document.getElementById('entry').value,t=document.getElementById('target').value,st=document.getElementById('stop').value,sz=document.getElementById('size').value;
+ if(!e||!t||!st){alert('Entry, target and stop are required');return;}
+ const isMint=mint.length>20;
+ const q=new URLSearchParams({entry:e,target:t,stop:st,sizeUsd:sz||'0'}); if(isMint)q.set('mint',mint);else if(mint)q.set('symbol',mint.toLowerCase());
+ document.getElementById('out').innerHTML='<p style="color:#8b949e">Loading live price…</p>';
+ try{const r=await fetch('/v1/position?'+q);const d=await r.json();
+  if(d.error){document.getElementById('out').innerHTML='<p style="color:#f85149">'+d.error+'</p>';return;}
+  document.getElementById('out').innerHTML='<div class="dec d-'+d.decision+'">'+d.decision+'</div><p>'+d.reason+'</p>'+
+   '<div class="kpi"><div><span>Live</span><b>$'+Number(d.live).toLocaleString()+'</b></div><div><span>P&L</span><b>'+d.pnlPct+'%</b></div><div><span>P&L $</span><b>$'+Number(d.pnlUsd).toFixed(2)+'</b></div><div><span>To target</span><b>'+d.toTarget+'%</b></div><div><span>To stop</span><b>'+d.toStop+'%</b></div></div>';
+ }catch(e){document.getElementById('out').innerHTML='<p style="color:#f85149">Service offline.</p>';}
+}
+</script></body></html>
