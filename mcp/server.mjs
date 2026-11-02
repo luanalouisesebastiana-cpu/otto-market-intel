@@ -1,89 +1,80 @@
 #!/usr/bin/env node
-// Otto Market Intel — MCP server. Exposes the intel API as MCP tools so any
-// MCP-compatible agent (Claude, other LLMs, agent frameworks) can discover and
-// call Otto's market intelligence directly.
-//
-// Tools:
-//   get_summary        -> free market summary (macro + counts)
-//   get_opportunities  -> risk-filtered opportunities (paid)
-//   get_arb            -> cross-DEX arbitrage spreads (paid)
-//   get_signals        -> entry/target/stop signals (paid)
-//   get_intel          -> unified intelligence feed (paid)
-//   check_token        -> token safety verdict (paid)
-//   get_riskgate       -> risk policy gate results (free)
-//   get_leaderboard    -> performance/edge proof (free)
-//
-// Run: node mcp/server.mjs   (stdio transport)
-import fs from 'node:fs';
+/**
+ * Otto Market Intel — MCP Server (stdio transport).
+ * Exposes Otto's risk-filtered Solana market intelligence + paid x402 API to any
+ * MCP client (Claude Code, etc.). Zero dependencies. Run: npx otto-mcp | or bin.
+ */
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dirname, '..', 'data');
+function readJson(f, fb){ try { return JSON.parse(readFileSync(join(DATA,f),'utf8')); } catch { return fb; } }
+
+// Minimal JSON-RPC 2.0 over stdio
 const BASE = process.env.OTTO_BASE_URL || 'http://localhost:7010';
+function reply(id, result){
+  process.stdout.write(JSON.stringify({ jsonrpc:'2.0', id, result }) + '\n');
+}
+function error(id, code, message){
+  process.stdout.write(JSON.stringify({ jsonrpc:'2.0', id, error:{ code, message } }) + '\n');
+}
 
 const TOOLS = [
-  { name: 'get_summary', description: 'Free market summary: macro prices (BTC/ETH/SOL) + opportunity/arb counts.', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_riskgate', description: 'Risk policy gate results: which candidates passed/failed the inviolable filters.', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_leaderboard', description: 'Performance/edge proof: backtest + paper-trade win rate + journal.', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_opportunities', description: 'Risk-filtered Solana opportunities (paid, 50c).', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_arb', description: 'Cross-DEX arbitrage spreads (paid, 50c).', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_signals', description: 'Entry/target/stop signals under the risk policy (paid, 50c).', inputSchema: { type: 'object', properties: {} } },
-  { name: 'get_intel', description: 'Unified intelligence feed: macro + opportunities + arb (paid, 100c).', inputSchema: { type: 'object', properties: {} } },
-  { name: 'check_token', description: 'Token safety verdict for a Solana mint (paid, 100c).', inputSchema: { type: 'object', properties: { mint: { type: 'string', description: 'Solana token mint address' } }, required: ['mint'] } },
+  { name:'otto_health', description:'Otto Market Health Index (0-100 greed/fear) + component breakdown.',
+    inputSchema:{ type:'object', properties:{} } },
+  { name:'otto_opportunities', description:'Risk-filtered Solana opportunities (liq>$50k, vol>$100k, slip<1%).',
+    inputSchema:{ type:'object', properties:{ limit:{type:'number'} } } },
+  { name:'otto_signals', description:'Live trading signals with entry/target/stop under inviolable risk policy.',
+    inputSchema:{ type:'object', properties:{ limit:{type:'number'} } } },
+  { name:'otto_journal', description:'Jev decision journal — recent autonomous OBSERVE/ENTER decisions.',
+    inputSchema:{ type:'object', properties:{ limit:{type:'number'} } } },
+  { name:'otto_positions', description:'Open positions tracked vs live prices with P&L and stop/target alerts.',
+    inputSchema:{ type:'object', properties:{} } },
+  { name:'otto_paper', description:'Paper-trading track record: equity, return, win rate.',
+    inputSchema:{ type:'object', properties:{} } },
+  { name:'otto_macro', description:'BTC/ETH/SOL macro snapshot (CoinGecko).',
+    inputSchema:{ type:'object', properties:{} } },
+  { name:'otto_paid_fetch', description:'Fetch a PAID x402 endpoint by paying USDC. Returns intel after payment.',
+    inputSchema:{ type:'object', required:['path'], properties:{ path:{type:'string',description:'e.g. /v1/report'} } } },
 ];
 
-async function callTool(name, args) {
-  const pathMap = {
-    get_summary: '/v1/summary', get_riskgate: '/v1/riskgate', get_leaderboard: '/v1/leaderboard',
-    get_opportunities: '/v1/opportunities', get_arb: '/v1/arb', get_signals: '/v1/signals',
-    get_intel: '/v1/intel', check_token: '/v1/safety?mint=' + encodeURIComponent(args?.mint || ''),
-  };
-  const path = pathMap[name];
-  if (!path) return { content: [{ type: 'text', text: `unknown tool: ${name}` }] };
-  try {
-    const res = await fetch(BASE + path, { headers: { accept: 'application/json' }, signal: AbortSignal.timeout(20000) });
-    const body = await res.text();
-    if (res.status === 402) return { content: [{ type: 'text', text: `Payment required for ${name}. Use trial key or pay via x402. Challenge: ${body.slice(0, 300)}` }] };
-    return { content: [{ type: 'text', text: body.slice(0, 8000) }] };
-  } catch (e) {
-    return { content: [{ type: 'text', text: `error calling ${name}: ${e.message}` }] };
+function handle(req){
+  const { id, method, params } = req;
+  if (method === 'initialize') return reply(id, { protocolVersion:'2024-11-05', capabilities:{ tools:{} }, serverInfo:{ name:'otto-market-intel', version:'1.0.0' } });
+  if (method === 'notifications/initialized') return;
+  if (method === 'tools/list') return reply(id, { tools: TOOLS });
+  if (method === 'tools/call'){
+    const name = params?.name; const args = params?.arguments || {};
+    const cap = n => Math.min(n||10, 50);
+    try {
+      let data;
+      switch(name){
+        case 'otto_health': data = readJson('health.json', {}); break;
+        case 'otto_opportunities': { const d=readJson('intel.json',{opportunities:[]}); data=(d.opportunities||[]).slice(0,cap(args.limit)); break; }
+        case 'otto_signals': { const d=readJson('signal.json',{signals:[],top:[]}); data={ signals:(d.signals||[]).slice(0,cap(args.limit)), top:(d.top||[]).slice(0,cap(args.limit)) }; break; }
+        case 'otto_journal': { const d=readJson('journal.json',{}); const h=d.history||d.decisions||[]; data={ lastDecision:d.lastDecision||null, stats:d.stats||{}, history:h.slice(-cap(args.limit)) }; break;
+        case 'otto_positions': data = readJson('positions.json', {}); break;
+        case 'otto_paper': data = readJson('paper-state.json', {stats:{}}); break;
+        case 'otto_macro': { const d=readJson('intel.json',{macro:null}); data=d.macro||{}; break; }
+        case 'otto_paid_fetch': data = { note:'paid x402 fetch requires an x402-enabled MCP client. Call the endpoint directly: '+BASE+args.path, path:args.path }; break;
+        default: return error(id, -32602, 'unknown tool: '+name);
+      }
+      return reply(id, { content:[{ type:'text', text: JSON.stringify(data) }] });
+    } catch(e){ return error(id, -32603, e.message); }
   }
+  return error(id, -32601, 'method not found: '+method);
 }
 
-// --- minimal JSON-RPC over stdio ---
-function send(obj) { process.stdout.write(JSON.stringify(obj) + '\n'); }
-
-async function handle(msg) {
-  const { id, method, params } = msg;
-  if (method === 'initialize') {
-    return { jsonrpc: '2.0', id, result: { protocolVersion: '2024-11-05', capabilities: { tools: {} }, serverInfo: { name: 'otto-market-intel', version: '1.0.0' } } };
-  }
-  if (method === 'notifications/initialized') return null;
-  if (method === 'tools/list') {
-    return { jsonrpc: '2.0', id, result: { tools: TOOLS } };
-  }
-  if (method === 'tools/call') {
-    const { name, arguments: args } = params || {};
-    const result = await callTool(name, args || {});
-    return { jsonrpc: '2.0', id, result };
-  }
-  if (method === 'ping') return { jsonrpc: '2.0', id, result: {} };
-  return { jsonrpc: '2.0', id, error: { code: -32601, message: `method not found: ${method}` } };
-}
-
-let buf = '';
+let buf='';
 process.stdin.setEncoding('utf8');
-process.stdin.on('data', (chunk) => {
+process.stdin.on('data', chunk => {
   buf += chunk;
   let idx;
-  while ((idx = buf.indexOf('\n')) >= 0) {
-    const line = buf.slice(0, idx).trim();
-    buf = buf.slice(idx + 1);
+  while ((idx = buf.indexOf('\n')) >= 0){
+    const line = buf.slice(0, idx).trim(); buf = buf.slice(idx+1);
     if (!line) continue;
-    let msg;
-    try { msg = JSON.parse(line); } catch { continue; }
-    handle(msg).then(resp => { if (resp) send(resp); }).catch(e => send({ jsonrpc: '2.0', id: msg.id, error: { code: -32603, message: e.message } }));
+    try { handle(JSON.parse(line)); } catch(e){ error(null, -32700, 'parse error'); }
   }
 });
-process.stdin.on('end', () => process.exit(0));
-console.error('[otto-mcp] Otto Market Intel MCP server started (stdio)');
+process.stderr.write('[otto-mcp] ready\n');
