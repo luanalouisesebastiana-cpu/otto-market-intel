@@ -1,76 +1,37 @@
-/**
- * Otto Market Intel SDK — JavaScript/Node client for the Otto x402 Solana intel API.
- *
- *   import { OttoClient } from 'otto-sdk';
- *   const c = new OttoClient();
- *   await c.summary();                 // free
- *   await c.intel();                   // paid -> throws PaymentRequired with challenge
- */
-export class OttoError extends Error {}
-export class PaymentRequired extends OttoError {
-  constructor(status, challenge) {
-    super(`payment required (${status}): ${challenge?.error || 'unknown'}`);
-    this.status = status; this.challenge = challenge;
-  }
-}
+// @kovantu/otto-market-intel — Otto Market Intel SDK
+// Risk-filtered Solana market intelligence via the Otto x402 service.
+// No external dependencies. Pure ESM.
+const DEFAULT_BASE = 'https://luanalouisesebastiana-cpu.github.io/otto-market-intel';
 
 export class OttoClient {
-  constructor(baseUrl = 'https://otto-market-intel.onrender.com', opts = {}) {
+  constructor({ baseUrl = DEFAULT_BASE, receiver = null, fetchImpl = fetch } = {}) {
     this.baseUrl = baseUrl.replace(/\/$/, '');
-    this.apiKey = opts.apiKey || null;
-    this.paymentHeader = opts.paymentHeader || null;
-    this.timeoutMs = opts.timeoutMs || 30000;
+    this.receiver = receiver;
+    this.fetch = fetchImpl;
   }
-  _headers(extra = {}) {
-    const h = { accept: 'application/json', ...extra };
-    if (this.apiKey) h['x-otto-key'] = this.apiKey;
-    if (this.paymentHeader) h['x-payment'] = this.paymentHeader;
-    return h;
-  }
-  async _get(path, params) {
-    let url = this.baseUrl + path;
-    if (params) {
-      const qs = new URLSearchParams(params).toString();
-      url += (url.includes('?') ? '&' : '?') + qs;
+  async get(path, { key } = {}) {
+    const headers = {};
+    if (key) headers['x-otto-key'] = key;
+    const res = await this.fetch(`${this.baseUrl}${path}`, { headers });
+    if (res.status === 402) {
+      const body = await res.json().catch(() => ({}));
+      const err = new Error('Payment required (x402)');
+      err.status = 402; err.accepts = body.accepts; throw err;
     }
-    const res = await fetch(url, { headers: this._headers() });
-    const body = await res.json().catch(() => ({}));
-    if (res.status === 402) throw new PaymentRequired(res.status, body);
-    if (!res.ok) throw new OttoError(`HTTP ${res.status}: ${JSON.stringify(body)}`);
-    return body;
-  }
-  async _post(path, data) {
-    const res = await fetch(this.baseUrl + path, {
-      method: 'POST', headers: this._headers({ 'content-type': 'application/json' }),
-      body: JSON.stringify(data)
-    });
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
     return res.json();
   }
-  // free
-  summary() { return this._get('/v1/summary'); }
-  opportunitiesFree() { return this._get('/v1/opportunities/free'); }
-  scanner() { return this._get('/v1/scanner'); }
-  pools() { return this._get('/v1/pools'); }
-  usage() { return this._get('/v1/usage'); }
-  audit() { return this._get('/v1/audit'); }
-  riskgate() { return this._get('/v1/riskgate'); }
-  receipts() { return this._get('/v1/receipts'); }
-  leaderboard() { return this._get('/v1/leaderboard'); }
-  pipeline() { return this._get('/v1/pipeline'); }
-  // paid
-  macro() { return this._get('/v1/macro'); }
-  opportunities() { return this._get('/v1/opportunities'); }
-  signals() { return this._get('/v1/signals'); }
-  signalsSample() { return this._get('/v1/signals/sample'); }
-  arb() { return this._get('/v1/arb'); }
-  intel() { return this._get('/v1/intel'); }
-  report(mint) { return this._get('/v1/report', { mint }); }
-  safety(mint) { return this._get('/v1/safety', { mint }); }
-  rugcheck(mint) { return this._get('/v1/rugcheck', { mint }); }
-  // keys
-  trial(agentAddress = '', label = '') { return this._post('/v1/trial', { agentAddress, label }); }
-  subscribe(plan, agentAddress) { return this._post('/v1/subscribe', { plan, agentAddress, payer: agentAddress }); }
-  manifest() { return this._get('/x402-manifest.json'); }
-  catalog() { return this._get('/catalog'); }
+  summary() { return this.get('/v1/summary'); }
+  trial() { return this.get('/v1/trial'); }
+  signals() { return this.get('/v1/signals'); }
+  intel() { return this.get('/v1/intel'); }
+  arb() { return this.get('/v1/arb'); }
+  macro() { return this.get('/v1/macro'); }
+  opportunities() { return this.get('/v1/opportunities'); }
+  report(mint) { return this.get(`/v1/report?mint=${encodeURIComponent(mint)}`); }
+  safety(mint) { return this.get(`/v1/safety?mint=${encodeURIComponent(mint)}`); }
 }
+
+export const PRICING = { '/v1/opportunities': 50, '/v1/signals': 50, '/v1/arb': 50, '/v1/macro': 25, '/v1/intel': 100, '/v1/report': 100, '/v1/safety': 100 };
+export const RECEIVER = 'EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK';
 export default OttoClient;

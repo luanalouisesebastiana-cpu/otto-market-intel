@@ -1,1 +1,14 @@
-{ "name": "otto-sdk", "version": "1.0.0", "description": "Otto Market Intel SDK — x402 Solana market intelligence API", "main": "index.js", "type": "module", "license": "MIT" }
+{
+  "name": "@kovantu/otto-market-intel",
+  "version": "1.0.0",
+  "description": "Otto Market Intel SDK — risk-filtered Solana market intelligence + x402 pay-per-call API client",
+  "type": "module",
+  "main": "index.js",
+  "exports": { ".": "./index.js" },
+  "license": "MIT",
+  "author": "Kovantu Digital",
+  "keywords": ["solana","x402","market-intelligence","trading","signals","usdc","autonomous-agent","kovantu","otto"],
+  "repository": { "type": "git", "url": "https://github.com/luanalouisesebastiana-cpu/otto-market-intel" },
+  "files": ["index.js","README.md"],
+  "engines": { "node": ">=18" }
+}
