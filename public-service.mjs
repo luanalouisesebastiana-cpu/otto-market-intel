@@ -20,6 +20,7 @@ function readIntel() { return readJson(join(DATA,'intel.json'), { generatedAt:nu
 function readOpps() { return readJson(join(DATA,'opportunities.json'), { generatedAt:null, opportunities:[] }); }
 function readArb() { return readJson(join(DATA,'arb.json'), { generatedAt:null, opportunities:[] }); }
 function readSignal() { return readJson(join(DATA,'signal.json'), { generatedAt:null, signals:[], top:[], stats:{}, policy:{}, bank:{} }); }
+function readJournal() { return readJson(join(DATA,'journal.json'), { generatedAt:null, lastDecision:{}, stats:{}, history:[] }); }
 
 function send(res, code, body, headers={}) { const d = typeof body==='string'?body:JSON.stringify(body,null,2); res.writeHead(code, {'content-type':'application/json; charset=utf-8', ...headers}); res.end(d); }
 function esc(s) { return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -117,6 +118,8 @@ async function handle(req,res){
   if(p==='/v1/opportunities/free') return send(res,200,{generatedAt:intel.generatedAt,count:(intel.opportunities||[]).length,opportunities:(intel.opportunities||[]).slice(0,5)});
   if(p==='/v1/trial'){ const o=(intel.opportunities||[])[0]||null; return send(res,200,{generatedAt:intel.generatedAt,trial:o,paid:{'/v1/opportunities':50}}); }
   const signal=readSignal();
+  const journal=readJournal();
+  if(p==='/v1/journal') return send(res,200,{generatedAt:journal.generatedAt,lastDecision:journal.lastDecision,stats:journal.stats,history:(journal.history||[]).slice(0,12)});
   if(p==='/v1/signals/sample'){ const sg=(signal.signals||[])[0]||null; return send(res,200,{generatedAt:signal.generatedAt,sample:sg,policy:signal.policy,bank:signal.bank,paid:{'/v1/signals':50}}); }
   // paid endpoints
   const price=PRICES[p];
