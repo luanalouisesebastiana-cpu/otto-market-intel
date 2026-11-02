@@ -1,1 +1,42 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Otto Signal Webhooks — Subscribe</title><meta name="description" content="Subscribe a webhook URL to receive Otto's trade signals (entry/target/stop) as JSON POST when a new ENTER decision fires."><style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}.wrap{max-width:760px;margin:0 auto}h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}input,button{font-size:14px;padding:10px;border-radius:8px;border:1px solid #1b2745;background:#0f1830;color:#e2e8f0}input{width:100%;margin:6px 0}button{background:linear-gradient(90deg,#0ea5e9,#8b5cf6);border:0;color:#fff;font-weight:700;cursor:pointer;padding:12px 20px}.card{background:#0f1830;border:1px solid #1b2745;border-radius:10px;padding:16px;margin:16px 0}code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}a{color:#38bdf8}.muted{color:#64748b}.ok{color:#4ade80}</style></head><body><div class="wrap"><h1>Otto Signal Webhooks</h1><p style="color:#94a3b8">Signal-as-a-service: receive Otto's trade signals (entry/target/stop) as a JSON POST when a new ENTER decision fires.</p><div class="card"><h2 style="color:#94a3b8;font-size:15px;margin:0 0 10px">Subscribe a webhook</h2><p class="muted" style="font-size:12px">POST to <code>/v1/subscribe</code> with JSON <code>{"url":"https://...","secret":"optional"}</code>. Free during beta.</p><input id="url" placeholder="https://your-app.com/webhook"><input id="secret" placeholder="secret (optional)"><button onclick="sub()">Subscribe</button><p id="res" style="margin-top:10px"></p></div><div class="card"><h2 style="color:#94a3b8;font-size:15px;margin:0 0 10px">Payload example</h2><pre style="font-size:12px;color:#94a3b8;overflow:auto">{ "type":"otto.signal", "signal":{ "pair":"SOL/USDC", "entryUSD":104.35, "targetUSD":107.48, "stopUSD":96.00, "sizeSOL":0.01 }, "policy":{ "stopPct":-0.08 } }</pre></div><p style="color:#94a3b8;font-size:12px">Otto · Kovantu Digital · <a href="/signals.html">signals</a> · <a href="/journal.html">journal</a> · <a href="/">storefront</a></p></div><script>async function sub(){const url=document.getElementById('url').value.trim();const secret=document.getElementById('secret').value.trim();const res=document.getElementById('res');if(!url){res.innerHTML='<span class="muted">enter a URL</span>';return;}try{const r=await fetch('/v1/subscribe',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({url,secret})});const j=await r.json();res.innerHTML=r.ok?`<span class="ok">✓ subscribed — id ${j.id}</span>`:`<span class="muted">${j.error||'failed'}</span>`;}catch(e){res.innerHTML='<span class="muted">service unreachable</span>';}}</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Subscription Plans</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:880px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .plans{display:flex;gap:1rem;flex-wrap:wrap;margin:1.5rem 0}
+.plan{flex:1;min-width:220px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:1.2rem}
+.plan h2{color:#79c0ff;margin:0 0 .3rem}.price{font-size:2rem;color:#58a6ff;font-weight:800}
+.quota{color:#8b949e;font-size:.85rem;margin:.5rem 0}
+label{display:block;margin:.4rem 0 .15rem;color:#8b949e;font-size:.8rem}
+input{width:100%;padding:.55rem;background:#0d1117;border:1px solid #21262d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.7rem;padding:.6rem 1.2rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:.95rem;cursor:pointer}
+.ok{color:#3fb950}code{color:#79c0ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Subscription Plans</h1>
+<p>Flat monthly access for high-volume agent integrators. Pay once, get an API key, unlimited calls within quota. Alternative to pay-per-call.</p>
+<div class="plans">
+ <div class="plan"><h2>Starter</h2><div class="price">$5<span style="font-size:.9rem;color:#8b949e">/mo</span></div><div class="quota">200 calls/month · ~0.10 SOL</div></div>
+ <div class="plan"><h2>Pro</h2><div class="price">$25<span style="font-size:.9rem;color:#8b949e">/mo</span></div><div class="quota">2,000 calls/month · ~0.50 SOL</div></div>
+ <div class="plan"><h2>Scale</h2><div class="price">$100<span style="font-size:.9rem;color:#8b949e">/mo</span></div><div class="quota">10,000 calls/month · ~2.00 SOL</div></div>
+</div>
+<h2>Get a key</h2>
+<label>Plan</label><select id="plan" style="width:100%;padding:.55rem;background:#0d1117;border:1px solid #21262d;color:#c9d1d9;border-radius:6px"><option value="starter">Starter</option><option value="pro" selected>Pro</option><option value="scale">Scale</option></select>
+<label>Agent address</label><input id="addr" placeholder="0x... or Solana address">
+<button onclick="sub()">Subscribe</button>
+<div id="msg"></div>
+<h2>Check a key</h2>
+<label>API key</label><input id="chk" placeholder="ottolive_...">
+<button onclick="check()">Check</button>
+<div id="chkOut"></div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./INTEGRATION.md">integration guide</a> · <a href="./referral.html">referrals</a></p>
+<script>
+async function sub(){
+ const plan=document.getElementById('plan').value,addr=document.getElementById('addr').value.trim();
+ if(!addr){alert('Address required');return;}
+ const r=await fetch('/v1/subscribe',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({plan,agentAddress:addr,payer:addr})});
+ const d=await r.json();
+ document.getElementById('msg').innerHTML=d.key?'<span class="ok">✓ Key issued: <code>'+d.key+'</code> — quota '+d.quotaCalls+' calls, expires '+new Date(d.expiresAt).toLocaleDateString()+'</span>':'<span style="color:#f85149">'+d.error+'</span>';
+}
+async function check(){
+ const k=document.getElementById('chk').value.trim();
+ const r=await fetch('/v1/subscribe?key='+encodeURIComponent(k));const d=await r.json();
+ document.getElementById('chkOut').innerHTML=d.error?'<span style="color:#f85149">'+d.error+'</span>':'<span class="ok">✓ '+d.plan+' — '+d.callsUsed+'/'+d.quotaCalls+' calls used · active until '+new Date(d.expiresAt).toLocaleDateString()+'</span>';
+}
+</script></body></html>

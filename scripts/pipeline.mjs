@@ -19,6 +19,7 @@ const steps = [
   ['./scripts/alerts.mjs', 'alerts'],
   ['./scripts/fulfill.mjs', 'fulfill'],
   ['./scripts/referral.mjs', 'referral'],
+  ['./scripts/subscribe.mjs', 'subscribe'],
   ['./scripts/report.mjs', 'report'],
   ['./scripts/reports-index.mjs', 'reports-index'],
   ['./scripts/rss.mjs', 'rss'],

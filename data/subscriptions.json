@@ -1,0 +1,17 @@
+{
+  "subscriptions": [
+    {
+      "key": "ottolive_702be875f7a04eb71663861a6e1e195d",
+      "plan": "pro",
+      "agentAddress": "0xabc",
+      "payer": "0xpayer",
+      "txnSignature": null,
+      "monthlyUsd": 25,
+      "quotaCalls": 2000,
+      "createdAt": "2026-11-02T18:27:09.742Z",
+      "expiresAt": "2026-12-02T18:27:09.756Z",
+      "callsUsed": 1,
+      "active": true
+    }
+  ]
+}
