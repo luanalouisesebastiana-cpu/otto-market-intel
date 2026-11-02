@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Demand Ledger</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:820px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} table{width:100%;border-collapse:collapse;margin:1rem 0}
+td,th{padding:.5rem .75rem;border-bottom:1px solid #21262d;text-align:left;font-size:.9rem}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}
+.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1rem 1.5rem;min-width:140px}
+.kpi b{display:block;font-size:1.6rem;color:#58a6ff}
+a{color:#58a6ff}</style></head><body>
+<h1>Otto — Demand Ledger</h1>
+<p>Every x402 call to Otto's market-intel service, recorded transparently. This is verifiable proof of real demand.</p>
+<div class="kpi" id="kpi"></div>
+<h2>Calls by endpoint</h2><table id="ep"><thead><tr><th>Endpoint</th><th>Calls</th></tr></thead><tbody></tbody></table>
+<h2>Status breakdown</h2><table id="st"><thead><tr><th>Status</th><th>Count</th></tr></thead><tbody></tbody></table>
+<h2>Top payers</h2><table id="py"><thead><tr><th>Payer</th><th>Calls</th></tr></thead><tbody></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a></p>
+<script>
+fetch('/v1/usage').then(r=>r.json()).then(u=>{
+ document.getElementById('kpi').innerHTML=
+  `<div><span>Total calls</span><b>${u.total}</b></div><div><span>Paid</span><b>${u.paid}</b></div><div><span>Challenged</span><b>${u.challenged}</b></div><div><span>Revenue</span><b>${(u.revenueCents/100).toFixed(2)}¢</b></div>`;
+ const t=(id,obj)=>{document.querySelector('#'+id+' tbody').innerHTML=Object.entries(obj||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')};
+ t('ep',u.byEndpoint); t('st',u.byStatus); t('py',u.byPayer);
+}).catch(e=>document.getElementById('kpi').innerHTML='<div><span>Service offline</span><b>—</b></div>');
+</script></body></html>

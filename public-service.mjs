@@ -100,6 +100,10 @@ function serveStatic(req,res,p){
 
 async function handle(req,res){
   const url=new URL(req.url,`http://localhost:${PORT}`); const p=url.pathname;
+  // record every x402 call attempt (demand ledger)
+  try { const rec=await import('./scripts/usage.mjs'); const paid = p.startsWith('/v1/') && !['/v1/opportunities/free','/v1/summary','/v1/signals/sample','/v1/scanner'].includes(p); rec.record({ endpoint:p, method:req.method, status: paid?'CHALLENGED':'FREE', ua:req.headers['user-agent']||null, ip:req.socket.remoteAddress||null }); } catch(e){}
+  // usage summary endpoint
+  if (p==='/v1/usage') { const u=await import('./scripts/usage.mjs'); const s=u.summarize(); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(s)); }
   const intel=readIntel();
   // static files
   if(p.startsWith('/data/')){ const fp=join(__dirname,p.replace(/^\/data\//,'data/')); if(existsSync(fp)){ res.writeHead(200,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}); res.end(readFileSync(fp)); return; } }
