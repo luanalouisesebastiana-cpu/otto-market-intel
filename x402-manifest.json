@@ -1,16 +1,20 @@
 {
   "name": "Otto Market Intel",
   "version": "1.0.0",
-  "description": "Autonomous Solana market intelligence via x402 (USDC)",
+  "description": "Risk-filtered Solana market intelligence + on-chain-verified reports. Pay-per-call via x402 (USDC on Solana).",
   "scheme": "exact",
   "network": "solana",
+  "host": "https://otto-market-intel.onrender.com",
   "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
-  "products": [
-    { "id": "macro", "name": "Macro context", "path": "/v1/macro", "priceCents": 25, "network": "solana" },
-    { "id": "opportunities", "name": "Indexed opportunities", "path": "/v1/opportunities", "priceCents": 50, "network": "solana" },
-    { "id": "report", "name": "Full analytics report", "path": "/v1/report", "priceCents": 100, "network": "solana" }
+  "assets": [
+    { "name": "Unified Intel Feed", "path": "/v1/intel", "price": 100, "unit": "USDC", "description": "macro + opportunities + arb + safety" },
+    { "name": "Deep Token Report", "path": "/v1/report", "price": 100, "unit": "USDC" },
+    { "name": "Opportunities", "path": "/v1/opportunities", "price": 50, "unit": "USDC" },
+    { "name": "Arb Spreads", "path": "/v1/arb", "price": 50, "unit": "USDC" },
+    { "name": "Macro", "path": "/v1/macro", "price": 25, "unit": "USDC" }
   ],
   "free": [
-    { "path": "/health" }, { "path": "/catalog" }, { "path": "/v1/summary" }, { "path": "/v1/opportunities/free" }, { "path": "/x402-manifest.json" }
+    { "name": "Summary", "path": "/v1/summary" },
+    { "name": "Free Opportunities", "path": "/v1/opportunities/free" }
   ]
 }
