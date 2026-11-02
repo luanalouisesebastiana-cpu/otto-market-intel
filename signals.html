@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto Signals — Entry / Target / Stop (Solana)</title>
+<meta name="description" content="Risk-filtered Solana trade signals: entry, target, stop — computed under Otto's inviolable risk policy.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;text-transform:uppercase;font-size:11px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.ok{color:#4ade80}.bad{color:#f87171}.warn{color:#f59e0b}
+.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}
+.policy{background:#0f1830;border:1px solid #1b2745;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:13px}
+.policy b{color:#38bdf8}
+.cta{display:inline-block;background:linear-gradient(90deg,#0ea5e9,#8b5cf6);color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:700;margin-top:10px}
+a{color:#38bdf8}
+.muted{color:#64748b}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Otto Signals</h1>
+<p style="color:#94a3b8">Entry / target / stop signals computed from live Solana market data, filtered through Otto's inviolable risk policy.</p>
+<div>
+<span class="badge">● LIVE</span>
+<span class="badge" id="count">— signals</span>
+<span class="badge">Solana mainnet</span>
+</div>
+
+<h2 style="color:#94a3b8;font-size:15px;margin:22px 0 8px">Active Signals</h2>
+<table>
+<thead><tr><th>Par</th><th>DEX</th><th class="num">Entrada</th><th class="num">Alvo (+3%)</th><th class="num">Stop (−8%)</th><th class="num">Size SOL</th><th class="num">Score</th></tr></thead>
+<tbody id="rows"><tr><td colspan="7" class="muted">carregando...</td></tr></tbody>
+</table>
+
+<div class="policy">
+<b>Risk policy (inviolable):</b> position ≤ 12.5% of free bank · lot &lt; 0.010 SOL · mandatory −8% stop-loss ·
+asset filters: liquidity &gt; $50k, volume 24h &gt; $100k, slippage &lt; 1% · reserve 0.0100 SOL untouchable.
+</div>
+
+<h2 style="color:#94a3b8;font-size:15px;margin:22px 0 8px">Get full signals via x402</h2>
+<p style="color:#94a3b8;font-size:13px">Pay-per-call (USDC on Solana) for the complete signal set + policy metadata.</p>
+<table>
+<thead><tr><th>Endpoint</th><th>Price</th><th>Content</th></tr></thead>
+<tbody>
+<tr><td><code>GET /v1/signals/sample</code></td><td class="ok">free</td><td>1 sample signal + policy</td></tr>
+<tr><td><code>GET /v1/signals</code></td><td class="warn">50c</td><td>full signal set + bank + stats</td></tr>
+<tr><td><code>GET /v1/report</code></td><td class="warn">100c</td><td>deep dated report</td></tr>
+</tbody>
+</table>
+<a class="cta" href="/x402-manifest.json">View x402 manifest →</a>
+<p style="color:#94a3b8;font-size:12px;margin-top:18px">Otto · Kovantu Digital · Solana <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code> · <a href="/">storefront</a> · <a href="/reports/">reports</a></p>
+</div>
+<script>
+async function load(){
+  try{
+    const r=await fetch('data/signal.json',{cache:'no-store'});
+    const d=await r.json();
+    const sigs=d.signals||[];
+    document.getElementById('count').textContent=sigs.length+' signals';
+    document.getElementById('rows').innerHTML=sigs.map(o=>{const g=o.signal||{};return `<tr><td>${o.pair}</td><td>${o.dex}</td><td class="num">$${g.entryUSD??'—'}</td><td class="num ok">$${g.targetUSD??'—'}</td><td class="num bad">$${g.stopUSD??'—'}</td><td class="num">${g.sizeSOL??'—'}</td><td class="num">${(o.score*100).toFixed(0)}</td></tr>`;}).join('')||'<tr><td colspan="7" class="muted">sem sinais</td></tr>';
+  }catch(e){console.warn('signal.json falhou',e);document.getElementById('rows').innerHTML='<tr><td colspan="7" class="muted">dados indisponíveis</td></tr>';}
+}
+load();setInterval(load,60000);
+</script>
+</body>
+</html>
