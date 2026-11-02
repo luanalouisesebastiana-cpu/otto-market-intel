@@ -23,5 +23,8 @@
     "usdc",
     "autonomous-agent",
     "kovantu"
-  ]
+  ],
+  "bin": {
+    "otto-mcp": "./mcp/server.mjs"
+  }
 }
