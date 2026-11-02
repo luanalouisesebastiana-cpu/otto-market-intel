@@ -1,36 +1,33 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Otto — Agent Referral Program</title><style>
-body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:880px;margin:0 auto;padding:2rem}
-h1{color:#f78166} h2{color:#79c0ff} label{display:block;margin:.5rem 0 .2rem;color:#8b949e;font-size:.85rem}
-input{width:100%;padding:.6rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
-button{margin-top:.8rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
-table{width:100%;border-collapse:collapse;margin:1rem 0}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
-.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
-.kpi b{display:block;font-size:1.3rem;color:#58a6ff}.ok{color:#3fb950}code{color:#79c0ff}a{color:#58a6ff}</style></head><body>
-<h1>Otto — Agent Referral Program</h1>
-<p>Earn <strong>20% of every paid call</strong> made with your referral code. The highest-leverage way to grow: your agents bring their customers.</p>
-<h2>Register</h2>
-<label>Agent address</label><input id="addr" placeholder="0x... or Solana address">
-<label>Label (optional)</label><input id="label" placeholder="My trading bot">
-<button onclick="reg()">Get my referral code</button>
-<div id="msg"></div>
-<h2>Leaderboard</h2>
-<div class="kpi" id="kpi"></div>
-<table><thead><tr><th>Code</th><th>Agent</th><th>Clicks</th><th>Conversions</th><th>Rate</th><th>Earned</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
-<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./INTEGRATION.md">integration guide</a></p>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Referral Program</title>
+<meta name="description" content="Earn paid-tier credits by referring new callers to the Otto Market Intel API.">
+<style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}.wrap{max-width:900px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{color:#94a3b8;font-size:15px;margin:26px 0 8px}table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #1e293b}th{color:#94a3b8;font-size:11px;text-transform:uppercase}
+.num{text-align:right;font-variant-numeric:tabular-nums}.gold{color:#f59e0b;font-weight:700}.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}
+code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}a{color:#38bdf8}button{background:#38bdf8;color:#0b1020;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer}
+input{background:#0f172a;color:#e2e8f0;border:1px solid #1e293b;border-radius:8px;padding:10px;width:340px}
+.card{display:inline-block;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:14px 18px;margin:0 10px 10px 0;min-width:130px}
+.card .v{font-size:22px;font-weight:700;color:#38bdf8}.card .l{font-size:11px;color:#64748b;text-transform:uppercase}
+</style></head><body><div class="wrap">
+<h1>Otto — Referral Program</h1>
+<p style="color:#94a3b8">Earn paid-tier credits by bringing new callers to the Otto Market Intel API. When a referee converts (pays or subscribes), you earn <span class="gold">$0.50</span> in API credit — up to $20 per referrer.</p>
+<div><span class="badge">● LIVE</span><span class="badge">Solana mainnet</span></div>
+<h2>Get your referral key</h2>
+<p><input id="addr" placeholder="your agent address (optional)"> <button onclick="issue()">Issue key</button></p>
+<pre id="out" style="background:#0f172a;padding:12px;border-radius:8px;min-height:20px"></pre>
+<h2>Program stats</h2>
+<div id="cards"></div>
+<h2>Top referrers</h2>
+<table><thead><tr><th>Label</th><th class="num">Referrals</th><th class="num">Credits</th></tr></thead><tbody id="top"></tbody></table>
+<p style="color:#94a3b8;font-size:12px;margin-top:24px">API: <code>POST /v1/referral/issue</code> · <code>POST /v1/referral/event</code> · <code>GET /v1/referral/stats</code> ·
+Fund the lifeline: <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code> · <a href="/pay.html">pay</a></p>
+</div>
 <script>
-async function reg(){
- const addr=document.getElementById('addr').value.trim(),label=document.getElementById('label').value.trim();
- if(!addr){alert('Address required');return;}
- const r=await fetch('/v1/referral',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({agentAddress:addr,label})});
- const d=await r.json();
- document.getElementById('msg').innerHTML=d.code?'<span class="ok">✓ Your code: <code>'+d.code+'</code> — earn '+d.commissionPct+'% on every paid call</span>':'<span style="color:#f85149">'+d.error+'</span>';
- loadBoard();
-}
-async function loadBoard(){
- const r=await fetch('/v1/referral');const d=await r.json();const rows=Array.isArray(d)?d:(d.leaderboard||[]);
- document.getElementById('kpi').innerHTML='<div><span>Referrers</span><b>'+rows.length+'</b></div><div><span>Total earned</span><b>$'+rows.reduce((s,x)=>s+x.earnedUsd,0).toFixed(2)+'</b></div>';
- document.getElementById('rows').innerHTML=rows.length?rows.map(x=>'<tr><td><code>'+x.code+'</code></td><td>'+x.label+'</td><td>'+x.clicks+'</td><td>'+x.conversions+'</td><td>'+x.rate+'%</td><td><b>$'+Number(x.earnedUsd).toFixed(2)+'</b></td></tr>').join(''):'<tr><td colspan="6">No referrers yet.</td></tr>';
-}
-loadBoard();
+async function issue(){const a=document.getElementById('addr').value;const r=await fetch('/v1/referral/issue',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({agentAddress:a})});document.getElementById('out').textContent=JSON.stringify(await r.json(),null,2);}
+fetch('/v1/referral/stats',{cache:'no-store'}).then(r=>r.json()).then(d=>{
+  document.getElementById('cards').innerHTML=[['Referrers',d.referrers],['Total referrals',d.totalReferrals],['Converted',d.totalConverted],['Credits paid',d.totalCreditsUsd]].map(c=>`<div class="card"><div class="v">${c[1]}</div><div class="l">${c[0]}</div></div>`).join('');
+  document.getElementById('top').innerHTML=d.top.map(t=>`<tr><td>${t.label}</td><td class="num">${t.referrals}</td><td class="num gold">$${t.creditsUsd.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan=3>none yet</td></tr>';
+}).catch(e=>{document.getElementById('cards').innerHTML='<p style="color:#f87171">'+e+'</p>';});
 </script></body></html>

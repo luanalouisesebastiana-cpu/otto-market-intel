@@ -139,6 +139,11 @@ async function handle(req,res){
   // free tier
   if(p==='/v1/summary') return send(res,200,{service:'otto-market-intel',generatedAt:intel.generatedAt,macro:intel.macro,opportunities:(intel.opportunities||[]).slice(0,5),arb:(intel.arb||[]).slice(0,3),paid:{'/v1/intel':100,'/v1/report':100,'/v1/signals':50,'/v1/opportunities':50,'/v1/arb':50,'/v1/macro':25},receiver:RECEIVER});
   if(p==='/v1/opportunities/free') return send(res,200,{generatedAt:intel.generatedAt,count:(intel.opportunities||[]).length,opportunities:(intel.opportunities||[]).slice(0,5)});
+
+  // --- referral program (affiliate growth loop) ---
+  if(p==='/v1/referral/issue'){ const body={}; for await (const c of req) body.push(c); let j={}; try{j=JSON.parse(Buffer.concat(body).toString()||'{}');}catch(e){} const rm=await import('./scripts/referral.mjs'); return send(res,200,rm.issueReferrer({agentAddress:j.agentAddress,label:j.label})); }
+  if(p==='/v1/referral/event'){ const body=[]; for await (const c of req) body.push(c); let j={}; try{j=JSON.parse(Buffer.concat(body).toString()||'{}');}catch(e){} const rm=await import('./scripts/referral.mjs'); return send(res,200,rm.recordEvent({refKey:j.refKey,referee:j.referee,event:j.event})); }
+  if(p==='/v1/referral/stats'){ const rm=await import('./scripts/referral.mjs'); return send(res,200,rm.stats()); }
   if(p==='/v1/trial'){ const o=(intel.opportunities||[])[0]||null; return send(res,200,{generatedAt:intel.generatedAt,trial:o,paid:{'/v1/opportunities':50}}); }
   const signal=readSignal();
   const journal=readJournal();
