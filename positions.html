@@ -1,0 +1,37 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Position Manager</title>
+<meta name="description" content="Autonomous position tracker: live P&L on open Jev-journal entries with stop-loss and target-hit alerts.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;margin:14px 0}
+.alert{border-left:4px solid #f87171;background:#f871711a}
+.alert.target{border-color:#4ade80;background:#4ade801a}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.pos{font-weight:800}.pos.stop{color:#f87171}.pos.target{color:#4ade80}.pos.hold{color:#fbbf24}.pos.noprice{color:#64748b}
+.up{color:#4ade80}.down{color:#f87171}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer}
+.empty{color:#64748b;font-size:13px;padding:20px;text-align:center}
+</style></head><body><div class="wrap">
+<h1>Otto — Position Manager</h1>
+<p style="color:#94a3b8;font-size:14px">Tracks open Jev-journal entries against <strong>live prices</strong>. Fires STOP-LOSS (−8%) and TARGET-HIT (+3%) alerts.</p>
+<div id="alerts"></div>
+<div class="card"><table id="tbl"><thead><tr><th>Pair</th><th class="num">Entry</th><th class="num">Live</th><th class="num">P&amp;L</th><th>Status</th></tr></thead><tbody id="rows"><tr><td colspan="5" class="empty">loading…</td></tr></tbody></table></div>
+<p style="color:#64748b;font-size:12px">Source: data/positions.json · risk: stop −8% · target +3% · <button onclick="load()">refresh</button></p>
+<script>
+async function load(){
+  const r=await fetch('data/positions.json',{cache:'no-store'});const d=await r.json();
+  const al=document.getElementById('alerts');
+  al.innerHTML=(d.alerts||[]).map(a=>`<div class="card alert ${a.action==='TARGET_HIT'?'target':''}"><strong>${a.action}</strong> — ${a.pair} @ entry $${a.entry} → live $${a.livePrice} (${a.pnlPct}%)<div style="color:#94a3b8;font-size:12px">${a.reason||''}</div></div>`).join('');
+  if(!(d.alerts||[]).length) al.innerHTML='<div class="card" style="color:#94a3b8">No alerts — all positions within risk bounds.</div>';
+  const rows=(d.positions||[]);
+  document.getElementById('rows').innerHTML=rows.length?rows.map(p=>{
+    const cls=p.action==='STOP_LOSS'?'stop':p.action==='TARGET_HIT'?'target':p.action==='NO_PRICE'?'noprice':'hold';
+    const pl=p.pnlPct==null?'—':`<span class="${p.pnlPct>=0?'up':'down'}">${p.pnlPct>0?'+':''}${p.pnlPct}%</span>`;
+    return `<tr><td><strong>${p.pair||p.mint?.slice(0,8)}</strong> <span style="color:#64748b;font-size:11px">${p.dex||''}</span></td><td class="num">$${p.entry??'—'}</td><td class="num">$${p.livePrice??'—'}</td><td class="num">${pl}</td><td class="pos ${cls}">${p.action}</td></tr>`;
+  }).join(''):'<tr><td colspan="5" class="empty">No open positions — journal has no unresolved ENTER.</td></tr>';
+}
+load();
+</script></div></body></html>

@@ -8,6 +8,7 @@ const steps = [
   ['./whales.mjs', 'whales'],
   ['./perp.mjs', 'perp'],
   ['./health.mjs', 'health'],
+  ['./positions.mjs', 'positions'],
   ['./arb.mjs', 'arb'],
   ['./pools.mjs', 'pools'],
   ['./riskgate.mjs', 'riskgate'],
