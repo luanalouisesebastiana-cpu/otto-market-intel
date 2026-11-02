@@ -8,60 +8,94 @@
 <meta property="og:title" content="Otto — Solana Market Intelligence API">
 <meta property="og:description" content="Risk-filtered signals + on-chain-verified market data via x402. USDC on Solana, pay-per-call.">
 <meta property="og:type" content="website">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}
+code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}
+.price{color:#38bdf8;font-weight:700}
+h2{color:#94a3b8;font-size:15px;margin:26px 0 8px}
+footer{color:#64748b;font-size:12px;margin-top:30px}
+</style>
 </head>
 <body>
-<header>
-  <h1>Otto</h1>
-  <p class="tag">Solana Market Intelligence API · <strong>x402</strong> · USDC pay-per-call</p>
-  <p class="vendor">by Kovantu Digital</p>
-</header>
+<div class="wrap">
+<h1>Otto</h1>
+<p style="color:#94a3b8">Autonomous Solana market-intelligence agent — Kovantu Digital. Risk-filtered signals via x402 (USDC · Solana · verified on-chain).</p>
+<div><span class="badge">● LIVE</span><span class="badge">Solana mainnet</span><span class="badge" id="meta">loading…</span></div>
 
-<main>
-<section>
-  <h2>What Otto sells</h2>
-  <p>Risk-filtered trading signals and on-chain-verified market data. No account, no API key — just USDC. Payment is verified <strong>on-chain</strong> before any data is delivered.</p>
-  <table>
-    <tr><th>Endpoint</th><th>Method</th><th>Price</th><th>Returns</th></tr>
-    <tr><td>/v1/opportunities</td><td>POST</td><td>50¢</td><td>Full approved signal list</td></tr>
-    <tr><td>/v1/macro</td><td>GET</td><td>25¢</td><td>BTC / ETH / SOL macro snapshot</td></tr>
-    <tr><td>/v1/report</td><td>GET</td><td>100¢</td><td>Full scan + signals + policy</td></tr>
-    <tr><td>/v1/summary</td><td>GET</td><td>free</td><td>Top 3 approved signals</td></tr>
-    <tr><td>/v1/trial</td><td>GET</td><td>free</td><td>1 sample signal</td></tr>
-  </table>
-</section>
+<h2>Signals (risk-filtered: liq &gt; $50k, vol24h &gt; $100k)</h2>
+<table><thead><tr><th>Pair</th><th>DEX</th><th class="num">Price</th><th class="num">24h</th><th class="num">Liquidity</th><th class="num">Vol 24h</th><th class="num">Size SOL</th></tr></thead>
+<tbody id="signals"><tr><td colspan="7">Loading live data…</td></tr></tbody></table>
 
-<section>
-  <h2>Payment (x402)</h2>
-  <ul>
-    <li><strong>Network:</strong> Solana mainnet</li>
-    <li><strong>Asset:</strong> USDC (<code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code>)</li>
-    <li><strong>Scheme:</strong> exact</li>
-    <li><strong>Pay to:</strong> <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code></li>
-  </ul>
-  <p><strong>Flow:</strong> request a paid endpoint → receive HTTP 402 with an <code>accepts</code> object → send a USDC transfer → re-request with <code>X-Payment: {"payload":{"signature":"&lt;tx&gt;","network":"solana"}}</code> → Otto verifies the on-chain delta and delivers the data.</p>
-</section>
+<h2>Macro</h2>
+<table><thead><tr><th>Asset</th><th class="num">Price</th><th class="num">24h</th></tr></thead>
+<tbody id="macro"></tbody></table>
 
-<section>
-  <h2>Risk filters (all must pass)</h2>
-  <ul>
-    <li>Liquidity &gt; $50,000</li>
-    <li>24h volume &gt; $100,000</li>
-    <li>Estimated slippage &lt; 1.0%</li>
-    <li>Position ≤ 10–15% of free capital; lot &lt; 0.010 SOL</li>
-    <li>Untouchable reserve: 0.0100 SOL</li>
-  </ul>
-</section>
+<h2>API (x402 · USDC pay-per-call)</h2>
+<table>
+<tr><th>Endpoint</th><th>Method</th><th>Price</th><th>Returns</th></tr>
+<tr><td><code>/v1/opportunities</code></td><td>POST</td><td class="price">50¢</td><td>Full approved signal list</td></tr>
+<tr><td><code>/v1/macro</code></td><td>GET</td><td class="price">25¢</td><td>BTC / ETH / SOL macro</td></tr>
+<tr><td><code>/v1/report</code></td><td>GET</td><td class="price">100¢</td><td>Full scan + signals + policy</td></tr>
+<tr><td><code>/v1/summary</code></td><td>GET</td><td class="price">free</td><td>Top 3 approved signals</td></tr>
+<tr><td><code>/v1/trial</code></td><td>GET</td><td class="price">free</td><td>1 sample signal</td></tr>
+</table>
 
-<section>
-  <h2>Self-host</h2>
-  <pre>git clone https://github.com/luanalouisesebastiana-cpu/otto-market-intel
+<h2>Payment (x402)</h2>
+<ul>
+<li><strong>Network:</strong> Solana mainnet · <strong>Asset:</strong> USDC</li>
+<li><strong>Pay to:</strong> <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code></li>
+<li><strong>Verify:</strong> on-chain transfer confirmed before delivery</li>
+</ul>
+<p>Request a paid endpoint → get 402 with an <code>accepts</code> object → send a USDC transfer → re-request with <code>X-Payment: {"payload":{"signature":"&lt;tx&gt;","network":"solana"}}</code> → data delivered.</p>
+
+<h2>Self-host</h2>
+<pre>git clone https://github.com/luanalouisesebastiana-cpu/otto-market-intel
 cd otto-market-intel
 node public-service.mjs</pre>
-</section>
-</main>
 
-<footer>
-  <p>Source: <a href="https://github.com/luanalouisesebastiana-cpu/otto-market-intel">github.com/luanalouisesebastiana-cpu/otto-market-intel</a></p>
-</footer>
+<footer>Source: <a href="https://github.com/luanalouisesebastiana-cpu/otto-market-intel">github.com/luanalouisesebastiana-cpu/otto-market-intel</a></footer>
+</div>
+
+<script>
+let DATA = null;
+async function load() {
+  try {
+    const r = await fetch('data/scan.json', { cache: 'no-store' });
+    if (!r.ok) throw new Error('no data yet');
+    DATA = await r.json();
+    render();
+  } catch (e) {
+    document.getElementById('signals').innerHTML =
+      '<tr><td colspan="7">Live data not published yet — the scanner runs every 15 min.</td></tr>';
+  }
+}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function render() {
+  const d = DATA; const ap = d.approved || [];
+  document.getElementById('signals').innerHTML = ap.map(s => `<tr>
+    <td>${esc(s.pair)}</td><td>${esc(s.dex)}</td>
+    <td class="num">${s.priceUsd ? '$' + s.priceUsd : 'n/a'}</td>
+    <td class="num">${s.change24h != null ? s.change24h.toFixed(2) + '%' : 'n/a'}</td>
+    <td class="num">$${(s.liquidityUsd / 1000).toFixed(0)}k</td>
+    <td class="num">$${(s.volume24h / 1000).toFixed(0)}k</td>
+    <td class="num">${s.suggestedSizeSol}</td>
+  </tr>`).join('') || '<tr><td colspan="7">No pairs pass the risk filters right now.</td></tr>';
+  const m = d.macro || {};
+  document.getElementById('macro').innerHTML = ['bitcoin','ethereum','solana'].map(k => {
+    const v = m[k]; if (!v) return '';
+    return `<tr><td>${k.toUpperCase()}</td><td class="num">$${v.usd}</td><td class="num">${(v.usd_24h_change ?? 0).toFixed(2)}%</td></tr>`;
+  }).join('');
+  document.getElementById('meta').textContent =
+    `${d.summary?.approved ?? 0}/${d.summary?.total ?? 0} approved · updated ${d.generatedAt ? new Date(d.generatedAt).toLocaleString() : '—'}`;
+}
+load();
+</script>
 </body>
 </html>
