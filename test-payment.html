@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Payment Integration Test</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:860px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} code{background:#161b22;padding:.15rem .4rem;border-radius:4px;font-size:.85rem}
+pre{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:1rem;overflow:auto;font-size:.82rem}
+button{padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer;margin:.3rem}
+.ok{color:#3fb950}.warn{color:#f0883e}.bad{color:#f85149}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Payment Integration Test</h1>
+<p>Verify the x402 payment flow end-to-end before integrating. This tool calls a paid endpoint, captures the <strong>402 challenge</strong>, and checks it against the manifest.</p>
+<h2>1 · Choose an endpoint</h2>
+<button onclick="test('/v1/macro')">/v1/macro · 25¢</button>
+<button onclick="test('/v1/arb')">/v1/arb · 50¢</button>
+<button onclick="test('/v1/intel')">/v1/intel · 100¢</button>
+<button onclick="test('/v1/signals')">/v1/signals · 50¢</button>
+<h2>2 · Challenge response</h2>
+<pre id="out">Click an endpoint to test.</pre>
+<h2>3 · Manifest consistency</h2>
+<pre id="man">loading…</pre>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./INTEGRATION.md">integration guide</a></p>
+<script>
+fetch('/x402-manifest.json').then(r=>r.json()).then(m=>{
+ const s=m.services||[];document.getElementById('man').innerHTML=
+  'scheme: <span class="ok">'+m.payment.scheme+'</span>\nnetwork: <span class="ok">'+m.payment.network+'</span>\nreceiver: <code>'+m.payment.receiver+'</code>\ntoken: '+m.payment.token+' <code>'+m.payment.mint+'</code>\n\nendpoints:\n'+s.map(x=>'  '+x.tier.padEnd(5)+' '+(x.price==='0'?'free':x.price+' USDC').padEnd(12)+x.path).join('\n');
+}).catch(e=>document.getElementById('man').textContent='manifest load failed: '+e.message);
+async function test(path){
+ const out=document.getElementById('out');out.textContent='calling '+path+' …';
+ try{
+  const r=await fetch(path,{headers:{'accept':'application/json'}});
+  if(r.status===402){
+   const body=await r.text();
+   let parsed;try{parsed=JSON.parse(body)}catch(e){parsed=null}
+   out.innerHTML='<span class="warn">HTTP 402 Payment Required</span> — challenge returned.\n\n'+
+    (parsed?JSON.stringify(parsed,null,2):body)+
+    '\n\n<span class="ok">✓</span> Payment challenge is valid. Pay with USDC on Solana to <code>'+((parsed&&(parsed.receiver||parsed.accepts?.[0]?.recipient))||'see manifest')+'</code>, then retry.';
+  } else if(r.status===200){
+   out.innerHTML='<span class="bad">HTTP 200</span> — this endpoint did not require payment. Check the manifest tier.\n\n'+ (await r.text()).slice(0,400);
+  } else {
+   out.innerHTML='<span class="bad">HTTP '+r.status+'</span>\n\n'+ (await r.text()).slice(0,400);
+  }
+ }catch(e){out.innerHTML='<span class="bad">request failed:</span> '+e.message+'\n\nIf the service is offline, deploy your own: <code>docker compose up -d --build</code>';}
+}
+</script></body></html>
