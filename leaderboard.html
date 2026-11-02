@@ -1,28 +1,71 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Otto — Performance & Edge Proof</title><style>
-body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
-h1{color:#f78166} .verdict{background:#0d2818;border:1px solid #238636;border-radius:10px;padding:1rem 1.2rem;font-size:1.1rem;color:#3fb950;margin:1rem 0}
-.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem;flex:1;min-width:150px}
-.kpi b{display:block;font-size:1.5rem;color:#58a6ff}
-table{width:100%;border-collapse:collapse;margin:1rem 0}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
-h2{color:#79c0ff}a{color:#58a6ff}</style></head><body>
-<h1>Otto — Performance & Edge Proof</h1>
-<p>Investor-grade aggregation of the trading engine's edge: backtest strategy results, live paper-trade win rate, and the decision journal. This is the evidence base for deploying real capital.</p>
-<div class="verdict" id="verdict">loading…</div>
-<div class="kpi" id="kpi"></div>
-<h2>Backtest — strategy equity curves</h2>
-<table><thead><tr><th>Symbol</th><th>Equity</th><th>Max DD</th><th>Signal</th></tr></thead><tbody id="bt"><tr><td colspan="4">loading…</td></tr></tbody></table>
-<h2>Paper trades</h2>
-<table><thead><tr><th>Pair</th><th>Entry</th><th>Live</th><th>P&L %</th><th>Outcome</th></tr></thead><tbody id="pt"><tr><td colspan="5">loading…</td></tr></tbody></table>
-<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./papertrade.html">paper trades</a> · <a href="./backtest.html">backtest</a> · <a href="./trackrecord.html">track record</a></p>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Edge Proof & Performance</title>
+<meta name="description" content="Verifiable performance of the Otto trading engine: backtest edge, live paper-trading, Jev decision journal, risk policy.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{color:#94a3b8;font-size:15px;margin:26px 0 8px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.pos{color:#4ade80}.neg{color:#f87171}.gold{color:#f59e0b;font-weight:700}
+.card{display:inline-block;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:14px 18px;margin:0 10px 10px 0;min-width:130px}
+.card .v{font-size:22px;font-weight:700;color:#38bdf8}.card .l{font-size:11px;color:#64748b;text-transform:uppercase}
+.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}
+code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}
+a{color:#38bdf8}
+</style></head><body><div class="wrap">
+<h1>Otto — Edge Proof</h1>
+<p style="color:#94a3b8">Verifiable performance of the Otto trading engine (Kovantu Digital). Every number below is computed from live market data by the risk-gated pipeline — auditable, reproducible, read-only.</p>
+<div><span class="badge">● LIVE</span><span class="badge" id="gen">…</span><span class="badge">Solana mainnet</span></div>
+
+<h2>Scorecard</h2>
+<div id="cards"></div>
+
+<h2>Backtest — strategy edge by asset</h2>
+<table><thead><tr><th>Asset</th><th class="num">Return</th><th class="num">Equity</th><th class="num">Win rate</th><th class="num">Max DD</th><th class="num">Trades</th></tr></thead><tbody id="bt"></tbody></table>
+
+<h2>Live paper-trading</h2>
+<table><thead><tr><th>Symbol</th><th class="num">Entry</th><th class="num">Target</th><th class="num">Stop</th><th class="num">Live</th><th class="num">P&amp;L %</th><th>Outcome</th></tr></thead><tbody id="pt"></tbody></table>
+<p style="color:#64748b;font-size:12px" id="ptsum"></p>
+
+<h2>Jev decision journal</h2>
+<table><thead><tr><th>Cycle</th><th>Action</th><th>Symbol</th><th>Reason</th></tr></thead><tbody id="jr"></tbody></table>
+
+<h2>Current signal book (risk-filtered)</h2>
+<table><thead><tr><th>Symbol</th><th class="num">Entry</th><th class="num">Target</th><th class="num">Stop</th><th class="num">Size USD</th><th class="num">Edge %</th></tr></thead><tbody id="bk"></tbody></table>
+
+<p style="color:#94a3b8;font-size:12px;margin-top:24px">
+Risk policy (inviolable): liquidity &gt; $50k · 24h volume &gt; $100k · slippage &lt; 1% · stop −8% · position ≤ 12.5% of free bank.
+Fund the lifeline: <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code> ·
+<a href="/pay.html">pay</a> · <a href="/x402-manifest.json">manifest</a>
+</p>
+</div>
 <script>
-fetch('/v1/leaderboard').then(r=>r.json()).then(d=>{
- document.getElementById('verdict').textContent='Verdict: '+d.verdict;
- const e=d.edge||{};
- document.getElementById('kpi').innerHTML='<div><span>Paper win rate</span><b>'+(e.paperTrade?.winRate??0)+'%</b></div><div><span>Paper P&L</span><b>$'+(e.paperTrade?.totalPnlUsd??0).toFixed(2)+'</b></div><div><span>Backtest symbols</span><b>'+(e.backtest?.symbols??0)+'</b></div><div><span>Profitable</span><b>'+(e.backtest?.profitable??0)+'</b></div><div><span>Journal decisions</span><b>'+(e.journal?.decisions??0)+'</b></div>';
- const bt=e.backtest?.list||[];
- document.getElementById('bt').innerHTML=bt.length?bt.map(x=>'<tr><td>'+x.symbol+'</td><td>'+(x.equity??x.final??'—')+'</td><td>'+(x.maxDD??x.maxDrawdown??'—')+'</td><td>'+(x.signal??'—')+'</td></tr>').join(''):'<tr><td colspan="4">No backtest data.</td></tr>';
- const pt=(e.paperTrade?.trades)||d.edge?.paperTrade?.trades||[];
- document.getElementById('pt').innerHTML=pt.length?pt.slice(0,10).map(t=>'<tr><td>'+(t.pair||t.symbol)+'</td><td>'+(t.entry??'—')+'</td><td>'+(t.live??'—')+'</td><td style="color:'+(t.pnlPct>0?'#3fb950':t.pnlPct<0?'#f85149':'#8b949e')+'">'+(t.pnlPct>0?'+':'')+(t.pnlPct??0)+'%</td><td>'+t.outcome+'</td></tr>').join(''):'<tr><td colspan="5">No paper trades yet.</td></tr>';
-}).catch(e=>{document.getElementById('verdict').textContent='Service offline.';});
+const D = 'data/leaderboard.json';
+const money = n => n==null?'—':'$'+Number(n).toFixed(2);
+const pct = n => n==null?'—':Number(n).toFixed(2)+'%';
+const cls = n => n>0?'pos':(n<0?'neg':'');
+fetch(D,{cache:'no-store'}).then(r=>r.json()).then(d=>{
+  document.getElementById('gen').textContent = new Date(d.generatedAt).toLocaleString();
+  const s = d.score;
+  const cards = [
+    ['Avg backtest return', pct(s.avgBacktestReturnPct), 'gold'],
+    ['Best asset', s.bestBacktestAsset||'—', ''],
+    ['Best return', pct(s.bestBacktestReturnPct), 'gold'],
+    ['Paper win rate', pct(s.paperWinRate), ''],
+    ['Jev cycles', s.jevCycles, ''],
+    ['Approved opps', s.approvedOpportunities, ''],
+    ['Free bank', money(s.freeBankUsd), ''],
+  ];
+  document.getElementById('cards').innerHTML = cards.map(c=>`<div class="card"><div class="v ${c[2]}">${c[1]}</div><div class="l">${c[0]}</div></div>`).join('');
+  document.getElementById('bt').innerHTML = d.backtest.map(r=>`<tr><td>${r.asset}</td><td class="num ${cls(r.edgePct)}">${pct(r.edgePct)}</td><td class="num">${r.equity?.toFixed(3)}</td><td class="num">${pct(r.winRate)}</td><td class="num">${pct(r.maxDrawdown)}</td><td class="num">${r.trades}</td></tr>`).join('') || '<tr><td colspan=6>no backtest data</td></tr>';
+  document.getElementById('pt').innerHTML = d.paperTrades.map(t=>`<tr><td>${t.symbol}</td><td class="num">${t.entry}</td><td class="num">${t.target}</td><td class="num">${t.stop}</td><td class="num">${t.live}</td><td class="num ${cls(t.pnlPct)}">${pct(t.pnlPct)}</td><td>${t.outcome}</td></tr>`).join('') || '<tr><td colspan=7>no paper trades yet</td></tr>';
+  const ps = d.papertrade;
+  document.getElementById('ptsum').textContent = `Paper mode: ${ps.closed}/${ps.total} closed · win rate ${ps.winRate}% · P&L ${money(ps.totalPnlUsd)} · policy: ${ps.policy}`;
+  document.getElementById('jr').innerHTML = d.journal.decisions.map(j=>`<tr><td>${(j.cycle||'').slice(0,19)}</td><td>${j.action}</td><td>${j.symbol||'—'}</td><td>${j.reason||''}</td></tr>`).join('') || '<tr><td colspan=4>no decisions</td></tr>';
+  document.getElementById('bk').innerHTML = d.signalBook.map(b=>`<tr><td>${b.symbol}</td><td class="num">${b.entry}</td><td class="num">${b.target}</td><td class="num">${b.stop}</td><td class="num">${money(b.sizeUsd)}</td><td class="num ${cls(b.edgePct)}">${pct(b.edgePct)}</td></tr>`).join('') || '<tr><td colspan=6>no signals</td></tr>';
+}).catch(e=>{document.body.insertAdjacentHTML('beforeend','<p style="color:#f87171">failed to load data: '+e+'</p>');});
 </script></body></html>
