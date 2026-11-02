@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-02T14:06:33.575Z",
+  "generatedAt": "2026-11-02T18:56:04.131Z",
   "creator": "4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU",
   "reserve": {
     "SOL": 0.01,
     "untouchable": true
   },
-  "solPrice": 93,
+  "solPrice": 94.43,
   "bank": {
-    "freeBankUsd": 100,
-    "inMeta1": false,
+    "freeBankUsd": 1.82,
+    "inMeta1": true,
     "meta1TargetUsd": 100
   },
   "pnl": {
@@ -16,7 +16,7 @@
     "realizedSOL": 0,
     "wins": 0,
     "stops": 0,
-    "open": 0
+    "open": 1
   },
   "split": {
     "creatorShareUsd": 0,
@@ -24,7 +24,7 @@
     "triggerSOL": 0.05,
     "payoutDue": false,
     "payoutSOL": 0,
-    "nextTriggerAtUsd": 4.65
+    "nextTriggerAtUsd": 98.18
   },
   "transfers": [],
   "audit": "state.db + decisions.jsonl + treasury.json"

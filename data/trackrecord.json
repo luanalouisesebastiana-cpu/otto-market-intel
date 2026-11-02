@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-02T14:08:08.193Z",
+  "generatedAt": "2026-11-02T18:56:05.005Z",
   "live": {
-    "decisions": 0,
-    "enters": 0,
+    "decisions": 1,
+    "enters": 1,
     "observes": 0,
     "targets": 0,
     "stops": 0,
-    "open": 0,
+    "open": 1,
     "winRate": 0,
     "realizedUsd": 0,
     "realizedSOL": 0
@@ -17,30 +17,30 @@
     "triggerSOL": 0.05,
     "payoutDue": false,
     "payoutSOL": 0,
-    "nextTriggerAtUsd": 4.65
+    "nextTriggerAtUsd": 98.18
   },
   "bank": {
-    "freeBankUsd": 100,
-    "inMeta1": false,
+    "freeBankUsd": 1.82,
+    "inMeta1": true,
     "meta1TargetUsd": 100
   },
   "backtest": [
     {
       "asset": "BTC",
-      "equity": 1.202,
+      "equity": 1.176,
       "maxDD": 12.1,
       "winRate": 0.000925925925925926
     },
     {
       "asset": "ETH",
-      "equity": 1.149,
+      "equity": 1.122,
       "maxDD": 21.2,
       "winRate": 0.0023148148148148147
     },
     {
       "asset": "SOL",
-      "equity": 1.261,
-      "maxDD": 24.8,
+      "equity": 1.221,
+      "maxDD": 26.2,
       "winRate": 0.002777777777777778
     }
   ],

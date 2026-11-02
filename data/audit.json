@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-11-02T18:56:05.009Z",
+  "agent": "Otto (Kovantu Digital)",
+  "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+  "creator": "4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU",
+  "policy": {
+    "maxPositionPct": 12.5,
+    "stopPct": -8,
+    "minLiqUsd": 50000,
+    "minVol24Usd": 100000,
+    "maxSlippagePct": 1,
+    "reserveSol": 0.01
+  },
+  "counts": {
+    "decisions": 2,
+    "closed": 0,
+    "wins": 0
+  },
+  "winRate": 0,
+  "outcomes": {
+    "OPEN": 2
+  },
+  "treasury": {},
+  "trackrecord": {
+    "backtestEdge": [
+      {
+        "asset": "BTC",
+        "equity": 1.176,
+        "maxDD": 12.1,
+        "winRate": 0.000925925925925926
+      },
+      {
+        "asset": "ETH",
+        "equity": 1.122,
+        "maxDD": 21.2,
+        "winRate": 0.0023148148148148147
+      },
+      {
+        "asset": "SOL",
+        "equity": 1.221,
+        "maxDD": 26.2,
+        "winRate": 0.002777777777777778
+      }
+    ],
+    "signalCount": 5
+  },
+  "decisions": [
+    {
+      "ts": "2026-11-02T14:45:24.033Z",
+      "action": "OBSERVE",
+      "reason": "already in 1 open position(s) — no new entry",
+      "outcome": "OPEN"
+    },
+    {
+      "ts": "2026-11-02T14:04:05.132Z",
+      "action": "ENTER",
+      "pair": "SOL/USDC",
+      "reason": "score 1 ≥ 0.8, liq $2191053k, no open position — edge confirmed",
+      "outcome": "OPEN"
+    }
+  ],
+  "trail": {
+    "signals": "data/signal.json",
+    "journal": "data/decisions.jsonl",
+    "treasury": "data/treasury.json",
+    "trackrecord": "data/trackrecord.json",
+    "backtest": "data/backtest.json"
+  }
+}

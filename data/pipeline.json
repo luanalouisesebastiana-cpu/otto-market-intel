@@ -1,0 +1,125 @@
+{
+  "generatedAt": "2026-11-02T18:56:14.862Z",
+  "ok": 20,
+  "total": 23,
+  "results": [
+    {
+      "step": "intel",
+      "ok": true,
+      "ms": 3
+    },
+    {
+      "step": "arb",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "step": "pools",
+      "ok": true,
+      "ms": 3443
+    },
+    {
+      "step": "riskgate",
+      "ok": true,
+      "ms": 16
+    },
+    {
+      "step": "signals",
+      "ok": false,
+      "ms": 2,
+      "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
+    },
+    {
+      "step": "journal",
+      "ok": false,
+      "ms": 6,
+      "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
+    },
+    {
+      "step": "treasury",
+      "ok": true,
+      "ms": 4
+    },
+    {
+      "step": "payout",
+      "ok": true,
+      "ms": 8
+    },
+    {
+      "step": "backtest",
+      "ok": true,
+      "ms": 861
+    },
+    {
+      "step": "trackrecord",
+      "ok": true,
+      "ms": 5
+    },
+    {
+      "step": "leaderboard",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "step": "audit",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "step": "position",
+      "ok": true,
+      "ms": 3
+    },
+    {
+      "step": "papertrade",
+      "ok": true,
+      "ms": 81
+    },
+    {
+      "step": "rugcheck",
+      "ok": true,
+      "ms": 9740
+    },
+    {
+      "step": "alerts",
+      "ok": true,
+      "ms": 5
+    },
+    {
+      "step": "fulfill",
+      "ok": true,
+      "ms": 4
+    },
+    {
+      "step": "referral",
+      "ok": true,
+      "ms": 1
+    },
+    {
+      "step": "subscribe",
+      "ok": true,
+      "ms": 4
+    },
+    {
+      "step": "trial",
+      "ok": true,
+      "ms": 3
+    },
+    {
+      "step": "report",
+      "ok": true,
+      "ms": 9
+    },
+    {
+      "step": "reports-index",
+      "ok": false,
+      "ms": 0,
+      "error": "Cannot find module '/home/hatch/.automaton/storefront/scripts/scripts/reports-index.mjs' imported from /home/hatch/.automaton/storefront/scripts/pipeline.mjs\nDid you mean to import \"./reports-index.mjs\"?"
+    },
+    {
+      "step": "rss",
+      "ok": true,
+      "ms": 2
+    }
+  ]
+}

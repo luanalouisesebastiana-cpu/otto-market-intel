@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-11-02T18:56:04.114Z",
+  "policy": {
+    "minLiqUsd": 50000,
+    "minVol24Usd": 100000,
+    "maxSlippagePct": 1,
+    "maxPositionPct": 12.5,
+    "stopPct": -8,
+    "reserveSol": 0.01
+  },
+  "total": 20,
+  "approved": 0,
+  "rejected": 20,
+  "rejectedList": [
+    {
+      "symbol": "SOL",
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "RAY",
+      "mint": "FJkTpy5rTZYCAUn3FXDzz9hgJYHYwBsxGm5ee75rAZNC",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "SOL",
+      "mint": "2ZbaN9Dkj5HPyYUeij82PcZgHJYZ8747Ca69qdcvCh5C",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "SOL",
+      "mint": "5vhw96LZoKA4K8kbBkTJXBYvJSN1RWJzJgJbYEorBChv",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "ERC20-USDT",
+      "mint": "F3sCvPfmh1oX1mxPCm2gS7ChTJ5F8mWJu1khwYXWem1w",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "ERC20-USDC",
+      "mint": "G8KhLpeBPRhM6tMroEVC72H4Fv23KtwYzU1LZK6YE4rR",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "PYUSD",
+      "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "BOME",
+      "mint": "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "WETH",
+      "mint": "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "PENGU",
+      "mint": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "PUMP",
+      "mint": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "RAY",
+      "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "USDC",
+      "mint": "5vJmAfBjsS6wEHcgQGNm69P3fbyPmUU1dVfE5j1rraVZ",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "KMNO",
+      "mint": "KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "WBTC",
+      "mint": "3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "UMBRA",
+      "mint": "PRVT6TB7uss3FrUd2D9xs2zqDBsa3GbMJMwCQsgmeta",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "STONK",
+      "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "NEAR",
+      "mint": "3ZLekZYq2qkZiSpnSvabjit34tUkjSwD1JFuW9as9wBG",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "Fartcoin ",
+      "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    },
+    {
+      "symbol": "JUP",
+      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+      "reasons": [
+        "slippage 999.000% > 1%"
+      ]
+    }
+  ]
+}
