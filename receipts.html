@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Payment Receipts</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .kpi{display:flex;gap:1.5rem;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}
+table{width:100%;border-collapse:collapse}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.82rem}
+a{color:#58a6ff}code{color:#79c0ff}</style></head><body>
+<h1>Otto — Payment Receipts</h1>
+<p>Durable proof-of-payment for every fulfilled x402 call. Each receipt is idempotent (same payment unlocks the same resource) and auditable.</p>
+<div class="kpi" id="kpi"></div>
+<table><thead><tr><th>Receipt</th><th>Resource</th><th>Price</th><th>Payer</th><th>Txn</th><th>When</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./test-payment.html">test payment</a> · <a href="./audit.html">audit</a></p>
+<script>
+fetch('/v1/receipts').then(r=>r.json()).then(d=>{
+ document.getElementById('kpi').innerHTML='<div><span>Receipts</span><b>'+d.count+'</b></div><div><span>Revenue</span><b>$'+Number(d.revenueUsd||0).toFixed(2)+'</b></div>';
+ const rs=d.receipts||[];
+ document.getElementById('rows').innerHTML=rs.length?rs.map(x=>'<tr><td><code>'+x.id+'</code></td><td>'+x.path+'</td><td>$'+(Number(x.price)).toFixed(2)+'</td><td><code>'+(x.payer?x.payer.slice(0,6)+'…'+x.payer.slice(-4):'—')+'</code></td><td><code>'+(x.txnSignature?x.txnSignature.slice(0,8)+'…':'—')+'</code></td><td>'+new Date(x.ts).toLocaleString()+'</td></tr>').join(''):'<tr><td colspan="6">No receipts yet — no payments fulfilled.</td></tr>';
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="6">Service offline.</td></tr>');
+</script></body></html>

@@ -112,6 +112,7 @@ async function handle(req,res){
   }
   if (p==='/v1/riskgate') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/riskgate.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,approved:0,rejected:0})); } }
   if (p==='/v1/pipeline') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/pipeline.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,ok:0,total:0,results:[]})); } }
+  if (p==='/v1/receipts') { try { const f=await import('./scripts/fulfill.mjs'); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(f.summary())); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,count:0,revenueUsd:0,receipts:[]})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files
@@ -153,6 +154,8 @@ async function handle(req,res){
     if(!ph) return send(res,402,{error:'payment required',accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]});
     const v=await verifyPayment({paymentHeader:ph,receiver:RECEIVER,amountUsd:price/100});
     if(!v.verified) return send(res,402,{error:'payment not verified',reason:v.reason,accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]});
+    // fulfillment: issue a durable receipt so the payer can unlock idempotently
+    try { const f=await import('./scripts/fulfill.mjs'); const pl=f.parsePaymentHeader(ph); const rc=f.issueReceipt({path:p,price:price/100,payer:pl.payer||pl.from||null,txnSignature:v.txnSignature||null,network:'solana'}); res.setHeader('x-otto-receipt',rc.id); } catch(e){}
     if(p==='/v1/intel') return send(res,200,{paid:true,endpoint:p,generatedAt:intel.generatedAt,macro:intel.macro,opportunities:intel.opportunities,arb:intel.arb});
     if(p==='/v1/arb') return send(res,200,{paid:true,endpoint:p,generatedAt:intel.generatedAt,opportunities:intel.arb});
     if(p==='/v1/signals') return send(res,200,{paid:true,endpoint:p,generatedAt:signal.generatedAt,policy:signal.policy,bank:signal.bank,stats:signal.stats,signals:signal.signals});
