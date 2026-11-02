@@ -55,49 +55,40 @@ async function analyze(){
   const mint = $('addr').value.trim();
   const out = $('out');
   if(!mint){ out.innerHTML='<p style="color:var(--warn)">Cole um endereço de mint.</p>'; return; }
-  $('go').disabled = true; out.innerHTML = '<p>analisando…</p>';
+  $('go').disabled = true; out.innerHTML = '<p>analisando via Otto Market Intel…</p>';
   try{
-    const r = await fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(mint));
+    // Resolve live service URL from LIVE.md
+    let base = '';
+    try{ const t = await (await fetch('LIVE.md')).text(); const m = t.match(/https:\/\/[a-z0-9]+\.instatunnel\.my/); if(m) base = m[0]; }catch{}
+    if(!base) base = location.origin; // fallback: static host (free verdict only)
+    const r = await fetch(base + '/v1/report?mint=' + encodeURIComponent(mint));
+    if(r.status===402){
+      out.innerHTML = '<div class="verdict v-warn"><h2>PAGAMENTO REQUERIDO</h2><div>Este relatório é pago via x402 (USDC). Envie USDC para <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code> e reenvie com o header <code>X-Payment</code>. Veja <a href="/x402-manifest.json">manifest</a>.</div></div>';
+      $('go').disabled = false; return;
+    }
     const d = await r.json();
-    const pairs = (d.pairs||[]).filter(p=>p.chainId==='solana').sort((a,b)=>((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0));
-    if(!pairs.length){ out.innerHTML='<p style="color:var(--warn)">Nenhum par Solana encontrado para este mint.</p>'; $('go').disabled=false; return; }
-    const p = pairs[0];
-    const liq = (p.liquidity&&p.liquidity.usd)||0;
-    const vol = (p.volume&&p.volume.h24)||0;
-    const chg = (p.priceChange&&p.priceChange.h24)||0;
-    const fdv = p.fdv||null;
-    const pairCreated = p.pairCreatedAt||null;
-    const ageDays = pairCreated? (Date.now()-pairCreated)/86400000 : null;
-
-    // risk scoring (heuristic, transparent)
-    let score = 50; // neutral start
-    if(liq>200000) score-=15; else if(liq>50000) score-=8; else if(liq>10000) score+=5; else score+=20;
-    if(vol>200000) score-=10; else if(vol>50000) score-=4; else score+=12;
-    if(ageDays!=null){ if(ageDays>90) score-=10; else if(ageDays>30) score-=4; else score+=15; }
-    if(chg<-50) score+=10; else if(chg>200) score+=8;
-    score = Math.max(0, Math.min(100, score));
-    const risk = 100-score; // higher = riskier
-
-    let cls, label, col;
+    const rep = d.tokenRisk || d;
+    if(!rep.found){ out.innerHTML='<p style="color:var(--warn)">Nenhum par Solana encontrado para este mint.</p>'; $('go').disabled=false; return; }
+    const risk = rep.riskScore ?? 50;
+    let cls,label,col;
     if(risk<30){ cls='v-safe'; label='BAIXO RISCO'; col='var(--up)'; }
     else if(risk<60){ cls='v-warn'; label='RISCO MODERADO'; col='var(--warn)'; }
     else { cls='v-danger'; label='ALTO RISCO'; col='var(--dn)'; }
-
+    const fmt = n => n==null?'—':n.toLocaleString('en-US',{style:'currency',currency:'USD'});
     out.innerHTML = `
-      <div class="verdict ${cls}"><h2>${label}</h2><div>Score de risco: <b>${risk}/100</b> · ${p.baseToken.symbol||'?'} / ${p.quoteToken.symbol||'?'}</div></div>
+      <div class="verdict ${cls}"><h2>${label}</h2><div>Score de risco: <b>${risk}/100</b> · ${rep.symbol||'?'}</div></div>
       <div class="grid">
-        <div class="kpi"><div class="lbl">Liquidez</div><div class="val">${fmt(liq)}</div></div>
-        <div class="kpi"><div class="lbl">Volume 24h</div><div class="val">${fmt(vol)}</div></div>
-        <div class="kpi"><div class="lbl">Variação 24h</div><div class="val" style="color:${chg>=0?'var(--up)':'var(--dn)'}">${chg==null?'—':(chg>=0?'+':'')+chg.toFixed(2)+'%'}</div></div>
-        <div class="kpi"><div class="lbl">Idade do par</div><div class="val">${ageDays==null?'—':ageDays.toFixed(0)+'d'}</div></div>
-        <div class="kpi"><div class="lbl">FDV</div><div class="val">${fmt(fdv)}</div></div>
-        <div class="kpi"><div class="lbl">DEX</div><div class="val">${p.dexId||'—'}</div></div>
+        <div class="kpi"><div class="lbl">Liquidez</div><div class="val">${fmt(rep.liquidityUsd)}</div></div>
+        <div class="kpi"><div class="lbl">Volume 24h</div><div class="val">${fmt(rep.volume24hUsd)}</div></div>
+        <div class="kpi"><div class="lbl">Variação 24h</div><div class="val">${rep.priceChange24hPct==null?'—':(rep.priceChange24hPct>=0?'+':'')+rep.priceChange24hPct.toFixed(2)+'%'}</div></div>
+        <div class="kpi"><div class="lbl">Idade do par</div><div class="val">${rep.ageDays==null?'—':rep.ageDays+'d'}</div></div>
+        <div class="kpi"><div class="lbl">FDV</div><div class="val">${fmt(rep.fdv)}</div></div>
+        <div class="kpi"><div class="lbl">Passa nos filtros?</div><div class="val">${rep.passesFilters?'SIM':'NÃO'}</div></div>
       </div>
       <div class="kpi" style="margin-top:12px"><div class="lbl">Risk score</div><div class="bar"><span style="width:${risk}%;background:${col}"></span></div></div>
-      <p style="color:var(--mut);font-size:.85rem;margin-top:12px">Veredito básico gratuito. Para relatório profundo (holders, profundidade de liquidez, sinais de honeypot, histórico), use <code>/v1/report</code> via x402.</p>
     `;
   }catch(e){
-    out.innerHTML = '<p style="color:var(--dn)">Erro ao analisar. Tente novamente.</p>';
+    out.innerHTML = '<p style="color:var(--dn)">Erro ao analisar ('+String(e.message||e)+').</p>';
   }
   $('go').disabled = false;
 }

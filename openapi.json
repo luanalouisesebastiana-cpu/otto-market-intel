@@ -1,77 +1,39 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Otto — Solana Market Intelligence API",
+    "title": "Otto Market Intel",
     "version": "1.0.0",
-    "description": "Risk-filtered Solana trading signals and on-chain-verified market data. Paid via x402 (USDC on Solana, pay-per-call). Filters: liquidity > $50k, volume24h > $100k, slippage < 1%.",
-    "contact": { "name": "Otto · Kovantu Digital", "url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/" }
+    "description": "Inteligência de mercado Solana via x402 (USDC). Dados de mercado, análise de risco de tokens e relatórios. Operado por Otto (Kovantu Digital).",
+    "contact": { "name": "Otto", "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK" }
   },
-  "servers": [
-    { "url": "http://localhost:80", "description": "self-hosted" },
-    { "url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/", "description": "storefront (data only)" }
-  ],
+  "servers": [{ "url": "https://REPLACE_WITH_LIVE_URL" }],
+  "x-x402": {
+    "scheme": "exact",
+    "network": "solana",
+    "currency": "USDC",
+    "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+    "manifest": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/x402-manifest.json"
+  },
   "paths": {
-    "/v1/summary": {
-      "get": {
-        "summary": "Top 3 approved signals (free)",
-        "responses": { "200": { "description": "Approved signals", "content": { "application/json": { "schema": { "type": "object" } } } } }
-      }
-    },
-    "/v1/trial": {
-      "get": {
-        "summary": "1 sample signal (free)",
-        "responses": { "200": { "description": "Trial signal", "content": { "application/json": { "schema": { "type": "object" } } } } }
-      }
-    },
+    "/health": { "get": { "summary": "Health check", "x-price": 0, "responses": { "200": { "description": "ok" } } } },
+    "/catalog": { "get": { "summary": "Catálogo de produtos", "x-price": 0, "responses": { "200": { "description": "catálogo" } } } },
+    "/v1/summary": { "get": { "summary": "Resumo do scanner (grátis)", "x-price": 0, "responses": { "200": { "description": "resumo" } } } },
     "/v1/opportunities": {
-      "post": {
-        "summary": "Full approved signal list (50¢)",
-        "responses": {
-          "200": { "description": "Signals", "content": { "application/json": { "schema": { "type": "object" } } } },
-          "402": { "description": "Payment required (x402)", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PaymentRequired" } } } }
-        }
-      }
+      "get": { "summary": "Oportunidades indexadas com filtros de risco", "x-price": 50,
+        "responses": { "200": { "description": "oportunidades" }, "402": { "description": "pagamento x402 requerido" } } }
     },
     "/v1/macro": {
-      "get": {
-        "summary": "BTC/ETH/SOL macro (25¢)",
-        "responses": {
-          "200": { "description": "Macro", "content": { "application/json": { "schema": { "type": "object" } } } },
-          "402": { "description": "Payment required (x402)" }
-        }
-      }
+      "get": { "summary": "Contexto macro BTC/ETH/SOL", "x-price": 25,
+        "responses": { "200": { "description": "macro" }, "402": { "description": "pagamento x402 requerido" } } }
     },
     "/v1/report": {
-      "get": {
-        "summary": "Full scan + signals + policy (100¢)",
-        "responses": {
-          "200": { "description": "Report", "content": { "application/json": { "schema": { "type": "object" } } } },
-          "402": { "description": "Payment required (x402)" }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "PaymentRequired": {
-        "type": "object",
-        "properties": {
-          "error": { "type": "string", "example": "Payment required" },
-          "accepts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "amount": { "type": "string", "example": "50" },
-                "asset": { "type": "string", "example": "USDC" },
-                "network": { "type": "string", "example": "solana" },
-                "payTo": { "type": "string" },
-                "scheme": { "type": "string", "example": "exact" }
-              }
-            }
-          }
-        }
-      }
+      "get": { "summary": "Relatório analítico completo", "x-price": 100,
+        "responses": { "200": { "description": "relatório" }, "402": { "description": "pagamento x402 requerido" } } }
+    },
+    "/v1/report": {
+      "get": { "summary": "Relatório profundo de risco de token (mint)", "x-price": 100,
+        "parameters": [{ "name": "mint", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "relatório de risco" }, "402": { "description": "pagamento x402 requerido" } } }
     }
   }
 }
