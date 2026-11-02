@@ -104,6 +104,7 @@ async function handle(req,res){
   try { const rec=await import('./scripts/usage.mjs'); const paid = p.startsWith('/v1/') && !['/v1/opportunities/free','/v1/summary','/v1/signals/sample','/v1/scanner'].includes(p); rec.record({ endpoint:p, method:req.method, status: paid?'CHALLENGED':'FREE', ua:req.headers['user-agent']||null, ip:req.socket.remoteAddress||null }); } catch(e){}
   // usage summary endpoint
   if (p==='/v1/usage') { const u=await import('./scripts/usage.mjs'); const s=u.summarize(); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(s)); }
+  if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files
   if(p.startsWith('/data/')){ const fp=join(__dirname,p.replace(/^\/data\//,'data/')); if(existsSync(fp)){ res.writeHead(200,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}); res.end(readFileSync(fp)); return; } }

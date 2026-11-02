@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — New Pool Launches</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} h2{color:#79c0ff} table{width:100%;border-collapse:collapse;margin:1rem 0}
+td,th{padding:.5rem .75rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
+.tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:600}
+.r-red{background:#3d1d1d;color:#f85149}.r-orange{background:#3d2e1d;color:#f0883e}.r-green{background:#1d3d2a,color:#3fb950}
+a{color:#58a6ff}</style></head><body>
+<h1>Otto — New Pool Launches</h1>
+<p>Freshly created Solana pools (&lt;24h old) across Raydium, Orca, pumpfun and more. Flagged by risk. <strong>New pools are the highest-risk assets</strong> — most fail. Use the safety checker before touching anything.</p>
+<h2>Live new pairs</h2>
+<table><thead><tr><th>Pair</th><th>DEX</th><th>Liquidity</th><th>Vol 24h</th><th>Age</th><th>Risk</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./token-check.html">token safety checker</a></p>
+<script>
+fetch('/v1/pools').then(r=>r.json()).then(d=>{
+ const rows=d.pools||[];
+ document.getElementById('rows').innerHTML=rows.length?rows.map(p=>`<tr>
+  <td><a href="${p.url||'#'}" target="_blank" rel="noopener">${p.pair}</a></td>
+  <td>${p.dex}</td><td>$${(p.liqUsd||0).toLocaleString()}</td><td>$${(p.vol24Usd||0).toLocaleString()}</td>
+  <td>${p.ageMin<60?p.ageMin+' min':(p.ageMin/60).toFixed(1)+' h'}</td>
+  <td><span class="tag r-${p.riskColor}">${p.risk}</span></td></tr>`).join('')
+  :'<tr><td colspan="6">No new pools in the last 24h.</td></tr>';
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="6">Service offline.</td></tr>');
+</script></body></html>
