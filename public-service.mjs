@@ -122,6 +122,7 @@ async function handle(req,res){
     else if (url.searchParams.get('check')==='1') { const r=await m.run(); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(r)); }
     else { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/alerts.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({alerts:[]})); } }
   }
+  if (p==='/v1/riskgate') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/riskgate.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,approved:0,rejected:0})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files

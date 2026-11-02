@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Risk Policy Gate</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .pol{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:1rem;font-size:.88rem;line-height:1.7}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}
+.rej{background:#2d1414;border:1px solid #5a1d1d;border-radius:8px;padding:.6rem 1rem;margin:.4rem 0;font-size:.85rem}
+.rej b{color:#f85149}a{color:#58a6ff}code{color:#79c0ff}</style></head><body>
+<h1>Otto — Risk Policy Gate</h1>
+<p>The inviolable pre-trade filter. Every candidate opportunity is rejected unless it passes <strong>all</strong> checks: liquidity ≥ $50k, 24h volume ≥ $100k, slippage ≤ 1%. Assets outside the filters are never operated.</p>
+<div class="pol" id="pol"></div>
+<div class="kpi" id="kpi"></div>
+<h2>Rejected candidates (with reasons)</h2><div id="rej"><span style="color:#8b949e">loading…</span></div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./audit.html">audit trail</a> · <a href="./signals.html">signals</a></p>
+<script>
+fetch('/v1/riskgate').then(r=>r.json()).then(d=>{
+ const p=d.policy||{};
+ document.getElementById('pol').innerHTML='<strong>Inviolable policy:</strong> min liquidity <code>$'+Number(p.minLiqUsd||0).toLocaleString()+'</code> · min 24h vol <code>$'+Number(p.minVol24Usd||0).toLocaleString()+'</code> · max slippage <code>'+(p.maxSlippagePct||0)+'%</code> · max position <code>'+(p.maxPositionPct||0)+'%</code> · stop <code>'+(p.stopPct||0)+'%</code> · reserve <code>'+(p.reserveSol||0)+' SOL</code>';
+ document.getElementById('kpi').innerHTML='<div><span>Candidates</span><b>'+d.total+'</b></div><div><span>Approved</span><b style="color:#3fb950">'+d.approved+'</b></div><div><span>Rejected</span><b style="color:#f85149">'+d.rejected+'</b></div>';
+ const rl=d.rejectedList||[];
+ document.getElementById('rej').innerHTML=rl.length?rl.map(x=>'<div class="rej"><b>'+(x.pair||x.symbol)+'</b> — '+x.reasons.join('; ')+'</div>').join(''):'<span style="color:#8b949e">No rejections in this scan.</span>';
+}).catch(e=>document.getElementById('rej').innerHTML='<span style="color:#f85149">Service offline.</span>');
+</script></body></html>
