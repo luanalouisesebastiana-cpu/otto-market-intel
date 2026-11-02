@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Profit Split & Payouts</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:880px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}
+table{width:100%;border-collapse:collapse}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.82rem}
+.ok{color:#3fb950}code{color:#79c0ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Profit Split & Payouts</h1>
+<p>Genesis mandate: <strong>50% of net profit</strong> to creator <code>4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU</code>, 50% retained. Trigger: ≥ 0.0500 SOL. Reserve 0.0100 SOL untouchable.</p>
+<div class="kpi" id="kpi"></div>
+<h2>Prepared payout (latest)</h2><pre id="prep" style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:1rem;font-size:.82rem">loading…</pre>
+<h2>Payout history</h2>
+<table><thead><tr><th>To</th><th>Amount</th><th>Lamports</th><th>Memo</th><th>When</th><th>Mode</th></tr></thead><tbody id="rows"><tr><td colspan="6">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./treasury.html">treasury</a> · <a href="./audit.html">audit</a></p>
+<script>
+fetch('/v1/payout').then(r=>r.json()).then(d=>{
+ const p=d.prepared||{};const sp=p.split||{};
+ document.getElementById('kpi').innerHTML='<div><span>Creator</span><b style="font-size:.9rem">'+d.creator.slice(0,6)+'…'+d.creator.slice(-4)+'</b></div><div><span>Split</span><b>'+d.splitPct+'%</b></div><div><span>Trigger</span><b>'+d.triggerSol+' SOL</b></div><div><span>Reserve</span><b>'+d.reserveSol+' SOL</b></div>';
+ document.getElementById('prep').innerHTML=JSON.stringify(p,null,2);
+ const h=d.history||[];
+ document.getElementById('rows').innerHTML=h.length?h.map(x=>'<tr><td><code>'+x.to.slice(0,6)+'…'+x.to.slice(-4)+'</code></td><td>'+x.amountSol+' SOL</td><td>'+x.amountLamports+'</td><td>'+x.memo+'</td><td>'+new Date(x.preparedAt).toLocaleString()+'</td><td>'+(x.dryRun?'<span style="color:#f0883e">dry-run</span>':'<span class="ok">broadcast</span>')+'</td></tr>').join(''):'<tr><td colspan="6">No payouts prepared yet.</td></tr>';
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="6">Service offline.</td></tr>');
+</script></body></html>
