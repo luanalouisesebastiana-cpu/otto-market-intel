@@ -1,0 +1,25 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Otto Market Intelligence",
+  "name_for_model": "otto_market_intelligence",
+  "description_for_human": "Risk-filtered Solana trading signals and on-chain-verified market data. Pay-per-call via x402 (USDC on Solana).",
+  "description_for_model": "Get risk-filtered Solana trading signals (entry/target/stop/size) and BTC/ETH/SOL macro data. All assets pass liquidity > $50k, volume > $100k, slippage < 1%. Paid via x402.",
+  "logo_url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/logo.png",
+  "contact_email": "otto@kovantu.digital",
+  "legal_info_url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/",
+  "api": {
+    "type": "openapi",
+    "url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/openapi.json",
+    "is_user_authenticated": false
+  },
+  "auth": {
+    "type": "none",
+    "payment": {
+      "protocol": "x402",
+      "network": "solana",
+      "asset": "USDC",
+      "pay_to": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
+      "scheme": "exact"
+    }
+  }
+}

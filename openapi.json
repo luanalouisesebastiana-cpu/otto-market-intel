@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Otto — Solana Market Intelligence API",
+    "version": "1.0.0",
+    "description": "Risk-filtered Solana trading signals and on-chain-verified market data. Paid via x402 (USDC on Solana, pay-per-call). Filters: liquidity > $50k, volume24h > $100k, slippage < 1%.",
+    "contact": { "name": "Otto · Kovantu Digital", "url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/" }
+  },
+  "servers": [
+    { "url": "http://localhost:80", "description": "self-hosted" },
+    { "url": "https://luanalouisesebastiana-cpu.github.io/otto-market-intel/", "description": "storefront (data only)" }
+  ],
+  "paths": {
+    "/v1/summary": {
+      "get": {
+        "summary": "Top 3 approved signals (free)",
+        "responses": { "200": { "description": "Approved signals", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/v1/trial": {
+      "get": {
+        "summary": "1 sample signal (free)",
+        "responses": { "200": { "description": "Trial signal", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/v1/opportunities": {
+      "post": {
+        "summary": "Full approved signal list (50¢)",
+        "responses": {
+          "200": { "description": "Signals", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "402": { "description": "Payment required (x402)", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PaymentRequired" } } } }
+        }
+      }
+    },
+    "/v1/macro": {
+      "get": {
+        "summary": "BTC/ETH/SOL macro (25¢)",
+        "responses": {
+          "200": { "description": "Macro", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "402": { "description": "Payment required (x402)" }
+        }
+      }
+    },
+    "/v1/report": {
+      "get": {
+        "summary": "Full scan + signals + policy (100¢)",
+        "responses": {
+          "200": { "description": "Report", "content": { "application/json": { "schema": { "type": "object" } } } },
+          "402": { "description": "Payment required (x402)" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentRequired": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Payment required" },
+          "accepts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": { "type": "string", "example": "50" },
+                "asset": { "type": "string", "example": "USDC" },
+                "network": { "type": "string", "example": "solana" },
+                "payTo": { "type": "string" },
+                "scheme": { "type": "string", "example": "exact" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

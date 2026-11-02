@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://luanalouisesebastiana-cpu.github.io/otto-market-intel/sitemap.xml
