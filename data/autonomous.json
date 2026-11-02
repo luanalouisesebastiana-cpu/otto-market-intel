@@ -1,5 +1,5 @@
 {
-  "cycle": "2026-11-02T20:53:05.190Z",
+  "cycle": "2026-11-02T21:07:22.770Z",
   "decision": "OBSERVE",
   "reason": "top edge $0.00 < $0.5 threshold — not worth the fees",
   "chosen": null,
@@ -9,18 +9,18 @@
   "top": {
     "symbol": "SOL",
     "score": 1,
-    "liq": 25167998.93,
-    "vol": 92463706.73
+    "liq": 25203692.49,
+    "vol": 93566298.04
   },
   "macro": {
     "bitcoin": {
-      "usd": 76806
+      "usd": 76733
     },
     "ethereum": {
-      "usd": 2245.79
+      "usd": 2249.2
     },
     "solana": {
-      "usd": 91.42
+      "usd": 91.57
     }
   },
   "validation": [

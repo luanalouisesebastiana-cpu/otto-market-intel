@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T20:53:12.018Z",
+  "generatedAt": "2026-11-02T21:07:30.598Z",
   "strategy": {
     "targetPct": 3,
     "stopPct": -8,
@@ -11,8 +11,8 @@
       "wins": 2,
       "losses": 0,
       "winRate": 0.000925925925925926,
-      "totalRet": 17.4,
-      "equity": 1.173,
+      "totalRet": 17.3,
+      "equity": 1.172,
       "maxDD": 12.1,
       "log": [
         {
@@ -81,9 +81,9 @@
         {
           "i": 2159,
           "entry": 76947.06,
-          "ret": -0.17,
+          "ret": -0.27,
           "outcome": "hold",
-          "equity": 1.173
+          "equity": 1.172
         }
       ]
     },
@@ -92,8 +92,8 @@
       "wins": 5,
       "losses": 0,
       "winRate": 0.0023148148148148147,
-      "totalRet": 13.7,
-      "equity": 1.119,
+      "totalRet": 13.8,
+      "equity": 1.12,
       "maxDD": 21.2,
       "log": [
         {
@@ -162,9 +162,9 @@
         {
           "i": 2159,
           "entry": 2248.91,
-          "ret": -0.14,
+          "ret": -0.04,
           "outcome": "hold",
-          "equity": 1.119
+          "equity": 1.12
         }
       ]
     },
@@ -173,8 +173,8 @@
       "wins": 6,
       "losses": 0,
       "winRate": 0.002777777777777778,
-      "totalRet": 23,
-      "equity": 1.212,
+      "totalRet": 23.1,
+      "equity": 1.214,
       "maxDD": 26.6,
       "log": [
         {
@@ -243,9 +243,9 @@
         {
           "i": 2159,
           "entry": 91.48,
-          "ret": -0.02,
+          "ret": 0.1,
           "outcome": "hold",
-          "equity": 1.212
+          "equity": 1.214
         }
       ]
     }

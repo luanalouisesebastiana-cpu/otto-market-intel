@@ -1,6 +1,6 @@
 {
   "bank": 100,
-  "cash": 87.5,
+  "cash": 76.5625,
   "positions": [
     {
       "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
@@ -12,21 +12,47 @@
       "stop": 96.002,
       "openedAt": "2026-11-02T21:04:11.425Z",
       "status": "OPEN",
-      "sourceScore": null
+      "sourceScore": null,
+      "livePrice": 104.35,
+      "liveLiq": 2191052975.83,
+      "pnlPct": 0
+    },
+    {
+      "mint": "AyiQP43hqPXRfJNH1kcRVS7jq1AjbCqXK2E4jxmWVP5u",
+      "pair": "SOL",
+      "dex": "raydium",
+      "entry": 104.35,
+      "sizeUSD": 10.94,
+      "target": 107.4805,
+      "stop": 96.002,
+      "openedAt": "2026-11-02T21:06:58.338Z",
+      "status": "OPEN",
+      "sourceScore": null,
+      "livePrice": 104.35,
+      "liveLiq": 2191052975.83,
+      "pnlPct": 0
     }
   ],
   "closed": [],
-  "cycle": 1,
+  "cycle": 3,
   "equity": [
     {
       "t": "2026-11-02T21:04:11.413Z",
+      "v": 100
+    },
+    {
+      "t": "2026-11-02T21:06:58.332Z",
+      "v": 100
+    },
+    {
+      "t": "2026-11-02T21:09:00.743Z",
       "v": 100
     }
   ],
   "startedAt": "2026-11-02T21:04:11.389Z",
   "stats": {
-    "cycle": 1,
-    "open": 1,
+    "cycle": 3,
+    "open": 2,
     "closed": 0,
     "winRate": 0,
     "totalPnlUSD": 0,

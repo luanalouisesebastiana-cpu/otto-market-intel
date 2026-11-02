@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T20:52:57.134Z",
+  "generatedAt": "2026-11-02T21:09:05.287Z",
   "policy": {
     "stopPct": -8,
     "note": "exit at target or -8% stop; read-only verification"
@@ -19,7 +19,7 @@
       "liveUSD": 104.35,
       "liveSource": "dexscreener",
       "pair": "SOL/USDC",
-      "liqUsd": 2191052971.53,
+      "liqUsd": 2191052975.83,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,
