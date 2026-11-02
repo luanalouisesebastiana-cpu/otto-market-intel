@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Verificador de Segurança de Token (Honeypot / Liquidez)</title>
+<meta name="description" content="Verifique se um token Solana é seguro: liquidez, idade, e teste de honeypot (cotação de venda via Jupiter).">
+<style>
+:root{--bg:#0b1020;--card:#121a2e;--txt:#e6edf7;--mut:#8b9bb4;--acc:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{font-size:1.5rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 20px}
+.form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.form input{flex:1;min-width:240px;padding:11px 12px;background:#0a0f1c;color:var(--txt);border:1px solid #1e2a44;border-radius:8px;font-family:ui-monospace,monospace;font-size:.85rem}
+button{padding:11px 20px;background:var(--acc);color:#04121f;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+.verdict{display:inline-block;padding:6px 14px;border-radius:99px;font-weight:700;font-size:.9rem;margin:6px 0}
+.v-safe{background:#064e3b;color:#6ee7b7}.v-caution{background:#78350f;color:#fcd34d}.v-risk{background:#7f1d1d;color:#fca5a5}.v-unknown{background:#334155;color:#cbd5e1}
+.card{background:var(--card);border:1px solid #1e2a44;border-radius:10px;padding:16px;margin:12px 0}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:6px 14px;font-size:.9rem}
+.kv b{color:var(--mut);font-weight:500}
+.scorebar{height:10px;background:#1e2a44;border-radius:99px;overflow:hidden;margin:8px 0}
+.scorebar>div{height:100%;background:var(--acc)}
+.note{color:var(--mut);font-size:.82rem}
+.cta{background:#0e1626;border:1px solid #134e4a;border-radius:10px;padding:14px 18px;margin-top:20px;font-size:.88rem}
+.cta a{color:var(--acc)}
+footer{color:var(--mut);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Verificador de Segurança de Token</h1>
+<p class="sub">Honeypot? Liquidez travada? Checa liquidez, idade e testa a cotação de venda (Jupiter) antes de comprar.</p>
+<div class="form">
+  <input id="mint" placeholder="Mint do token (endereço)" spellcheck="false">
+  <button id="go">Verificar</button>
+</div>
+<div id="out"></div>
+<div class="cta">
+<strong>Ferramentas:</strong> <a href="/token-check.html">risco do token</a> ·
+<a href="/route.html">otimizar rota</a> ·
+<a href="/swap.html">lançar swap</a> ·
+<a href="/dashboard.html">painel</a>
+</div>
+<footer>Otto — Kovantu Digital. Análise read-only. Não é conselho de investimento.</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const LIVE = 'https://luanalouisesebastiana-cpu.github.io/otto-market-intel/';
+async function resolveBase(){
+  try{ const r=await fetch(LIVE+'LIVE.md'); const t=await r.text();
+    const m=t.match(/https:\/\/[a-z0-9]+\.instatunnel\.my/); return m?m[0]:null; }catch(e){ return null; }
+}
+$('go').onclick = async () => {
+  const mint = $('mint').value.trim();
+  if(!mint){ $('out').innerHTML='<p class="note">Informe o mint do token.</p>'; return; }
+  $('out').innerHTML='<p class="note">Verificando…</p>';
+  const base = await resolveBase();
+  if(!base){ $('out').innerHTML='<p class="note">Serviço temporariamente indisponível. Tente em instantes.</p>'; return; }
+  try{
+    const r = await fetch(base+'/v1/safety?mint='+encodeURIComponent(mint));
+    if(r.status===402){ const c=await r.json();
+      $('out').innerHTML='<div class="card"><span class="verdict v-unknown">Pagamento necessário</span>'
+        +'<p>Este relatório custa <b>'+c.accepted.amountUsd+' USDC</b> (x402). Serviço: <code>'+c.resource+'</code></p>'
+        +'<p class="note">O endpoint gratuito de risco está em <a href="/token-check.html">token-check</a>.</p></div>'; return; }
+    if(!r.ok){ $('out').innerHTML='<p class="note">Erro ao verificar. Tente outro mint.</p>'; return; }
+    const d = await r.json();
+    const v = d.verdict||'unknown';
+    const cls = v==='likely-safe'?'v-safe':v==='caution'?'v-caution':v==='high-risk'?'v-risk':'v-unknown';
+    const lbl = v==='likely-safe'?'Provavelmente seguro':v==='caution'?'Cautela':v==='high-risk'?'Alto risco':v;
+    const c = d.checks||{};
+    const money = n => n?('$'+Number(n).toLocaleString()):'—';
+    $('out').innerHTML = '<div class="card">'
+      +'<span class="verdict '+cls+'">'+lbl+'</span>'
+      +'<div class="scorebar"><div style="width:'+(d.score||0)+'%"></div></div>'
+      +'<div class="kv">'
+      +'<b>Score</b><span>'+(d.score)+'/100</span>'
+      +'<b>Liquidez</b><span>'+money(c.liquidityUsd)+'</span>'
+      +'<b>Volume 24h</b><span>'+money(c.volume24hUsd)+'</span>'
+      +'<b>Idade do par</b><span>'+(c.ageHours!=null?c.ageHours+'h':'—')+'</span>'
+      +'<b>DEX</b><span>'+(c.dex||'—')+'</span>'
+      +'<b>Pares</b><span>'+(c.pairCount||'—')+'</span>'
+      +'<b>Venda (honeypot)</b><span>'+(c.sellQuote?(c.sellQuote.canSell?'✔ cotável':'✘ sem cotação'):'—')+'</span>'
+      +'</div>'
+      +((d.notes||[]).map(n=>'<p class="note">• '+n+'</p>').join(''))
+      +'<p class="note">Fontes: '+((d.sources||[]).join(', ')||'—')+'</p>'
+      +'</div>';
+  }catch(e){ $('out').innerHTML='<p class="note">Falha de rede. Tente novamente.</p>'; }
+};
+</script>
+</body>
+</html>
