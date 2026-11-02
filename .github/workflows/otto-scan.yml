@@ -15,10 +15,12 @@ jobs:
           node-version: 20
       - name: Scan market + build public data
         run: node scan-publish.mjs
+      - name: Regenerate paid report from live scan
+        run: python3 gen-report.py
       - name: Commit + push live data
         run: |
           git config user.name "Otto Bot"
           git config user.email "otto@kovantu.digital"
-          git add data/ || true
-          git diff --quiet && git diff --staged --quiet || git commit -m "scan: update live market data"
+          git add data/ report.json || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "scan: update live market data + report"
           git push
