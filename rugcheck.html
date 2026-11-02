@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Rug Risk Analyzer</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:820px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .score{font-size:3rem;font-weight:800;margin:.5rem 0}
+.v-safe{color:#3fb950}.v-caution{color:#f0883e}.v-risk{color:#f85149}.v-unknown{color:#8b949e}
+input{width:100%;padding:.7rem;font-size:1rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.6rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+.flag{padding:.5rem .75rem;border-radius:6px;margin:.3rem 0;font-size:.9rem}
+.f-OK{background:#1d3d2a;color:#3fb950}.f-WARN{background:#3d2e1d;color:#f0883e}.f-RED{background:#3d1d1d;color:#f85149}
+table{width:100%;border-collapse:collapse;margin:1rem 0}td,th{padding:.4rem .6rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
+a{color:#58a6ff}</style></head><body>
+<h1>Otto — Rug Risk Analyzer</h1>
+<p>Deep Solana token safety check: mint authority, freeze authority, top-10 holder concentration, liquidity. The #1 pre-buy check.</p>
+<input id="mint" placeholder="Token mint address (e.g. DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263)">
+<button onclick="check()">Analyze</button>
+<div id="out"><p style="color:#8b949e">Enter a mint address to analyze.</p></div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./token-check.html">token safety</a> · <a href="./pools.html">new pools</a></p>
+<script>
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+async function check(){
+ const mint=document.getElementById('mint').value.trim();
+ if(!mint){alert('Enter a mint address');return;}
+ document.getElementById('out').innerHTML='<p style="color:#8b949e">Analyzing on-chain data…</p>';
+ try{
+  const r=await fetch('/v1/rugcheck?mint='+encodeURIComponent(mint));const d=await r.json();
+  if(d.error){document.getElementById('out').innerHTML='<p class="v-risk">'+esc(d.error)+'</p>';return;}
+  const vc=d.verdict==='LIKELY-SAFE'?'v-safe':d.verdict==='CAUTION'?'v-caution':d.verdict==='HIGH-RISK'?'v-risk':'v-unknown';
+  let h='<div class="score '+vc+'">'+d.score+'<span style="font-size:1rem;color:#8b949e"> /100</span></div><div class="'+vc+'">'+d.verdict+'</div>';
+  h+='<h2>Checks</h2>'+(d.flags||[]).map(f=>'<div class="flag f-'+f.level+'">'+f.level+' — '+esc(f.msg)+'</div>').join('');
+  if(d.pair){h+='<h2>Market</h2><table><tr><td>Pair</td><td>'+esc(d.pair)+'</td></tr><tr><td>DEX</td><td>'+esc(d.dex)+'</td></tr><tr><td>Liquidity</td><td>$'+Number(d.liquidityUsd||0).toLocaleString()+'</td></tr><tr><td>Vol 24h</td><td>$'+Number(d.volume24Usd||0).toLocaleString()+'</td></tr><tr><td>Top-10 holders</td><td>'+(d.top10Share!=null?d.top10Share+'%':'n/a')+'</td></tr></table>';}
+  if(d.topHolders&&d.topHolders.length){h+='<h2>Top holders</h2><table>'+d.topHolders.slice(0,5).map(t=>'<tr><td><code>'+esc(t.addr.slice(0,8))+'…'+esc(t.addr.slice(-4))+'</code></td><td>'+esc(t.uiAmount||t.amount)+'</td></tr>').join('')+'</table>';}
+  document.getElementById('out').innerHTML=h;
+ }catch(e){document.getElementById('out').innerHTML='<p class="v-risk">Service offline.</p>';}
+}
+</script></body></html>

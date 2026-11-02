@@ -96,6 +96,7 @@ async function handle(req,res){
   try { const rec=await import('./scripts/usage.mjs'); const paid = p.startsWith('/v1/') && !['/v1/opportunities/free','/v1/summary','/v1/signals/sample','/v1/scanner'].includes(p); rec.record({ endpoint:p, method:req.method, status: paid?'CHALLENGED':'FREE', ua:req.headers['user-agent']||null, ip:req.socket.remoteAddress||null }); } catch(e){}
   // usage summary endpoint
   if (p==='/v1/usage') { const u=await import('./scripts/usage.mjs'); const s=u.summarize(); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(s)); }
+  if (p==='/v1/rugcheck') { try { const mint=url.searchParams.get('mint'); if(!mint){res.writeHead(400,{'content-type':'application/json'});return res.end('{"error":"mint required"}');} const m=await import('./scripts/rugcheck.mjs'); const r=await m.rugCheck(mint); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(r)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,score:0,verdict:'UNKNOWN'})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files
