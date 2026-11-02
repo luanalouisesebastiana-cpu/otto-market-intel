@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Price Alerts</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:820px;margin:0 auto;padding:2rem}
+h1{color:#f78166} label{display:block;margin:.5rem 0 .2rem;color:#8b949e;font-size:.85rem}
+input,select{width:100%;padding:.6rem;background:#161b22;border:1px solid #30363d;color:#c9d1d9;border-radius:6px}
+button{margin-top:.8rem;padding:.7rem 1.4rem;background:#238636;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer}
+.alert{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.7rem 1rem;margin:.5rem 0;font-size:.9rem}
+.trig{color:#f0883e;font-weight:700}.ok{color:#3fb950}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Price Alerts</h1>
+<p>Register threshold alerts on any Solana token or major symbol. When the price crosses, we fire your webhook. Free tier of the intel service.</p>
+<label>Token</label><input id="sym" placeholder="symbol (SOL/BTC/ETH) or mint address">
+<label>Direction</label><select id="dir"><option value="above">Crosses ABOVE</option><option value="below">Crosses BELOW</option></select>
+<label>Threshold (USD)</label><input id="th" type="number" step="any" placeholder="0.00">
+<label>Webhook URL (optional)</label><input id="hook" placeholder="https://example.com/webhook">
+<button onclick="reg()">Register alert</button>
+<div id="msg"></div>
+<h2 style="margin-top:1.5rem">Registered alerts</h2><div id="list"><span style="color:#8b949e">loading…</span></div>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./stream.html">live stream</a></p>
+<script>
+async function reg(){
+ const sym=document.getElementById('sym').value.trim(),dir=document.getElementById('dir').value,th=document.getElementById('th').value,hook=document.getElementById('hook').value.trim();
+ if(!sym||!th){alert('Token and threshold required');return;}
+ const body={symbol:sym.length<20?sym:null,mint:sym.length>=20?sym:null,direction:dir,threshold:parseFloat(th),webhookUrl:hook||null,label:sym+' '+dir+' '+th};
+ const r=await fetch('/v1/alerts',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+ const d=await r.json();
+ document.getElementById('msg').innerHTML=d.id?'<span class="ok">✓ Alert registered: '+d.id+'</span>':'<span style="color:#f85149">'+d.error+'</span>';
+ loadList();
+}
+async function loadList(){
+ const r=await fetch('/v1/alerts');const d=await r.json();const a=d.alerts||[];
+ document.getElementById('list').innerHTML=a.length?a.map(x=>'<div class="alert"><b>'+x.label+'</b> · '+(x.lastPrice?'$'+Number(x.lastPrice).toLocaleString():'no price yet')+' '+(x.triggered?'<span class="trig">TRIGGERED</span>':'<span style="color:#8b949e">watching</span>')+'</div>').join(''):'<span style="color:#8b949e">No alerts yet.</span>';
+}
+loadList();
+</script></body></html>
