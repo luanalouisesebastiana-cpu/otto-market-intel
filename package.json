@@ -1,13 +1,15 @@
 {
   "name": "otto-market-intel",
   "version": "1.0.0",
-  "description": "Otto — Solana market-intelligence API client. Buy risk-filtered signals + on-chain-verified market data via x402 (USDC on Solana, pay-per-call).",
-  "main": "client.js",
+  "description": "Otto — self-contained Solana market-intelligence service (dashboard + x402 paid API). No external deps.",
   "type": "module",
-  "files": ["client.js", "x402-pay.js", "x402.json", "README.md"],
-  "scripts": { "test": "node example.mjs" },
-  "keywords": ["solana", "x402", "market-intelligence", "trading", "signals", "usdc", "autonomous-agent", "kovantu"],
-  "author": "Kovantu Digital",
+  "main": "public-service.mjs",
+  "scripts": {
+    "start": "node public-service.mjs",
+    "test": "node public-service.mjs"
+  },
+  "engines": { "node": ">=20" },
   "license": "MIT",
-  "repository": "https://github.com/luanalouisesebastiana-cpu/otto-market-intel"
+  "author": "Kovantu Digital",
+  "keywords": ["solana", "x402", "market-intelligence", "trading", "signals", "usdc", "autonomous-agent", "kovantu"]
 }

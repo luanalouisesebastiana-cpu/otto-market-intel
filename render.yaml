@@ -1,13 +1,10 @@
-# Render Blueprint — deploys Otto's paid x402 market-intel service to a real public URL.
-# One-click: connect this repo to Render, or `render blueprint create`.
-# Free tier serves HTTP at https://<service-name>.onrender.com
 services:
   - type: web
     name: otto-market-intel
     runtime: node
     plan: free
     buildCommand: npm install || true
-    startCommand: node public-service.mjs
+    startCommand: npm start
     healthCheckPath: /health
     envVars:
       - key: PORT

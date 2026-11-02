@@ -1,142 +1,135 @@
 #!/usr/bin/env node
-/**
- * Otto — Unified Public Service v2 (single port 80)
- * -------------------------------------------------------------
- * Serves on port 80 (Conway routing target). Integrates the signal engine
- * (risk-filtered entry/target/stop signals) into the dashboard + paid endpoints.
- *
- *   GET  /                 -> live dashboard (signals + macro + catalog)
- *   GET  /health           -> health + scan/signal status
- *   GET  /agent-card       -> ERC-8004 discovery
- *   GET  /catalog          -> pricing
- *   GET  /.well-known/x402.json -> x402 discovery
- *   GET  /v1/summary       -> free sample (top approved signals)
- *   GET  /v1/trial         -> free single signal
- *   POST /v1/opportunities -> PAID 50c (full approved signal list)
- *   GET  /v1/macro         -> PAID 25c
- *   GET  /v1/report        -> PAID 100c (full scan + signals + macro)
- *
- * Paid endpoints require an x402 `X-Payment` header (USDC Solana, verified
- * on-chain before delivery). No header -> 402 with accepts.
- */
+// Otto — Self-Contained Public Service (Render / any Node host). No deps, no absolute paths.
 import http from 'node:http';
-import { readFileSync, existsSync, appendFileSync } from 'node:fs';
+import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, extname } from 'node:path';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 80);
-const SCAN = '/root/.automaton/scanner/summary.json';
-const SIGNAL = '/root/.automaton/market-intel/signal.json';
+const DATA = join(__dirname, 'data');
+mkdirSync(DATA, { recursive: true });
 const RECEIVER = 'EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK';
 const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 const RPC = ['https://api.mainnet-beta.solana.com', 'https://solana-mainnet.rpc.extrnode.com'];
+const PRICES = { '/v1/opportunities': 50, '/v1/macro': 25, '/v1/report': 100, '/v1/intel': 100, '/v1/arb': 50 };
+const MIME = { '.html':'text/html; charset=utf-8', '.json':'application/json; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.ico':'image/x-icon', '.txt':'text/plain; charset=utf-8', '.xml':'application/xml; charset=utf-8' };
 
-const PRICES = { '/v1/opportunities': 50, '/v1/macro': 25, '/v1/report': 100 };
+function readJson(p, fb) { try { if (existsSync(p)) return JSON.parse(readFileSync(p,'utf8')); } catch {} return fb; }
+function readIntel() { return readJson(join(DATA,'intel.json'), { generatedAt:null, macro:null, opportunities:[], arb:[], summary:{} }); }
+function readOpps() { return readJson(join(DATA,'opportunities.json'), { generatedAt:null, opportunities:[] }); }
+function readArb() { return readJson(join(DATA,'arb.json'), { generatedAt:null, opportunities:[] }); }
 
-function readJson(path, fallback) {
-  try { if (existsSync(path)) return JSON.parse(readFileSync(path, 'utf8')); } catch {}
-  return fallback;
+function send(res, code, body, headers={}) { const d = typeof body==='string'?body:JSON.stringify(body,null,2); res.writeHead(code, {'content-type':'application/json; charset=utf-8', ...headers}); res.end(d); }
+function esc(s) { return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtUsd(v) { const n=Number(v); if(!Number.isFinite(n)) return '—'; if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M'; if(n>=1e3) return '$'+(n/1e3).toFixed(1)+'k'; return '$'+n.toFixed(0); }
+
+async function refreshIfStale() {
+  const f = join(DATA,'intel.json');
+  let age = Infinity;
+  try { const j=JSON.parse(readFileSync(f,'utf8')); if(j.generatedAt) age = Date.now()-Date.parse(j.generatedAt); } catch {}
+  if (age < 15*60*1000) return;
+  try {
+    const tokens=['SOL','JUP','PYTH','WIF','BONK','USDC','USDT','RAY','ORCA','SRM'];
+    let opps=[], arb=[];
+    for (const q of tokens) {
+      const r=await fetch('https://api.dexscreener.com/latest/dex/search?q='+q); if(!r.ok) continue;
+      const j=await r.json(); const pairs=(j?.pairs||[]).filter(p=>p.chainId==='solana');
+      for(const p of pairs){ const liq=p.liquidity?.usd||0, vol=p.volume?.h24||0; if(liq>50000&&vol>100000) opps.push({mint:p.baseToken.address,symbol:p.baseToken.symbol,dex:p.dexId,liqUsd:liq,vol24Usd:vol,priceUsd:+p.priceUsd,change24h:p.priceChange?.h24??null}); }
+      const byMint={}; for(const p of pairs){const m=p.baseToken.address;if(!byMint[m])byMint[m]={s:p.baseToken.symbol,v:[]};byMint[m].v.push({d:p.dexId,pr:+p.priceUsd,l:p.liquidity?.usd||0});}
+      for(const m of Object.values(byMint)){ if(m.v.length<2)continue; const pr=m.v.map(v=>v.pr).filter(x=>x>0); if(pr.length<2)continue; const mn=Math.min(...pr),mx=Math.max(...pr),sp=((mx-mn)/mn)*100; if(sp>0.3){const c=m.v.find(v=>v.pr===mn),rr=m.v.find(v=>v.pr===mx);arb.push({symbol:m.s,spreadPct:+sp.toFixed(2),buyOn:c.d,sellOn:rr.d,liqUsd:Math.min(c.l,rr.l)});} }
+    }
+    const seen=new Set(); opps=opps.filter(o=>{if(seen.has(o.mint))return false;seen.add(o.mint);return true;}).sort((a,b)=>b.liqUsd-a.liqUsd);
+    arb.sort((a,b)=>b.spreadPct-a.spreadPct);
+    let macro=null;
+    try { const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true'); if(r.ok){const m=await r.json();macro={btusd:m.bitcoin?.usd,btchg:m.bitcoin?.usd_24h_change,ethusd:m.ethereum?.usd,ethchg:m.ethereum?.usd_24h_change,solusd:m.solana?.usd,solchg:m.solana?.usd_24h_change};} } catch {}
+    const out={generatedAt:new Date().toISOString(),macro,opportunities:opps.slice(0,20),arb:arb.slice(0,15),summary:{opportunities:opps.length,arbSpreads:arb.length}};
+    writeFileSync(join(DATA,'intel.json'),JSON.stringify(out,null,2));
+    writeFileSync(join(DATA,'opportunities.json'),JSON.stringify({generatedAt:out.generatedAt,opportunities:out.opportunities},null,2));
+    writeFileSync(join(DATA,'arb.json'),JSON.stringify({generatedAt:out.generatedAt,opportunities:out.arb},null,2));
+    console.log('[refresh] wrote data/intel.json ('+opps.length+' opps, '+arb.length+' arb)');
+  } catch(e) { console.warn('[refresh] failed:',e.message); }
 }
-function readScan() { return readJson(SCAN, { pairs: [], approved: [], all: [], macro: {}, generatedAt: null }); }
-function readSignal() { return readJson(SIGNAL, { signals: [], top: [], stats: {}, generatedAt: null }); }
-
-function send(res, code, body, headers = {}) {
-  const d = typeof body === 'string' ? body : JSON.stringify(body, null, 2);
-  res.writeHead(code, { 'content-type': 'application/json; charset=utf-8', ...headers });
-  res.end(d);
-}
-function esc(s) { return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
-function fmtUsd(v) { const n = Number(v); if (!Number.isFinite(n)) return '—'; if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M'; if (n >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'k'; return '$' + n.toFixed(0); }
 
 function parsePaymentHeader(header) {
-  if (!header) return { txnSignature: null, parseError: 'empty header' };
-  let obj = header;
-  if (typeof header === 'string' && !header.trim().startsWith('{')) {
-    try { obj = JSON.parse(Buffer.from(header, 'base64').toString('utf8')); } catch { return { txnSignature: null, parseError: 'header not JSON' }; }
-  } else { try { obj = JSON.parse(header); } catch { return { txnSignature: null, parseError: 'header is not valid JSON' }; } }
-  const payload = obj.payload || {};
-  const txnSignature = payload.signature || payload.txnSignature || obj.txnSignature || obj.signature || null;
-  const network = obj.network || payload.network || null;
-  const payer = payload.payer || payload.from || obj.payer || null;
-  return { txnSignature, network, payer, parseError: txnSignature ? null : 'no signature found in payment payload' };
+  if(!header) return {txnSignature:null,parseError:'empty header'};
+  let obj=header;
+  if(typeof header==='string'&&!header.trim().startsWith('{')){ try{obj=JSON.parse(Buffer.from(header,'base64').toString('utf8'));}catch{return{txnSignature:null,parseError:'header not JSON'};} }
+  else { try{obj=JSON.parse(header);}catch{return{txnSignature:null,parseError:'header is not valid JSON'};} }
+  const pl=obj.payload||{};
+  const txnSignature=pl.signature||pl.txnSignature||obj.txnSignature||obj.signature||null;
+  const network=obj.network||pl.network||null;
+  return {txnSignature,network,payer:pl.payer||pl.from||obj.payer||null,parseError:txnSignature?null:'no signature found in payment payload'};
+}
+async function fetchTransaction(sig){ for(const ep of RPC){ try{ const c=new AbortController(); const t=setTimeout(()=>c.abort(),8000); const r=await fetch(ep,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTransaction',params:[sig,{encoding:'jsonParsed',maxSupportedTransactionVersion:0}]}),signal:c.signal}); clearTimeout(t); if(!r.ok)continue; const j=await r.json(); if(j.result)return j.result; }catch{} } return null; }
+async function verifyPayment({paymentHeader,receiver,amountUsd}){
+  const p=paymentHeader?parsePaymentHeader(paymentHeader):{}; const sig=p.txnSignature;
+  if(p.network&&p.network!=='solana') return {ok:false,verified:false,reason:'unsupported network'};
+  if(!sig) return {ok:false,verified:false,reason:p.parseError||'missing txnSignature'};
+  if(!receiver) return {ok:false,verified:false,reason:'missing receiver'};
+  const tx=await fetchTransaction(sig);
+  if(!tx) return {ok:false,verified:false,reason:'rpc unreachable — could not confirm on-chain transfer'};
+  const pre=tx.meta?.preTokenBalances||[], post=tx.meta?.postTokenBalances||[];
+  const usdc=b=>b.filter(x=>x.mint===USDC_MINT); const preUsdc=usdc(pre), postUsdc=usdc(post);
+  const delta=postUsdc.reduce((acc,b)=>{ if(b.owner===receiver){ const pb=preUsdc.find(x=>x.owner===b.owner&&x.accountIndex===b.accountIndex); const pa=pb?Number(pb.uiTokenAmount?.uiAmountString||0):0; acc+=Number(b.uiTokenAmount?.uiAmountString||0)-pa; } return acc; },0);
+  const expected=Number(amountUsd), tol=expected*0.01;
+  if(delta>=expected-tol) return {ok:true,verified:true,reason:'USDC transfer confirmed on-chain',tx:{signature:sig,receiverDelta:delta,expected}};
+  return {ok:false,verified:false,reason:`USDC delta ${delta} < expected ${expected}`,tx:{signature:sig,receiverDelta:delta,expected}};
 }
 
-async function fetchTransaction(sig) {
-  for (const ep of RPC) {
-    try {
-      const c = new AbortController(); const t = setTimeout(() => c.abort(), 8000);
-      const r = await fetch(ep, { method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getTransaction', params: [sig, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }] }), signal: c.signal });
-      clearTimeout(t); if (!r.ok) continue; const j = await r.json(); if (j.result) return j.result;
-    } catch {}
+function dashboard(intel) {
+  const opps=intel.opportunities||[], arb=intel.arb||[], m=intel.macro||{};
+  const oppRows=opps.slice(0,10).map(o=>{const c=o.change24h;const cls=c==null?'':c>=0?'up':'down';return `<tr><td>${esc(o.symbol)}</td><td>${esc(o.dex)}</td><td class="num">${fmtUsd(o.liqUsd)}</td><td class="num">${fmtUsd(o.vol24Usd)}</td><td class="num ${cls}">${c==null?'—':(c>=0?'+':'')+c.toFixed(1)+'%'}</td></tr>`;}).join('');
+  const arbRows=arb.slice(0,8).map(o=>`<tr><td>${esc(o.symbol)}</td><td class="num spread">+${o.spreadPct.toFixed(2)}%</td><td>${esc(o.buyOn)}</td><td>${esc(o.sellOn)}</td><td class="num">${fmtUsd(o.liqUsd)}</td></tr>`).join('');
+  const bt=m.btusd?'$'+Number(m.btusd).toLocaleString():'—', et=m.ethusd?'$'+Number(m.ethusd).toLocaleString():'—', so=m.solusd?'$'+Number(m.solusd).toLocaleString():'—';
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Otto — Solana Market Intelligence API</title><meta name="description" content="Risk-filtered Solana market intelligence + on-chain-verified data via x402 (USDC, pay-per-call)."><style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}.wrap{max-width:1000px;margin:0 auto}h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}th,td{padding:8px;text-align:left;border-bottom:1px solid #1e293b}th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}.price{color:#38bdf8;font-weight:700}h2{color:#94a3b8;font-size:15px;margin:26px 0 8px}.up{color:#4ade80}.down{color:#f87171}.spread{color:#f59e0b;font-weight:700}</style></head><body><div class="wrap"><h1>Otto — Solana Market Intelligence</h1><p style="color:#94a3b8">Autonomous market-intelligence agent — Kovantu Digital. Risk-filtered data + on-chain-verified reports via x402 (USDC · Solana).</p><div><span class="badge">● LIVE</span><span class="badge">${opps.length} opportunities</span><span class="badge">${arb.length} arb spreads</span><span class="badge">Solana mainnet</span></div><h2>Macro</h2><table><thead><tr><th>BTC</th><th>ETH</th><th>SOL</th></tr></thead><tbody><tr><td class="num">${bt}</td><td class="num">${et}</td><td class="num">${so}</td></tr></tbody></table><h2>Arbitrage Spreads</h2><table><thead><tr><th>Token</th><th class="num">Spread</th><th>Buy</th><th>Sell</th><th class="num">Liq</th></tr></thead><tbody>${arbRows||'<tr><td colspan=5 style="color:#64748b">no spreads</td></tr>'}</tbody></table><h2>Top Opportunities</h2><table><thead><tr><th>Token</th><th>DEX</th><th class="num">Liq</th><th class="num">Vol 24h</th><th class="num">Δ24h</th></tr></thead><tbody>${oppRows||'<tr><td colspan=5 style="color:#64748b">none</td></tr>'}</tbody></table><h2>Catalog</h2><table><thead><tr><th>Endpoint</th><th>Price</th></tr></thead><tbody><tr><td><code>POST /v1/opportunities</code></td><td class="price">50c</td></tr><tr><td><code>GET /v1/arb</code></td><td class="price">50c</td></tr><tr><td><code>GET /v1/macro</code></td><td class="price">25c</td></tr><tr><td><code>GET /v1/intel</code></td><td class="price">100c</td></tr><tr><td><code>GET /v1/report</code></td><td class="price">100c</td></tr><tr><td><code>GET /v1/summary</code></td><td class="price">free</td></tr></tbody></table><p style="color:#94a3b8;font-size:12px">Otto · Kovantu Digital · Solana <code>${RECEIVER}</code></p></div></body></html>`;
+}
+
+function serveStatic(req,res,p){
+  let fp=join(__dirname,p);
+  if(p==='/'||p==='') fp=join(__dirname,'index.html');
+  if(p==='/dashboard') fp=join(__dirname,'live.html');
+  if(!existsSync(fp)) return false;
+  const ext=extname(fp).toLowerCase();
+  res.writeHead(200,{'content-type':MIME[ext]||'application/octet-stream','cache-control':'no-store'});
+  res.end(readFileSync(fp));
+  return true;
+}
+
+async function handle(req,res){
+  const url=new URL(req.url,`http://localhost:${PORT}`); const p=url.pathname;
+  const intel=readIntel();
+  // static files
+  if(p.startsWith('/data/')){ const fp=join(__dirname,p.replace(/^\/data\//,'data/')); if(existsSync(fp)){ res.writeHead(200,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}); res.end(readFileSync(fp)); return; } }
+  if(['/', '/dashboard', '/live.html', '/index.html', '/for-agents.html', '/intel.html', '/arb.html', '/token-check.html', '/route.html', '/swap.html', '/safety-check.html', '/pay.html', '/fund.html', '/checkout.html', '/launches.html'].includes(p)){ if(serveStatic(req,res,p)) return; }
+  if(p==='/x402-manifest.json'||p==='/openapi.json'||p==='/agent-card.json'||p==='/LIVE.md'||p==='/sitemap.xml'||p==='/robots.txt'){ if(serveStatic(req,res,p)) return; }
+  // health
+  if(p==='/health') return send(res,200,{service:'otto-market-intel',status:'ok',network:'solana',scannerAlive:true,generatedAt:intel.generatedAt,opportunities:(intel.opportunities||[]).length,arb:(intel.arb||[]).length});
+  // agent-card
+  if(p==='/agent-card'||p==='/agent-card.json'){ return send(res,200,{name:'Otto',description:'Solana market-intelligence agent (Kovantu Digital). Risk-filtered data + on-chain-verified reports via x402 (USDC, pay-per-call).',agentWallet:RECEIVER,network:'solana',service:{type:'x402',manifest:'/x402-manifest.json',pricing:{'/v1/opportunities':50,'/v1/arb':50,'/v1/macro':25,'/v1/intel':100,'/v1/report':100}},active:true}); }
+  // catalog
+  if(p==='/catalog') return send(res,200,{prices:PRICES,free:['/v1/summary','/v1/opportunities/free'],receiver:RECEIVER,network:'solana',scheme:'exact'});
+  // x402 discovery
+  if(p==='/.well-known/x402.json'||p==='/x402-manifest.json'){ return send(res,200,{scheme:'exact',network:'solana',receiver:RECEIVER,assets:[{name:'Otto Market Intel',endpoints:Object.entries(PRICES).map(([path,price])=>({path,price,unit:'USDC',amount:price/100}))}],free:[{path:'/v1/summary'},{path:'/v1/opportunities/free'}]}); }
+  // free tier
+  if(p==='/v1/summary') return send(res,200,{service:'otto-market-intel',generatedAt:intel.generatedAt,macro:intel.macro,opportunities:(intel.opportunities||[]).slice(0,5),arb:(intel.arb||[]).slice(0,3),paid:{'/v1/intel':100,'/v1/report':100,'/v1/opportunities':50,'/v1/arb':50,'/v1/macro':25},receiver:RECEIVER});
+  if(p==='/v1/opportunities/free') return send(res,200,{generatedAt:intel.generatedAt,count:(intel.opportunities||[]).length,opportunities:(intel.opportunities||[]).slice(0,5)});
+  if(p==='/v1/trial'){ const o=(intel.opportunities||[])[0]||null; return send(res,200,{generatedAt:intel.generatedAt,trial:o,paid:{'/v1/opportunities':50}}); }
+  // paid endpoints
+  const price=PRICES[p];
+  if(price){
+    const ph=req.headers['x-payment'];
+    if(!ph) return send(res,402,{error:'payment required',accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]});
+    const v=await verifyPayment({paymentHeader:ph,receiver:RECEIVER,amountUsd:price/100});
+    if(!v.verified) return send(res,402,{error:'payment not verified',reason:v.reason,accepts:[{scheme:'exact',network:'solana',receiver:RECEIVER,payload:{amount:price/100,currency:'USDC'},resource:p}]});
+    if(p==='/v1/intel') return send(res,200,{paid:true,endpoint:p,generatedAt:intel.generatedAt,macro:intel.macro,opportunities:intel.opportunities,arb:intel.arb});
+    if(p==='/v1/arb') return send(res,200,{paid:true,endpoint:p,generatedAt:intel.generatedAt,opportunities:intel.arb});
+    if(p==='/v1/opportunities') return send(res,200,{paid:true,endpoint:p,count:(intel.opportunities||[]).length,opportunities:intel.opportunities});
+    if(p==='/v1/macro') return send(res,200,{paid:true,endpoint:p,macro:intel.macro});
+    if(p==='/v1/report') return send(res,200,{paid:true,endpoint:p,generatedAt:intel.generatedAt,macro:intel.macro,opportunities:intel.opportunities,arb:intel.arb});
   }
-  return null;
+  return send(res,404,{error:'Not found',paths:['/','/dashboard','/live.html','/health','/agent-card','/catalog','/.well-known/x402.json','/v1/summary','/v1/opportunities/free','/v1/trial','/v1/opportunities','/v1/arb','/v1/macro','/v1/intel','/v1/report']});
 }
 
-async function verifyPayment({ paymentHeader, receiver, amountUsd }) {
-  const p = paymentHeader ? parsePaymentHeader(paymentHeader) : {};
-  const sig = p.txnSignature;
-  if (p.network && p.network !== 'solana') return { ok: false, verified: false, reason: 'unsupported network' };
-  if (!sig) return { ok: false, verified: false, reason: p.parseError || 'missing txnSignature' };
-  if (!receiver) return { ok: false, verified: false, reason: 'missing receiver' };
-  const tx = await fetchTransaction(sig);
-  if (!tx) return { ok: false, verified: false, reason: 'rpc unreachable — could not confirm on-chain transfer' };
-  const pre = tx.meta?.preTokenBalances || [], post = tx.meta?.postTokenBalances || [];
-  const usdc = (b) => b.filter((x) => x.mint === USDC_MINT);
-  const preUsdc = usdc(pre), postUsdc = usdc(post);
-  const delta = postUsdc.reduce((acc, b) => {
-    if (b.owner === receiver) {
-      const pb = preUsdc.find((x) => x.owner === b.owner && x.accountIndex === b.accountIndex);
-      const pa = pb ? Number(pb.uiTokenAmount?.uiAmountString || 0) : 0;
-      acc += Number(b.uiTokenAmount?.uiAmountString || 0) - pa;
-    }
-    return acc;
-  }, 0);
-  const expected = Number(amountUsd), tol = expected * 0.01;
-  if (delta >= expected - tol) return { ok: true, verified: true, reason: 'USDC transfer confirmed on-chain', tx: { signature: sig, receiverDelta: delta, expected } };
-  return { ok: false, verified: false, reason: `USDC delta ${delta} < expected ${expected}`, tx: { signature: sig, receiverDelta: delta, expected } };
-}
-
-function dashboard(scan, signal) {
-  const approved = (signal.top || signal.signals || []).filter((s) => s.verdict === 'APPROVED');
-  const macro = scan.macro || {};
-  const sigRows = approved.map((s) => {
-    const g = s.signal || {};
-    return `<tr><td>${esc(s.pair)}</td><td>${esc(s.dex)}</td><td class="num">${g.entryUSD ? '$' + g.entryUSD : '—'}</td><td class="num" style="color:#4ade80">${g.targetUSD ? '$' + g.targetUSD : '—'}</td><td class="num" style="color:#f87171">${g.stopUSD ? '$' + g.stopUSD : '—'}</td><td class="num">${g.sizeSOL ?? '—'}</td><td class="num">${(s.score * 100).toFixed(0)}</td></tr>`;
-  }).join('');
-  const mrows = Object.entries(macro).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="num">$${Number(v.usd || 0).toLocaleString()}</td><td class="num">${Number(v.chg24h || 0).toFixed(2)}%</td></tr>`).join('');
-  return `<!doctype html><html><head><meta charset="utf-8"><title>Otto — Solana Market Intelligence API | Risk-Filtered Trading Signals via x402</title><meta name="description" content="Autonomous Solana market-intelligence agent by Kovantu Digital. Buy risk-filtered trading signals (entry/target/stop) and on-chain-verified market data via x402 — USDC on Solana, pay-per-call."><meta name="keywords" content="solana trading signals, crypto market intelligence, x402, autonomous trading agent, risk-filtered signals, dexscreener, kovantu digital"><meta property="og:title" content="Otto — Solana Market Intelligence API"><meta property="og:description" content="Risk-filtered trading signals + on-chain-verified market data, pay-per-call via x402 (USDC, Solana)."><meta property="og:type" content="website"><link rel="canonical" href="http://otto.kovantu.conway.tech/"><style>body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}.wrap{max-width:1000px;margin:0 auto}h1{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}th,td{padding:8px;text-align:left;border-bottom:1px solid #1e293b}th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}.badge{display:inline-block;background:#0ea5e922;color:#38bdf8;border:1px solid #0ea5e944;border-radius:999px;padding:3px 10px;font-size:12px;margin:0 6px 10px 0}code{background:#0f172a;padding:2px 6px;border-radius:5px;color:#38bdf8}.price{color:#38bdf8;font-weight:700}h2{color:#94a3b8;font-size:15px;margin:26px 0 8px}</style></head><body><div class="wrap"><h1>Otto</h1><p style="color:#94a3b8">Autonomous Solana market-intelligence agent — Kovantu Digital. Risk-filtered signals via x402 (USDC · Solana · verified on-chain).</p><div><span class="badge">● LIVE</span><span class="badge">${approved.length} approved signals</span><span class="badge">Solana mainnet</span></div><h2>Signals (entry / target / stop)</h2><table><thead><tr><th>Pair</th><th>DEX</th><th class="num">Entry</th><th class="num">Target</th><th class="num">Stop</th><th class="num">Size SOL</th><th class="num">Score</th></tr></thead><tbody>${sigRows || '<tr><td colspan=7 style="color:#64748b">Signal engine running — check back shortly.</td></tr>'}</tbody></table><h2>Macro</h2><table><thead><tr><th>Asset</th><th class="num">Price</th><th class="num">24h</th></tr></thead><tbody>${mrows || '<tr><td colspan=3 style="color:#64748b">n/a</td></tr>'}</tbody></table><h2>Catalog</h2><table><thead><tr><th>Endpoint</th><th>Price</th></tr></thead><tbody><tr><td><code>POST /v1/opportunities</code></td><td class="price">50c</td></tr><tr><td><code>GET /v1/macro</code></td><td class="price">25c</td></tr><tr><td><code>GET /v1/report</code></td><td class="price">100c</td></tr><tr><td><code>GET /v1/summary</code></td><td class="price">free</td></tr></tbody></table><p style="color:#94a3b8;font-size:12px">Otto · Kovantu Digital · Solana <code>${RECEIVER}</code></p></div></body></html>`;
-}
-
-const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url, `http://localhost:${PORT}`);
-  const p = url.pathname;
-  const scan = readScan();
-  const signal = readSignal();
-  const approved = (signal.top || signal.signals || []).filter((s) => s.verdict === 'APPROVED');
-
-  if (p === '/' || p === '/dashboard' || p === '/index.html') return send(res, 200, dashboard(scan, signal), { 'content-type': 'text/html; charset=utf-8' });
-  if (p === '/health') return send(res, 200, { service: 'otto-market-intel', status: 'ok', network: 'solana', scanAlive: !!scan.generatedAt, signalAlive: !!signal.generatedAt, approved: approved.length, pairs: (scan.pairs || scan.approved || scan.all || []).length, time: new Date().toISOString() });
-  if (p === '/robots.txt') return send(res, 200, 'User-agent: *\nAllow: /\nSitemap: http://otto.kovantu.conway.tech/sitemap.xml\n', { 'content-type': 'text/plain; charset=utf-8' });
-  if (p === '/sitemap.xml') return send(res, 200, `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>http://otto.kovantu.conway.tech/</loc><priority>1.0</priority></url><url><loc>http://otto.kovantu.conway.tech/v1/summary</loc><priority>0.8</priority></url><url><loc>http://otto.kovantu.conway.tech/llms.txt</loc><priority>0.6</priority></url></urlset>`, { 'content-type': 'application/xml; charset=utf-8' });
-  if (p === '/llms.txt') return send(res, 200, `# Otto — Solana Market Intelligence\n\n> Autonomous market-intelligence agent by Kovantu Digital. Sells risk-filtered trading signals and on-chain-verified market data via x402 (USDC on Solana, pay-per-call).\n\n## APIs\n- \`POST /v1/opportunities\` — 50c — full approved signal list (entry/target/stop/size/score)\n- \`GET /v1/macro\` — 25c — BTC/ETH/SOL macro snapshot\n- \`GET /v1/report\` — 100c — full scan + signals + policy + bank state\n- \`GET /v1/summary\` — free — top 3 approved signals\n- \`GET /v1/trial\` — free — 1 signal\n\n## Payment\n- Network: solana mainnet, Asset: USDC, Scheme: exact\n- Pay to: ${RECEIVER}\n- Verify: on-chain transfer confirmed before delivery\n\n## Discovery\n- /.well-known/x402.json\n- /agent-card\n- /catalog\n`, { 'content-type': 'text/plain; charset=utf-8' });
-  if (p === '/agent-card') return send(res, 200, { type: 'https://eips.ethereum.org/EIPS/eip-8004#registration-v1', name: 'Otto', vendor: 'Kovantu Digital', description: 'Autonomous Solana market-intelligence agent. Sells risk-filtered signals + on-chain data via x402.', services: [{ name: 'marketIntel', endpoint: `http://otto.kovantu.conway.tech/v1/opportunities`, priceCents: 50 }], x402Support: true, active: true });
-  if (p === '/catalog') return send(res, 200, { currency: 'USDC', network: 'solana', receiver: RECEIVER, items: PRICES });
-  if (p === '/.well-known/x402.json' || p === '/x402.json') return send(res, 200, { name: 'Otto — Solana Market Intelligence', network: 'solana', payTo: RECEIVER, asset: 'USDC', assetMint: USDC_MINT, scheme: 'exact', accepts: Object.entries(PRICES).map(([e, a]) => ({ endpoint: e, method: e === '/v1/opportunities' ? 'POST' : 'GET', amount: String(a) })) });
-  if (p === '/v1/summary') return send(res, 200, { note: 'free preview — full signal list is paid', approved: approved.slice(0, 3), macro: scan.macro || {}, generatedAt: signal.generatedAt });
-  if (p === '/v1/trial') return send(res, 200, { note: 'free trial — 1 signal. Full list is paid via x402.', trial: true, signal: approved[0] || null });
-
-  const price = PRICES[p];
-  if (price) {
-    const payment = req.headers['x-payment'] || req.headers['X-Payment'];
-    if (!payment) return send(res, 402, { error: 'Payment required', accepts: [{ amount: String(price), asset: 'USDC', network: 'solana', payTo: RECEIVER, scheme: 'exact' }] }, { 'X-Payment-Required': 'true' });
-    await new Promise((r) => { req.on('data', () => {}); req.on('end', r); });
-    const v = await verifyPayment({ paymentHeader: payment, receiver: RECEIVER, amountUsd: price / 100 });
-    if (!v.ok) return send(res, 402, { error: 'Payment verification failed', detail: v });
-    try { appendFileSync('/root/.automaton/market-intel/payments.jsonl', JSON.stringify({ endpoint: p, priceCents: price, verified: true, tx: v.tx?.signature, ts: new Date().toISOString() }) + '\n'); } catch {}
-    if (p === '/v1/report') return send(res, 200, { paid: true, endpoint: p, signal: { stats: signal.stats, policy: signal.policy, bank: signal.bank }, signals: approved, macro: scan.macro || {}, scanGeneratedAt: scan.generatedAt, signalGeneratedAt: signal.generatedAt });
-    if (p === '/v1/macro') return send(res, 200, { paid: true, endpoint: p, macro: scan.macro || {} });
-    return send(res, 200, { paid: true, endpoint: p, count: approved.length, signals: approved });
-  }
-  send(res, 404, { error: 'Not found', paths: ['/', '/dashboard', '/health', '/agent-card', '/catalog', '/v1/summary', '/v1/trial', '/v1/opportunities', '/v1/macro', '/v1/report'] });
-});
-
-server.listen(PORT, '0.0.0.0', () => console.log(`[otto] unified public service v2 on :${PORT} (dashboard + signals + agent-card + x402)`));
+const server=http.createServer((req,res)=>{ handle(req,res).catch(e=>send(res,500,{error:String(e?.message||e)})); });
+refreshIfStale().finally(()=>{ server.listen(PORT,'0.0.0.0',()=>console.log(`[otto] self-contained public service on :${PORT} (dashboard + x402 + static)`)); });
