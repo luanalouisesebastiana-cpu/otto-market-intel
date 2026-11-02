@@ -27,22 +27,10 @@ function esc(s) { return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<
 function fmtUsd(v) { const n=Number(v); if(!Number.isFinite(n)) return '—'; if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M'; if(n>=1e3) return '$'+(n/1e3).toFixed(1)+'k'; return '$'+n.toFixed(0); }
 
 async function refreshIfStale() {
-  // refresh ALL data so a fresh Render boot serves live intel, not stale snapshots
-  const scripts = [
-    ['./scripts/intel.mjs',      'intel'],
-    ['./scripts/arb.mjs',        'arb'],
-    ['./scripts/pools.mjs',      'pools'],
-    ['./scripts/signals.mjs',    'signals'],
-    ['./scripts/backtest.mjs',   'backtest'],
-  ];
-  for (const [mod,label] of scripts) {
-    try {
-      const m = await import(mod);
-      if (typeof m.run === 'function') { await m.run(); }
-      else if (typeof m.main === 'function') { await m.main(); }
-      else { await import(mod); } // side-effect run (CLI-style scripts)
-    } catch(e) { console.warn('[refresh] '+label+' failed:', e.message); }
-  }
+  // run the FULL pipeline on boot so a fresh deploy serves live, gated intel
+  try {
+    await import('./scripts/pipeline.mjs');
+  } catch (e) { console.warn('[pipeline] boot run failed:', e.message); }
 }
 
 function parsePaymentHeader(header) {
@@ -123,6 +111,7 @@ async function handle(req,res){
     else { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/alerts.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({alerts:[]})); } }
   }
   if (p==='/v1/riskgate') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/riskgate.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,approved:0,rejected:0})); } }
+  if (p==='/v1/pipeline') { try { const d=JSON.parse(await import('node:fs').then(mm=>mm.readFileSync(new URL('./data/pipeline.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message,ok:0,total:0,results:[]})); } }
   if (p==='/v1/pools') { try { const d=JSON.parse(await import('node:fs').then(m=>m.readFileSync(new URL('./data/pools.json', import.meta.url),'utf8'))); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(d)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({count:0,pools:[]})); } }
   const intel=readIntel();
   // static files

@@ -13,23 +13,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Generate intel data
-        run: node scripts/ci-refresh.mjs
-      - name: Generate dated report (once per day)
-        run: |
-          node scripts/treasury.mjs
-          node scripts/trackrecord.mjs
-          node scripts/journal.mjs
-          node scripts/webhook.mjs
-          node scripts/backtest.mjs
-          node scripts/signals.mjs
-          node scripts/report.mjs
-          node scripts/reports-index.mjs
-          node scripts/rss.mjs
+      - name: Run full pipeline (data -> risk gate -> signals -> journal -> treasury -> audit)
+        run: node scripts/pipeline.mjs
       - name: Commit + push
         run: |
           git config user.name "Otto CI"
           git config user.email "otto@kovantu.digital"
           git add data/ reports/ rss.xml
-          git diff --staged --quiet || git commit -m "ci: refresh intel + report $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git diff --staged --quiet || git commit -m "ci: pipeline refresh $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push

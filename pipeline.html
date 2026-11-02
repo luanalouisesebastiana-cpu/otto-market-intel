@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Pipeline Status</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} table{width:100%;border-collapse:collapse}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.88rem}
+.ok{color:#3fb950}.bad{color:#f85149} .kpi{display:flex;gap:1.5rem;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem}
+.kpi b{display:block;font-size:1.4rem;color:#58a6ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Pipeline Status</h1>
+<p>The full autonomous loop: data → risk gate → signals → journal → treasury → backtest → audit → position → papertrade → alerts → report. Runs every 15 min via CI.</p>
+<div class="kpi" id="kpi"></div>
+<table><thead><tr><th>Step</th><th>Status</th><th>Duration</th></tr></thead><tbody id="rows"><tr><td colspan="3">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./audit.html">audit</a> · <a href="./riskgate.html">risk gate</a></p>
+<script>
+fetch('/v1/pipeline').then(r=>r.json()).then(d=>{
+ document.getElementById('kpi').innerHTML='<div><span>Steps ok</span><b>'+d.ok+'/'+d.total+'</b></div><div><span>Last run</span><b>'+new Date(d.generatedAt).toLocaleTimeString()+'</b></div>';
+ const rows=d.results||[];
+ document.getElementById('rows').innerHTML=rows.length?rows.map(r=>'<tr><td>'+r.step+'</td><td class="'+(r.ok?'ok':'bad')+'">'+(r.ok?'✓':'✗')+(r.error?' — '+r.error:'')+'</td><td>'+r.ms+'ms</td></tr>').join(''):'<tr><td colspan="3">No run recorded.</td></tr>';
+}).catch(e=>document.getElementById('rows').innerHTML='<tr><td colspan="3">Service offline.</td></tr>');
+</script></body></html>
