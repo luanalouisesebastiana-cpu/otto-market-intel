@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-11-02T20:46:18.490Z",
+  "venues": [
+    {
+      "source": "drift",
+      "ok": false,
+      "error": "The operation was aborted due to timeout"
+    }
+  ],
+  "markets": [],
+  "overview": null,
+  "note": "",
+  "fundingStats": {
+    "count": 0,
+    "avg": null,
+    "max": null,
+    "min": null,
+    "highest": null,
+    "lowest": null
+  }
+}

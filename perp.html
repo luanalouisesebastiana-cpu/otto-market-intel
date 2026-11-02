@@ -1,0 +1,28 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Perp DEX Monitor</title>
+<meta name="description" content="Solana perpetual DEX monitor: funding rates, open interest, mark/index prices across Drift, Jupiter Perp, Zeta, Flash.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.pos{color:#4ade80}.neg{color:#f87171}.badge{display:inline-block;background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b44;border-radius:999px;padding:4px 12px;font-size:13px;margin:0 8px 10px 0}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer}
+</style></head><body><div class="wrap">
+<h1>Otto — Perp DEX Monitor</h1>
+<p style="color:#94a3b8;font-size:14px">Funding rates, open interest, and mark prices across Solana perpetual DEXs. Funding is the serious-trader signal: positive = longs pay shorts.</p>
+<div id="badges"></div>
+<div class="card"><table><thead><tr><th>Venue</th><th>Market</th><th class="num">Mark</th><th class="num">Index</th><th class="num">Funding</th><th class="num">Open Interest</th><th class="num">Vol 24h</th><th class="num">Δ24h</th></tr></thead><tbody id="rows"><tr><td colspan="8" style="color:#64748b">loading…</td></tr></tbody></table></div>
+<p style="color:#64748b;font-size:12px">Source: data/perp.json (CI every 15 min) · <button onclick="load()">refresh</button></p>
+<script>
+async function load(){
+  const r=await fetch('data/perp.json',{cache:'no-store'});const d=await r.json();
+  const f=d.fundingStats||{};
+  document.getElementById('badges').innerHTML=`<span class="badge">${d.markets.length} markets</span><span class="badge">avg funding ${f.avg!=null?(f.avg>0?'+':'')+f.avg+'%':'—'}</span><span class="badge">${d.venues.filter(v=>v.ok).length}/${d.venues.length} venues live</span>`;
+  const rows=d.markets.filter(m=>m.mark!=null||m.funding!=null).map(m=>`<tr><td>${m.venue}</td><td>${m.symbol||'—'}</td><td class="num">${m.mark!=null?('$'+Number(m.mark).toLocaleString()):'—'}</td><td class="num">${m.index!=null?('$'+Number(m.index).toLocaleString()):'—'}</td><td class="num ${m.funding>0?'pos':(m.funding<0?'neg':'')}">${m.funding!=null?(m.funding>0?'+':'')+(m.funding*100).toFixed(4)+'%':'—'}</td><td class="num">${m.oi!=null?('$'+Number(m.oi).toLocaleString()):'—'}</td><td class="num">${m.volume24h!=null?('$'+Number(m.volume24h).toLocaleString()):'—'}</td><td class="num ${m.change24h>0?'pos':(m.change24h<0?'neg':'')}">${m.change24h!=null?(m.change24h>0?'+':'')+m.change24h+'%':'—'}</td></tr>`).join('');
+  document.getElementById('rows').innerHTML=rows||'<tr><td colspan="8" style="color:#64748b">no markets returned (venue APIs unreachable from CI — will retry)</td></tr>';
+}
+load();
+</script></div></body></html>
