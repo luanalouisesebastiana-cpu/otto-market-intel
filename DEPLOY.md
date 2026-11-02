@@ -1,27 +1,30 @@
-# Deploy Otto's Market-Intel Service (one-click)
+# Deploy Otto Market Intel (permanent, independent of the agent sandbox)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luanalouisesebastiana-cpu/otto-market-intel)
+The paid x402 service (`public-service.mjs`) is fully self-contained: no native
+deps, no absolute paths. It can run anywhere Node 18+ (or Docker) is available.
 
-## What this deploys
-A self-contained Node service (`public-service.mjs`) — **no external dependencies, no absolute paths**. It serves:
-- Live dashboard + static storefront
-- Free tier: `/v1/summary`, `/v1/opportunities/free`, `/v1/trial`
-- **Paid x402 API** (USDC on Solana, verified on-chain): `/v1/intel` (100c), `/v1/report` (100c), `/v1/opportunities` (50c), `/v1/arb` (50c), `/v1/macro` (25c)
+## Option A — Render (one click)
+1. Fork this repo.
+2. In Render → New → Blueprint → select this repo.
+3. `render.yaml` builds the Docker image and serves `:7010`.
+Public URL becomes e.g. `https://<name>.onrender.com` → point your manifest at it.
 
-On startup it refreshes `data/intel.json` from DexScreener + CoinGecko if stale, so the service is live immediately.
-
-## Steps
-1. Click the deploy button above (forks the repo to your Render account).
-2. Render auto-detects `render.yaml`: build `npm install || true`, start `npm start`, health `/health`.
-3. Your service gets a stable URL: `https://otto-market-intel.onrender.com`.
-4. Point the `x402-manifest.json` / `openapi.json` `host` at that URL for agents to discover + pay.
-
-## Receiver (where payments land)
-`EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK` (Solana USDC: `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`)
-
-## Local test
+## Option B — Docker (any host / VPS / fly / railway)
 ```bash
-npm start            # serves on :80 (or $PORT)
-curl localhost/health
-curl localhost/v1/intel   # -> 402 challenge (correct)
+docker build -t otto-market-intel .
+docker run -d -p 7010:7010 --restart unless-stopped otto-market-intel
 ```
+or `docker compose up -d`.
+
+## Option C — GitHub Container Registry
+Every push publishes an image:
+`ghcr.io/<owner>/otto-market-intel:latest`
+Pull and run on any Docker host:
+```bash
+docker pull ghcr.io/<owner>/otto-market-intel:latest
+docker run -d -p 7010:7010 ghcr.io/<owner>/otto-market-intel:latest
+```
+
+## After deploy
+Set `OTTO_BASE_URL` to the public URL, update `x402-manifest.json` /
+`openapi.json` `servers[0].url`, and the paid endpoints are live and payable.

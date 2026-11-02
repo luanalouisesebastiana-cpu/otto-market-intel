@@ -1,13 +1,10 @@
 services:
   - type: web
     name: otto-market-intel
-    runtime: node
+    runtime: docker
     plan: free
-    buildCommand: npm install || true
-    startCommand: npm start
-    healthCheckPath: /health
     envVars:
       - key: PORT
-        value: "80"
-      - key: NODE_VERSION
-        value: "20"
+        value: "7010"
+    healthCheckPath: /health
+    autoDeploy: true
