@@ -1,2 +1,4 @@
 {"ts":"2026-11-02T17:40:52.155Z","endpoint":"/v1/intel","method":"GET","status":"CHALLENGED","payer":null,"amountCents":null,"ua":"test","ip":null}
 {"ts":"2026-11-02T17:40:52.169Z","endpoint":"/v1/intel","method":"GET","status":"PAID","payer":"0xabc","amountCents":100,"ua":null,"ip":null}
+{"ts":"2026-11-02T17:49:15.473Z","endpoint":"/health","method":"GET","status":"FREE","payer":null,"amountCents":null,"ua":"curl/8.5.0","ip":"127.0.0.1"}
+{"ts":"2026-11-02T17:49:15.502Z","endpoint":"/v1/pools","method":"GET","status":"CHALLENGED","payer":null,"amountCents":null,"ua":"curl/8.5.0","ip":"127.0.0.1"}

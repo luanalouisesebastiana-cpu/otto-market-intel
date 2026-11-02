@@ -27,30 +27,22 @@ function esc(s) { return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<
 function fmtUsd(v) { const n=Number(v); if(!Number.isFinite(n)) return '—'; if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M'; if(n>=1e3) return '$'+(n/1e3).toFixed(1)+'k'; return '$'+n.toFixed(0); }
 
 async function refreshIfStale() {
-  const f = join(DATA,'intel.json');
-  let age = Infinity;
-  try { const j=JSON.parse(readFileSync(f,'utf8')); if(j.generatedAt) age = Date.now()-Date.parse(j.generatedAt); } catch {}
-  if (age < 15*60*1000) return;
-  try {
-    const tokens=['SOL','JUP','PYTH','WIF','BONK','USDC','USDT','RAY','ORCA','SRM'];
-    let opps=[], arb=[];
-    for (const q of tokens) {
-      const r=await fetch('https://api.dexscreener.com/latest/dex/search?q='+q); if(!r.ok) continue;
-      const j=await r.json(); const pairs=(j?.pairs||[]).filter(p=>p.chainId==='solana');
-      for(const p of pairs){ const liq=p.liquidity?.usd||0, vol=p.volume?.h24||0; if(liq>50000&&vol>100000) opps.push({mint:p.baseToken.address,symbol:p.baseToken.symbol,dex:p.dexId,liqUsd:liq,vol24Usd:vol,priceUsd:+p.priceUsd,change24h:p.priceChange?.h24??null}); }
-      const byMint={}; for(const p of pairs){const m=p.baseToken.address;if(!byMint[m])byMint[m]={s:p.baseToken.symbol,v:[]};byMint[m].v.push({d:p.dexId,pr:+p.priceUsd,l:p.liquidity?.usd||0});}
-      for(const m of Object.values(byMint)){ if(m.v.length<2)continue; const pr=m.v.map(v=>v.pr).filter(x=>x>0); if(pr.length<2)continue; const mn=Math.min(...pr),mx=Math.max(...pr),sp=((mx-mn)/mn)*100; if(sp>0.3){const c=m.v.find(v=>v.pr===mn),rr=m.v.find(v=>v.pr===mx);arb.push({symbol:m.s,spreadPct:+sp.toFixed(2),buyOn:c.d,sellOn:rr.d,liqUsd:Math.min(c.l,rr.l)});} }
-    }
-    const seen=new Set(); opps=opps.filter(o=>{if(seen.has(o.mint))return false;seen.add(o.mint);return true;}).sort((a,b)=>b.liqUsd-a.liqUsd);
-    arb.sort((a,b)=>b.spreadPct-a.spreadPct);
-    let macro=null;
-    try { const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true'); if(r.ok){const m=await r.json();macro={btusd:m.bitcoin?.usd,btchg:m.bitcoin?.usd_24h_change,ethusd:m.ethereum?.usd,ethchg:m.ethereum?.usd_24h_change,solusd:m.solana?.usd,solchg:m.solana?.usd_24h_change};} } catch {}
-    const out={generatedAt:new Date().toISOString(),macro,opportunities:opps.slice(0,20),arb:arb.slice(0,15),summary:{opportunities:opps.length,arbSpreads:arb.length}};
-    writeFileSync(join(DATA,'intel.json'),JSON.stringify(out,null,2));
-    writeFileSync(join(DATA,'opportunities.json'),JSON.stringify({generatedAt:out.generatedAt,opportunities:out.opportunities},null,2));
-    writeFileSync(join(DATA,'arb.json'),JSON.stringify({generatedAt:out.generatedAt,opportunities:out.arb},null,2));
-    console.log('[refresh] wrote data/intel.json ('+opps.length+' opps, '+arb.length+' arb)');
-  } catch(e) { console.warn('[refresh] failed:',e.message); }
+  // refresh ALL data so a fresh Render boot serves live intel, not stale snapshots
+  const scripts = [
+    ['./scripts/intel.mjs',      'intel'],
+    ['./scripts/arb.mjs',        'arb'],
+    ['./scripts/pools.mjs',      'pools'],
+    ['./scripts/signals.mjs',    'signals'],
+    ['./scripts/backtest.mjs',   'backtest'],
+  ];
+  for (const [mod,label] of scripts) {
+    try {
+      const m = await import(mod);
+      if (typeof m.run === 'function') { await m.run(); }
+      else if (typeof m.main === 'function') { await m.main(); }
+      else { await import(mod); } // side-effect run (CLI-style scripts)
+    } catch(e) { console.warn('[refresh] '+label+' failed:', e.message); }
+  }
 }
 
 function parsePaymentHeader(header) {
