@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Otimizador de Rota Solana</title>
+<style>
+:root{--bg:#0b1020;--card:#121a2e;--txt:#e6edf7;--mut:#8b9bb4;--up:#34d399;--dn:#f87171;--acc:#38bdf8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+.wrap{max-width:900px;margin:0 auto;padding:32px 20px}
+h1{font-size:1.6rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 20px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.form input{width:100%;padding:10px 12px;background:#0a0f1c;color:var(--txt);border:1px solid #1e2a44;border-radius:8px;font-family:ui-monospace,monospace;font-size:.85rem}
+button{padding:11px 20px;background:var(--acc);color:#04121f;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+button:disabled{opacity:.5}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid #1e2a44;border-radius:10px;overflow:hidden;font-size:.85rem}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #1e2a44}th{background:#0e1626;color:var(--mut)}
+tr:last-child td{border-bottom:none}
+.best{background:#052e1f}.rank{color:var(--mut);font-weight:700}
+.cta{background:#0e1626;border:1px solid #134e4a;border-radius:10px;padding:16px 20px;margin-top:20px}
+.cta a{color:var(--acc)}code{background:#0a0f1c;border:1px solid #1e2a44;border-radius:5px;padding:1px 5px;font-size:.82em}
+footer{color:var(--mut);font-size:.8rem;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Otimizador de Rota — Solana</h1>
+<p class="sub">Encontra a melhor DEX para um par (por liquidez, volume e histórico). Economia real de slippage.</p>
+
+<div class="form">
+  <input id="in" placeholder="inputMint (ex: SOL)" spellcheck="false">
+  <input id="out" placeholder="outputMint (ex: USDC)" spellcheck="false">
+</div>
+<button id="go">Melhor rota</button>
+<div id="out"></div>
+
+<div class="cta">
+<strong>Análises avançadas (x402, USDC):</strong>
+<ul>
+<li><code>GET /v1/route?in=&lt;mint&gt;&out=&lt;mint&gt;</code> — grátis (este)</li>
+<li><code>GET /v1/report?mint=&lt;addr&gt;</code> — risco profundo · <b>$1.00</b></li>
+<li><code>GET /v1/opportunities</code> — oportunidades indexadas · <b>$0.50</b></li>
+</ul>
+<p><a href="/x402-manifest.json">Manifest x402</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/launches.html">Novos tokens</a> · <a href="/token-check.html">Risco de token</a></p>
+</div>
+<footer>Otto — Kovantu Digital. Dados DexScreener. Não é conselho de investimento.</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n==null?'—':n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+const MINTS = {
+  'SOL':'So11111111111111111111111111111111111111112',
+  'USDC':'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+  'USDT':'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+  'BONK':'DezXAZ8774kn8SUk6ryrWVYGyahanyj9iCYKqXnpump',
+  'WIF':'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm'
+};
+function resolveMint(v){ v=(v||'').trim(); if(MINTS[v.toUpperCase()]) return MINTS[v.toUpperCase()]; return v; }
+
+async function go(){
+  const inM = resolveMint($('in').value), outM = resolveMint($('out').value);
+  const out = $('out');
+  if(!inM||!outM){ out.innerHTML='<p style="color:var(--warn)">Informe os dois mints.</p>'; return; }
+  $('go').disabled=true; out.innerHTML='<p>buscando rotas…</p>';
+  try{
+    let base='';
+    try{ const t=await (await fetch('LIVE.md')).text(); const m=t.match(/https:\/\/[a-z0-9]+\.instatunnel\.my/); if(m) base=m[0]; }catch{}
+    if(!base) base = location.origin;
+    const r = await fetch(`${base}/v1/route?in=${encodeURIComponent(inM)}&out=${encodeURIComponent(outM)}`);
+    const d = await r.json();
+    const v = (d.route && d.route.venues) || [];
+    if(!v.length){ out.innerHTML='<p style="color:var(--warn)">Nenhum par encontrado.</p>'; $('go').disabled=false; return; }
+    out.innerHTML = `<p style="color:var(--mut);margin:12px 0">Melhor venue: <b style="color:var(--up)">${v[0].dex||'—'}</b> (score ${v[0].score})</p>
+      <table><thead><tr><th>#</th><th>DEX</th><th>Preço</th><th>Liquidez</th><th>Volume 24h</th><th>Variação</th><th>Score</th></tr></thead><tbody>
+      ${v.slice(0,10).map((x,i)=>`<tr class="${i===0?'best':''}"><td class="rank">${i+1}</td><td>${x.dex||'—'}</td><td>${x.priceUsd==null?'—':'$'+Number(x.priceUsd).toFixed(4)}</td><td>${fmt(x.liquidityUsd)}</td><td>${fmt(x.volume24hUsd)}</td><td style="color:${(x.priceChange24hPct||0)>=0?'var(--up)':'var(--dn)'}">${x.priceChange24hPct==null?'—':(x.priceChange24hPct>=0?'+':'')+x.priceChange24hPct.toFixed(2)+'%'}</td><td>${x.score}</td></tr>`).join('')}
+      </tbody></table>`;
+  }catch(e){ out.innerHTML='<p style="color:var(--dn)">Erro ao buscar rotas.</p>'; }
+  $('go').disabled=false;
+}
+$('go').onclick = go;
+</script>
+</body>
+</html>
