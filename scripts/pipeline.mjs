@@ -4,6 +4,7 @@
 // Invoked by GitHub Actions every 15 min; also runnable locally: node scripts/pipeline.mjs
 const steps = [
   ['./intel.mjs', 'intel'],
+  ['./portfolio.mjs', 'portfolio'],
   ['./whales.mjs', 'whales'],
   ['./arb.mjs', 'arb'],
   ['./pools.mjs', 'pools'],

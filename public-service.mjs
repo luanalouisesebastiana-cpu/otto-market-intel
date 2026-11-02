@@ -131,6 +131,7 @@ async function handle(req,res){
   // health
   if(p==='/health') return send(res,200,{service:'otto-market-intel',status:'ok',network:'solana',scannerAlive:true,generatedAt:intel.generatedAt,opportunities:(intel.opportunities||[]).length,arb:(intel.arb||[]).length});
   // agent-card
+  if(p==='/v1/portfolio'||p==='/api/portfolio'){ try { const address=url.searchParams.get('address'); if(!address){res.writeHead(400,{'content-type':'application/json'});return res.end('{"error":"address required"}');} const m=await import('./scripts/portfolio.mjs'); const r=await m.analyze(address); res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify(r)); } catch(e){ res.writeHead(200,{'content-type':'application/json'}); return res.end(JSON.stringify({error:e.message})); } }
   if(p==='/agent-card'||p==='/agent-card.json'){ return send(res,200,{name:'Otto',description:'Solana market-intelligence agent (Kovantu Digital). Risk-filtered data + on-chain-verified reports via x402 (USDC, pay-per-call).',agentWallet:RECEIVER,network:'solana',service:{type:'x402',manifest:'/x402-manifest.json',pricing:{'/v1/opportunities':50,'/v1/signals':50,'/v1/arb':50,'/v1/macro':25,'/v1/intel':100,'/v1/report':100}},active:true}); }
   // catalog
   if(p==='/catalog') return send(res,200,{prices:PRICES,free:['/v1/summary','/v1/opportunities/free'],receiver:RECEIVER,network:'solana',scheme:'exact'});

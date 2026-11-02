@@ -1,0 +1,40 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Portfolio Analyzer</title>
+<meta name="description" content="Analyze any Solana wallet: SPL holdings, USD value, liquidity/volume risk exposure, and concentration.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+input{width:60%;padding:11px;border-radius:8px;border:1px solid #334155;background:#0b1020;color:#e2e8f0;font-size:14px}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:11px 18px;font-weight:800;cursor:pointer}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.low{color:#4ade80}.med{color:#fbbf24}.high{color:#f87171}.unk{color:#94a3b8}
+.big{font-size:28px;font-weight:800;color:#fbbf24}
+.hint{color:#64748b;font-size:12px;margin-top:6px}
+</style></head><body><div class="wrap">
+<h1>Otto — Portfolio Analyzer</h1>
+<p style="color:#94a3b8;font-size:14px">Enter any Solana wallet to see full SPL holdings, USD value, and liquidity/volume risk exposure.</p>
+<div style="display:flex;gap:8px;margin:14px 0">
+<input id="addr" placeholder="Solana wallet address (base58)" value="">
+<button onclick="go()">Analyze</button>
+</div>
+<div class="card" id="summary" style="display:none"></div>
+<div class="card" id="tbl" style="display:none"><table><thead><tr><th>Asset</th><th class="num">Amount</th><th class="num">Price</th><th class="num">USD</th><th class="num">24h Liq</th><th class="num">24h Vol</th><th class="num">24h %</th><th>Risk</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="hint">Source: public Solana RPC + DexScreener · read-only · values are indicative</p>
+<script>
+const DEF='EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK';
+async function go(){
+  const addr=document.getElementById('addr').value.trim()||DEF;
+  document.getElementById('addr').value=addr;
+  const r=await fetch('/api/portfolio?address='+encodeURIComponent(addr));
+  if(!r.ok){document.getElementById('summary').style.display='block';document.getElementById('summary').innerHTML='<span class="high">error: '+r.status+'</span>';return;}
+  const d=await r.json();
+  document.getElementById('summary').style.display='block';
+  document.getElementById('summary').innerHTML=`<div class="big">$${d.totalUsd.toLocaleString()}</div><div style="color:#94a3b8">${d.tokens.length} assets · risk: <span class="low">${d.risk.low} low</span> / <span class="med">${d.risk.medium} med</span> / <span class="high">${d.risk.high} high</span></div>`;
+  document.getElementById('tbl').style.display='block';
+  document.getElementById('rows').innerHTML=d.tokens.map(t=>`<tr><td>${t.symbol}</td><td class="num">${t.amount.toLocaleString()}</td><td class="num">$${t.price!=null?t.price:'—'}</td><td class="num">$${t.usd.toLocaleString()}</td><td class="num">$${(t.liq/1e6).toFixed(1)}M</td><td class="num">$${(t.vol/1e6).toFixed(1)}M</td><td class="num ${t.change>0?'low':(t.change<0?'high':'')}">${t.change!=null?(t.change>0?'+':'')+t.change+'%':'—'}</td><td class="${t.risk==='low'?'low':t.risk==='medium'?'med':t.risk==='high'?'high':'unk'}">${t.risk}</td></tr>`).join('');
+}
+go();
+</script></div></body></html>
