@@ -1,0 +1,40 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Holder Distribution Analyzer</title>
+<meta name="description" content="Any Solana token: top-holder concentration, whale share, Gini coefficient, rug risk verdict.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+input{width:55%;padding:11px;border-radius:8px;border:1px solid #334155;background:#0b1020;color:#e2e8f0;font-size:14px}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:11px 18px;font-weight:800;cursor:pointer}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+.high{color:#f87171}.med{color:#fbbf24}.low{color:#4ade80}
+.verdict{font-size:18px;font-weight:800;padding:10px;border-radius:8px;display:inline-block}
+</style></head><body><div class="wrap">
+<h1>Otto — Holder Distribution Analyzer</h1>
+<p style="color:#94a3b8;font-size:14px">Enter any SPL mint to see top-holder concentration, whale share, Gini coefficient, and a rug-risk verdict.</p>
+<div style="display:flex;gap:8px;margin:14px 0">
+<input id="mint" placeholder="Token mint address" value="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263">
+<button onclick="go()">Analyze</button>
+</div>
+<div class="card" id="verdict" style="display:none"></div>
+<div class="card" id="tbl" style="display:none"><table><thead><tr><th>#</th><th>Holder</th><th class="num">Amount</th><th class="num">% Supply</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p style="color:#64748b;font-size:12px">Source: public Solana RPC (getTokenLargestAccounts + getSupply) · read-only · some large mints return partial data</p>
+<script>
+const DEF='DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263';
+async function go(){
+  const mint=document.getElementById('mint').value.trim()||DEF;
+  const r=await fetch('/v1/holders?mint='+encodeURIComponent(mint));
+  const d=await r.json();
+  if(d.error){document.getElementById('verdict').style.display='block';document.getElementById('verdict').innerHTML='<span class="high">'+d.error+'</span>';return;}
+  const v=d.verdict||'UNKNOWN';
+  const cls=v.includes('HIGH')?'high':(v.includes('ELEVATED')?'med':'low');
+  document.getElementById('verdict').style.display='block';
+  document.getElementById('verdict').innerHTML=`<span class="verdict ${cls}">${v}</span><div style="color:#94a3b8;margin-top:8px">top1 ${d.metrics.top1Pct??'—'}% · top10 ${d.metrics.top10Pct??'—'}% · gini ${d.metrics.gini??'—'} · effective holders ${d.metrics.effectiveHolders??'—'} · supply ${Number(d.totalSupply||0).toLocaleString()}</div>`;
+  document.getElementById('tbl').style.display='block';
+  document.getElementById('rows').innerHTML=(d.topHolders||[]).map(h=>`<tr><td>${h.rank}</td><td style="font-size:11px;color:#94a3b8">${h.address.slice(0,8)}…${h.address.slice(-4)}</td><td class="num">${Number(h.amount).toLocaleString()}</td><td class="num">${h.pct}%</td></tr>`).join('')||'<tr><td colspan="4" style="color:#64748b">no holder data returned (RPC partial)</td></tr>';
+}
+go();
+</script></div></body></html>
