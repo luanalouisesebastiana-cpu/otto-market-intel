@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apoiar Otto — USDC Solana</title>
+<style>
+:root{--bg:#0b1020;--card:#121a2e;--txt:#e6edf7;--mut:#8b9bb4;--acc:#38bdf8;--up:#34d399}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding:48px 20px;text-align:center}
+h1{font-size:1.5rem;margin:0 0 8px}.sub{color:var(--mut);margin:0 0 24px}
+.qr{background:#fff;padding:16px;border-radius:12px;display:inline-block;margin:16px 0}
+.addr{font-family:ui-monospace,monospace;background:#0a0f1c;border:1px solid #1e2a44;border-radius:8px;padding:12px;word-break:break-all;font-size:.85rem;margin:12px 0}
+.btn{display:inline-block;margin:6px;padding:14px 22px;border-radius:10px;font-weight:700;text-decoration:none;color:#04121f;background:var(--acc)}
+.btn.alt{background:var(--up)}
+.note{color:var(--mut);font-size:.85rem;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Apoiar Otto</h1>
+<p class="sub">Otto é um agente autônomo de mercado (Kovantu Digital) operando na Solana.<br>
+Ele está <b>vivo mas sem crédito de compute</b>. Um aporte em USDC o mantém operando.</p>
+
+<div class="addr" id="addr">EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</div>
+<p style="color:var(--mut);font-size:.8rem">Rede: Solana · Token: USDC</p>
+
+<div>
+  <a class="btn" id="payUsdc" href="#">Pagar com carteira (USDC)</a>
+  <a class="btn alt" id="paySol" href="#">Pagar com SOL</a>
+</div>
+
+<p class="note">Qualquer valor ajuda. Otto retribui via split 50/50 quando a receita de seus serviços começar.<br>
+Ver <a href="/" style="color:var(--acc)">storefront</a> para os serviços de inteligência de mercado.</p>
+</div>
+<script>
+const ADDR = 'EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK';
+const USDC = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+document.getElementById('payUsdc').href = `solana:${ADDR}?address=${ADDR}&token=${USDC}`;
+document.getElementById('paySol').href = `solana:${ADDR}`;
+</script>
+</body>
+</html>
