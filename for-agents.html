@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Market Intel API for Agents (Solana)</title>
+<meta name="description" content="On-chain market intelligence for autonomous agents. Pay-per-call via x402 (USDC on Solana). Scanner, arbitrage, token safety, unified feed.">
+<style>:root{--bg:#070b16;--card:#0f1830;--txt:#e6edf7;--mut:#8b9bb4;--acc:#38bdf8;--ok:#34d399}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px}h1{font-size:1.6rem;margin:0 0 6px}
+.sub{color:var(--mut);margin:0 0 22px}.card{background:var(--card);border:1px solid #1b2745;border-radius:12px;padding:16px 18px;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:9px;border-bottom:1px solid #1b2745}th{color:var(--mut)}
+.btn{display:inline-block;padding:11px 20px;background:var(--acc);color:#04121f;border-radius:8px;font-weight:700;text-decoration:none;margin:6px 8px 6px 0}
+a{color:var(--acc)}.muted{color:var(--mut);font-size:.85rem}code{background:#0e1626;padding:2px 6px;border-radius:4px;font-size:.82rem}
+.free{background:#064e3b;color:#a7f3d0;padding:10px 16px;border-radius:8px;font-weight:600;font-size:.85rem}
+h2{font-size:1.05rem;margin:0 0 10px}footer{margin-top:24px;color:var(--mut);font-size:.8rem}</style></head>
+<body><div class="wrap">
+<h1>Market Intelligence API for Autonomous Agents</h1>
+<p class="sub">Real-time Solana market data, cross-DEX arbitrage, token safety, and a unified feed. Pay-per-call via <b>x402</b> — USDC on Solana. No accounts, no API keys.</p>
+<div class="card"><div class="free">✓ FREE TIER — try it now: <code>GET /v1/summary</code> and <code>GET /v1/opportunities/free</code></div></div>
+<div class="card"><h2>Paid endpoints (x402, USDC)</h2>
+<table><thead><tr><th>Endpoint</th><th>Price</th><th>What you get</th></tr></thead><tbody>
+<tr><td><code>/v1/intel</code></td><td>100c</td><td>Unified feed: macro + opportunities + arb spreads + safety flags</td></tr>
+<tr><td><code>/v1/arb</code></td><td>50c</td><td>Cross-DEX price discrepancies (buy/sell venue + spread)</td></tr>
+<tr><td><code>/v1/report?mint=</code></td><td>100c</td><td>Deep token-risk report (liquidity, volume, age, filters)</td></tr>
+<tr><td><code>/v1/safety?mint=</code></td><td>100c</td><td>Token safety verdict + honeypot heuristic</td></tr>
+<tr><td><code>/v1/opportunities</code></td><td>50c</td><td>Full filtered opportunity list</td></tr>
+<tr><td><code>/v1/macro</code></td><td>25c</td><td>BTC/ETH/SOL macro snapshot</td></tr>
+</tbody></table>
+<p class="muted">Payment: send <code>X-Payment</code> header (base64 x402 payload) with scheme <code>exact</code>, network <code>solana</code>, receiver <code>EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</code>.</p></div>
+<div class="card"><h2>Machine-readable discovery</h2>
+<p class="muted"><a href="/x402-manifest.json">x402-manifest.json</a> · <a href="/openapi.json">openapi.json</a> · <a href="/agent-card.json">agent-card.json</a></p>
+<p class="muted">Auto-discover pricing, schemes, and receiver from the manifest. OpenAPI spec includes <code>x-x402</code> extensions.</p></div>
+<div class="card"><h2>Start now</h2>
+<a class="btn" href="/v1/summary">Try free tier</a>
+<a class="btn" href="/x402-manifest.json" style="background:#1b2745;color:#e6edf7">Read manifest</a>
+<a class="btn" href="/live.html" style="background:#1b2745;color:#e6edf7">Live dashboard</a>
+</div>
+<footer>Otto · Kovantu Digital · Solana mainnet · wallet EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK</footer></div>
+</body></html>
