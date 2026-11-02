@@ -1,34 +1,48 @@
 {
-  "generatedAt": "2026-11-02T20:31:32.180Z",
-  "count": 2,
+  "generatedAt": "2026-11-02T20:52:54.808Z",
+  "count": 3,
   "pools": [
     {
-      "pair": "LaMisery/USDC",
-      "dex": "pumpfun",
-      "mint": "DBdhXjiVGHfrA2BkS8LRvSSHJsk92z8K4mVmknL8pump",
-      "pairAddress": "HNR9ZAUYxFSfP1TujxZtwe6BxvLnT7pjdtd7LLmvVX6z",
-      "priceUsd": "0.0000003221",
-      "liqUsd": 0,
-      "vol24Usd": 894,
-      "ageMin": 3,
-      "change24h": -89.09,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/hnr9zauyxfsfp1tujxztwe6bxvlnt7pjdtd7llmvvx6z"
+      "pair": "horse/USDC",
+      "dex": "pumpswap",
+      "mint": "9nutvj678qvbouYKqHkSJu3n5cQUEZw42wtPdjekpump",
+      "pairAddress": "FHs2rSarxtAYDQ7ZeFnxaSfZnKgjJV337rPkXgSEqtq4",
+      "priceUsd": "0.0001004",
+      "liqUsd": 30662,
+      "vol24Usd": 723730,
+      "ageMin": 167,
+      "change24h": 73.15,
+      "risk": "CAUTION",
+      "riskColor": "orange",
+      "url": "https://dexscreener.com/solana/fhs2rsarxtaydq7zefnxasfznkgjjv337rpkxgseqtq4"
     },
     {
-      "pair": "Barras /USDC",
+      "pair": "hedge/USDC",
       "dex": "pumpfun",
-      "mint": "2n1Ru3jkXmbduuC5sZHKkA2L8MKigpn8AkRgr4mSpump",
-      "pairAddress": "iyBmQcJpS3aSgQBcJzW6qn2JXNpqY8w3CwxWVJQNfVY",
-      "priceUsd": "0.0000004144",
+      "mint": "BwRxFYbbked71dusvHjdWy9ixFywpfR187Xnpgqxpump",
+      "pairAddress": "9iNBVrYDUFumYhUe3ebwRGW6t2cd9PnY6jrHBfnUFZ51",
+      "priceUsd": "0.000005131",
       "liqUsd": 0,
-      "vol24Usd": 268,
-      "ageMin": 6,
-      "change24h": -91.98,
+      "vol24Usd": 68688,
+      "ageMin": 168,
+      "change24h": 9.68,
       "risk": "LOW-LIQ",
       "riskColor": "red",
-      "url": "https://dexscreener.com/solana/iybmqcjps3asgqbcjzw6qn2jxnpqy8w3cwxwvjqnfvy"
+      "url": "https://dexscreener.com/solana/9inbvrydufumyhue3ebwrgw6t2cd9pny6jrhbfnufz51"
+    },
+    {
+      "pair": "USDC/USDC",
+      "dex": "pumpfun",
+      "mint": "GSXTmUVxbESVjmD2HfXpt9fkBwW4y9bsFAixgQ17pump",
+      "pairAddress": "EuQbuNakBwf89Luj7Lm9hiUEyBHci18e9nos3vTgRmoV",
+      "priceUsd": "0.000006747",
+      "liqUsd": 0,
+      "vol24Usd": 39863,
+      "ageMin": 168,
+      "change24h": 32.7,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/euqbunakbwf89luj7lm9hiueybhci18e9nos3vtgrmov"
     }
   ]
 }

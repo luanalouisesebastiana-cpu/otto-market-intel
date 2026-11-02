@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-11-02T20:54:34.435Z",
+  "score": 49,
+  "band": "NEUTRAL",
+  "components": {
+    "macro": 50,
+    "funding": 50,
+    "arb": 0,
+    "flow": 100,
+    "whale": 0,
+    "edge": 40
+  },
+  "weights": {
+    "macro": 0.25,
+    "funding": 0.2,
+    "arb": 0.1,
+    "flow": 0.2,
+    "whale": 0.1,
+    "edge": 0.15
+  },
+  "inputs": {
+    "macro7d": [],
+    "fundingAvg": null,
+    "posArb": 0,
+    "arbTotal": 8,
+    "oppCount": 20,
+    "whaleMoves": 0,
+    "edgeAvg": 0
+  }
+}

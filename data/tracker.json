@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T20:33:09.046Z",
+  "generatedAt": "2026-11-02T20:52:57.134Z",
   "policy": {
     "stopPct": -8,
     "note": "exit at target or -8% stop; read-only verification"
@@ -95,7 +95,7 @@
       "liveUSD": 1.0001,
       "liveSource": "dexscreener",
       "pair": "ERC20-USDT/USDC",
-      "liqUsd": 209901016.11,
+      "liqUsd": 209901018.63,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,

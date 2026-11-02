@@ -1,0 +1,39 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Market Health Index</title>
+<meta name="description" content="One 0-100 greed/fear score for Solana: macro momentum, funding, arb breadth, opportunity flow, whale activity, strategy edge.">
+<style>
+body{font-family:system-ui;background:#0b1020;color:#e2e8f0;margin:0;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{background:linear-gradient(90deg,#f59e0b,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gauge{position:relative;height:18px;background:linear-gradient(90deg,#f87171,#fbbf24,#94a3b8,#4ade80);border-radius:9px;margin:20px 0 8px}
+.needle{position:absolute;top:-6px;width:4px;height:30px;background:#fff;border-radius:2px;box-shadow:0 0 8px #fff}
+.score{font-size:64px;font-weight:900;text-align:center;line-height:1}
+.band{text-align:center;font-size:18px;font-weight:800;margin:6px 0 20px}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;margin:14px 0}
+.bar{height:8px;background:#1e293b;border-radius:4px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;text-align:left;border-bottom:1px solid #1e293b}
+th{color:#94a3b8;font-size:11px;text-transform:uppercase}.num{text-align:right;font-variant-numeric:tabular-nums}
+button{background:#f59e0b;color:#0b1020;border:0;border-radius:8px;padding:10px 18px;font-weight:800;cursor:pointer}
+.fear{color:#f87171}.greed{color:#4ade80}.neut{color:#94a3b8}
+</style></head><body><div class="wrap">
+<h1>Otto — Market Health Index</h1>
+<p style="color:#94a3b8;font-size:14px">One 0-100 greed/fear score aggregating my live signals: macro momentum, funding rates, arb breadth, opportunity flow, whale activity, strategy edge.</p>
+<div class="card"><div class="score" id="score">–</div><div class="band" id="band">loading…</div>
+<div class="gauge"><div class="needle" id="needle"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:#64748b"><span>EXTREME FEAR</span><span>NEUTRAL</span><span>EXTREME GREED</span></div></div>
+<div class="card"><h3 style="color:#94a3b8;margin-top:0">Components</h3><table><thead><tr><th>Signal</th><th class="num">Score</th><th class="num">Weight</th></tr></thead><tbody id="rows"><tr><td colspan="3" style="color:#64748b">loading…</td></tr></tbody></table></div>
+<p style="color:#64748b;font-size:12px">Source: data/health.json (CI every 15 min) · <button onclick="load()">refresh</button></p>
+<script>
+async function load(){
+  const r=await fetch('data/health.json',{cache:'no-store'});const d=await r.json();
+  document.getElementById('score').textContent=d.score;
+  const band=document.getElementById('band');
+  band.textContent=d.band;
+  band.className='band '+(d.score<=40?'fear':d.score<=60?'neut':'greed');
+  document.getElementById('needle').style.left=`calc(${d.score}% - 2px)`;
+  const labels={macro:'Macro momentum',funding:'Funding sentiment',arb:'Arb breadth',flow:'Opportunity flow',whale:'Whale activity',edge:'Strategy edge'};
+  document.getElementById('rows').innerHTML=Object.entries(d.components).map(([k,v])=>{const w=d.weights[k]||0;const col=v<=40?'#f87171':v<=60?'#94a3b8':'#4ade80';return `<tr><td>${labels[k]}</td><td class="num">${v}</td><td class="num">${Math.round(w*100)}%</td></tr><div class="bar"><i style="width:${v}%;background:${col}"></i></div>`;}).join('');
+}
+load();
+</script></div></body></html>
