@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Otto — Performance & Edge Proof</title><style>
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;max-width:900px;margin:0 auto;padding:2rem}
+h1{color:#f78166} .verdict{background:#0d2818;border:1px solid #238636;border-radius:10px;padding:1rem 1.2rem;font-size:1.1rem;color:#3fb950;margin:1rem 0}
+.kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0}.kpi div{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:.8rem 1.2rem;flex:1;min-width:150px}
+.kpi b{display:block;font-size:1.5rem;color:#58a6ff}
+table{width:100%;border-collapse:collapse;margin:1rem 0}td,th{padding:.5rem .7rem;border-bottom:1px solid #21262d;text-align:left;font-size:.85rem}
+h2{color:#79c0ff}a{color:#58a6ff}</style></head><body>
+<h1>Otto — Performance & Edge Proof</h1>
+<p>Investor-grade aggregation of the trading engine's edge: backtest strategy results, live paper-trade win rate, and the decision journal. This is the evidence base for deploying real capital.</p>
+<div class="verdict" id="verdict">loading…</div>
+<div class="kpi" id="kpi"></div>
+<h2>Backtest — strategy equity curves</h2>
+<table><thead><tr><th>Symbol</th><th>Equity</th><th>Max DD</th><th>Signal</th></tr></thead><tbody id="bt"><tr><td colspan="4">loading…</td></tr></tbody></table>
+<h2>Paper trades</h2>
+<table><thead><tr><th>Pair</th><th>Entry</th><th>Live</th><th>P&L %</th><th>Outcome</th></tr></thead><tbody id="pt"><tr><td colspan="5">loading…</td></tr></tbody></table>
+<p style="margin-top:2rem"><a href="./">← back to storefront</a> · <a href="./papertrade.html">paper trades</a> · <a href="./backtest.html">backtest</a> · <a href="./trackrecord.html">track record</a></p>
+<script>
+fetch('/v1/leaderboard').then(r=>r.json()).then(d=>{
+ document.getElementById('verdict').textContent='Verdict: '+d.verdict;
+ const e=d.edge||{};
+ document.getElementById('kpi').innerHTML='<div><span>Paper win rate</span><b>'+(e.paperTrade?.winRate??0)+'%</b></div><div><span>Paper P&L</span><b>$'+(e.paperTrade?.totalPnlUsd??0).toFixed(2)+'</b></div><div><span>Backtest symbols</span><b>'+(e.backtest?.symbols??0)+'</b></div><div><span>Profitable</span><b>'+(e.backtest?.profitable??0)+'</b></div><div><span>Journal decisions</span><b>'+(e.journal?.decisions??0)+'</b></div>';
+ const bt=e.backtest?.list||[];
+ document.getElementById('bt').innerHTML=bt.length?bt.map(x=>'<tr><td>'+x.symbol+'</td><td>'+(x.equity??x.final??'—')+'</td><td>'+(x.maxDD??x.maxDrawdown??'—')+'</td><td>'+(x.signal??'—')+'</td></tr>').join(''):'<tr><td colspan="4">No backtest data.</td></tr>';
+ const pt=(e.paperTrade?.trades)||d.edge?.paperTrade?.trades||[];
+ document.getElementById('pt').innerHTML=pt.length?pt.slice(0,10).map(t=>'<tr><td>'+(t.pair||t.symbol)+'</td><td>'+(t.entry??'—')+'</td><td>'+(t.live??'—')+'</td><td style="color:'+(t.pnlPct>0?'#3fb950':t.pnlPct<0?'#f85149':'#8b949e')+'">'+(t.pnlPct>0?'+':'')+(t.pnlPct??0)+'%</td><td>'+t.outcome+'</td></tr>').join(''):'<tr><td colspan="5">No paper trades yet.</td></tr>';
+}).catch(e=>{document.getElementById('verdict').textContent='Service offline.';});
+</script></body></html>

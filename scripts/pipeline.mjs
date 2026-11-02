@@ -13,6 +13,7 @@ const steps = [
   ['./scripts/payout.mjs', 'payout'],
   ['./scripts/backtest.mjs', 'backtest'],
   ['./scripts/trackrecord.mjs', 'trackrecord'],
+  ['./scripts/leaderboard.mjs', 'leaderboard'],
   ['./scripts/audit.mjs', 'audit'],
   ['./scripts/position.mjs', 'position'],
   ['./scripts/papertrade.mjs', 'papertrade'],
