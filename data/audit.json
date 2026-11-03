@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T21:07:30.630Z",
+  "generatedAt": "2026-11-03T02:58:36.724Z",
   "agent": "Otto (Kovantu Digital)",
   "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
   "creator": "4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU",
@@ -12,39 +12,44 @@
     "reserveSol": 0.01
   },
   "counts": {
-    "decisions": 6,
+    "decisions": 7,
     "closed": 0,
     "wins": 0
   },
   "winRate": 0,
   "outcomes": {
-    "OPEN": 6
+    "OPEN": 7
   },
   "treasury": {},
   "trackrecord": {
     "backtestEdge": [
       {
         "asset": "BTC",
-        "equity": 1.172,
+        "equity": 1.171,
         "maxDD": 12.1,
         "winRate": 0.000925925925925926
       },
       {
         "asset": "ETH",
-        "equity": 1.12,
+        "equity": 1.123,
         "maxDD": 21.2,
         "winRate": 0.0023148148148148147
       },
       {
         "asset": "SOL",
-        "equity": 1.214,
-        "maxDD": 26.6,
+        "equity": 1.218,
+        "maxDD": 26.7,
         "winRate": 0.002777777777777778
       }
     ],
     "signalCount": 5
   },
   "decisions": [
+    {
+      "action": "OBSERVE",
+      "reason": "free bank 0.0000 SOL below minimum lot — preserve capital",
+      "outcome": "OPEN"
+    },
     {
       "action": "OBSERVE",
       "reason": "top edge $0.00 < $0.5 threshold — not worth the fees",

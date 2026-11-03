@@ -1,12 +1,11 @@
 {
-  "cycle": "2026-11-02T21:07:23.807Z",
+  "cycle": "2026-11-03T02:58:36.469Z",
   "decision": "OBSERVE",
   "executeEnabled": false,
   "acted": false,
   "reason": "decision is not a validated ENTER — nothing to execute",
-  "preBalanceSol": 0.029251726,
-  "postBalanceSol": 0.029251726,
-  "deltaSol": 0,
-  "txSignature": null,
-  "verified": true
+  "preBalanceSol": null,
+  "postBalanceSol": null,
+  "deltaSol": null,
+  "txSignature": null
 }

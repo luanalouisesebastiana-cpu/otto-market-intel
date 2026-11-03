@@ -1,31 +1,27 @@
 {
-  "generatedAt": "2026-11-02T21:07:55.931Z",
+  "generatedAt": "2026-11-03T02:58:53.120Z",
   "results": [
     {
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-      "checkedAt": "2026-11-02T21:07:37.330Z",
-      "rpc": "ok",
+      "checkedAt": "2026-11-03T02:58:36.798Z",
+      "rpc": "unreachable",
       "flags": [
         {
-          "level": "OK",
-          "msg": "Mint authority renounced (supply fixed)"
+          "level": "WARN",
+          "msg": "RPC unreachable — could not verify mint authority on-chain"
         },
         {
           "level": "OK",
-          "msg": "Liquidity $278,338.68"
+          "msg": "Liquidity $277,955.8"
         }
       ],
-      "score": 100,
-      "decimals": 5,
-      "supply": "8799430677618206179",
-      "mintAuthority": null,
-      "freezeAuthority": null,
+      "score": 85,
       "dex": "orca",
       "pair": "Bonk/SOL",
-      "liquidityUsd": 278338.68,
-      "volume24Usd": 174411.82,
+      "liquidityUsd": 277955.8,
+      "volume24Usd": 167911.72,
       "pairCreatedAt": 1671980424000,
-      "priceChange24h": -4.46,
+      "priceChange24h": -4.98,
       "verdict": "LIKELY-SAFE"
     }
   ]
