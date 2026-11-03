@@ -1,34 +1,33 @@
 {
-  "generatedAt": "2026-11-03T02:58:35.823Z",
+  "generatedAt": "2026-11-03T10:29:01.951Z",
   "count": 2,
   "pools": [
     {
-      "pair": "USDC/USDC",
-      "dex": "pumpswap",
-      "mint": "DLsvm8VGQMucYFjagmv6j7WAr1NZiX2qMFVtGz8pump",
-      "pairAddress": "ASisU1HquSbs6ad2cP3eMejDxLUdL3VBmgxkTtRfvMXg",
-      "priceUsd": "0.0001742",
-      "liqUsd": 40404,
-      "vol24Usd": 547902,
-      "ageMin": 139,
-      "change24h": 173,
+      "pair": "Stamp/USDT",
+      "dex": "raydium",
+      "mint": "EKtmPPLaCbEEKiwoHHtV7TsRsmPXs5CMGtQtZFSiinsc",
+      "pairAddress": "GMxDULoKvXAjWvJhfXRPLSACC49AjwirBbvt9Sv2igRS",
+      "priceUsd": "0.0002250",
+      "liqUsd": 17577,
+      "vol24Usd": 3439,
+      "ageMin": 258,
+      "change24h": 0.01,
       "risk": "CAUTION",
       "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/asisu1hqusbs6ad2cp3emejdxludl3vbmgxkttrfvmxg"
+      "url": "https://dexscreener.com/solana/gmxdulokvxajwvjhfxrplsacc49ajwirbbvt9sv2igrs"
     },
     {
-      "pair": "HEDGE/USDC",
-      "dex": "raydium",
-      "mint": "wDSAqt4tEZpDAwB9XY6ejkZvMFuT1zUMjUh67txeYhf",
-      "pairAddress": "ishEsmyWEtrSksuaFP9xC16zy1w3ujV3idWACsNyriC",
-      "priceUsd": "0.00009148",
-      "liqUsd": 62789,
-      "vol24Usd": 1493621,
-      "ageMin": 395,
-      "change24h": -39.03,
-      "risk": "PASS",
-      "riskColor": "green",
-      "url": "https://dexscreener.com/solana/ishesmywetrsksuafp9xc16zy1w3ujv3idwacsnyric"
+      "pair": "POPCAT/57651",
+      "dex": "pumpswap",
+      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "pairAddress": "62xf5x4uoyzmFjyWHjz8CAeN4Ua7HdiZhvovXZZBPXeb",
+      "liqUsd": 0,
+      "vol24Usd": 0,
+      "ageMin": 925,
+      "change24h": -9.36,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/62xf5x4uoyzmfjywhjz8caen4ua7hdizhvovxzzbpxeb"
     }
   ]
 }
