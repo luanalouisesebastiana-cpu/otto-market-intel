@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-04T02:51:23.684Z",
+  "generatedAt": "2026-11-04T17:58:46.471Z",
   "score": {
     "backtestedAssets": 3,
-    "avgBacktestReturnPct": 17.8,
+    "avgBacktestReturnPct": 23.33,
     "bestBacktestAsset": "SOL",
-    "bestBacktestReturnPct": 23.9,
+    "bestBacktestReturnPct": 29,
     "paperWinRate": 0,
     "paperClosedTrades": 0,
     "paperPnlUsd": 0,
@@ -23,9 +23,9 @@
       "wins": 6,
       "losses": 0,
       "winRate": 0.28,
-      "equity": 1.223,
-      "maxDrawdown": 26.7,
-      "edgePct": 23.9
+      "equity": 1.287,
+      "maxDrawdown": 27.1,
+      "edgePct": 29
     },
     {
       "asset": "BTC",
@@ -33,9 +33,9 @@
       "wins": 2,
       "losses": 0,
       "winRate": 0.09,
-      "equity": 1.165,
-      "maxDrawdown": 12.2,
-      "edgePct": 16.7
+      "equity": 1.222,
+      "maxDrawdown": 12.6,
+      "edgePct": 21.5
     },
     {
       "asset": "ETH",
@@ -43,9 +43,9 @@
       "wins": 5,
       "losses": 0,
       "winRate": 0.23,
-      "equity": 1.109,
+      "equity": 1.185,
       "maxDrawdown": 21.2,
-      "edgePct": 12.8
+      "edgePct": 19.5
     }
   ],
   "papertrade": {
