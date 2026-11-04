@@ -1,21 +1,7 @@
 {
-  "generatedAt": "2026-11-04T17:58:45.154Z",
-  "count": 3,
+  "generatedAt": "2026-11-04T23:14:36.466Z",
+  "count": 1,
   "pools": [
-    {
-      "pair": "SI/USDC",
-      "dex": "pumpfun",
-      "mint": "Cn7fCGmBFBw97deUmX3pggUMpU74d1yi5bKqQmDfpump",
-      "pairAddress": "99M36nQFHYTHoWyHSFvavshBUbJCMP3vFn7UadgzmSaW",
-      "priceUsd": "0.000005671",
-      "liqUsd": 0,
-      "vol24Usd": 4665,
-      "ageMin": 9,
-      "change24h": 27.37,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/99m36nqfhythowyhsfvavshbubjcmp3vfn7uadgzmsaw"
-    },
     {
       "pair": "Bonk/PENGU",
       "dex": "orca",
@@ -24,25 +10,11 @@
       "priceUsd": "0.000003129",
       "liqUsd": 1607,
       "vol24Usd": 15,
-      "ageMin": 1041,
+      "ageMin": 1357,
       "change24h": 10.17,
       "risk": "LOW-LIQ",
       "riskColor": "red",
       "url": "https://dexscreener.com/solana/5nsqrr3atfk3ehv52fjayfujw1dd736zjusd6j5ylux7"
-    },
-    {
-      "pair": "PYTH/STONK",
-      "dex": "orca",
-      "mint": "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
-      "pairAddress": "BukeLUnNfDwBr9m25u6Euj4hi4f43b7GwbFpGM1yKH4b",
-      "priceUsd": "0.06664",
-      "liqUsd": 1655,
-      "vol24Usd": 103,
-      "ageMin": 1325,
-      "change24h": 1.14,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/bukelunnfdwbr9m25u6euj4hi4f43b7gwbfpgm1ykh4b"
     }
   ]
 }
