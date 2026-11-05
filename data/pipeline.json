@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-05T18:52:16.046Z",
+  "generatedAt": "2026-11-05T23:53:24.932Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 5
+      "ms": 4
     },
     {
       "step": "portfolio",
@@ -16,12 +16,12 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 1980
+      "ms": 5228
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 414
+      "ms": 664
     },
     {
       "step": "health",
@@ -36,17 +36,17 @@
     {
       "step": "paper",
       "ok": true,
-      "ms": 35
+      "ms": 37
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 252
+      "ms": 277
     },
     {
       "step": "riskgate",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 301
+      "ms": 256
     },
     {
       "step": "journal",
@@ -73,12 +73,12 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 258
+      "ms": 272
     },
     {
       "step": "execute",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "treasury",
@@ -93,42 +93,42 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 326
+      "ms": 289
     },
     {
       "step": "trackrecord",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 4
+      "ms": 1
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 70
+      "ms": 51
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16139
+      "ms": 16348
     },
     {
       "step": "alerts",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "fulfill",
@@ -143,7 +143,7 @@
     {
       "step": "subscribe",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "trial",
@@ -153,7 +153,7 @@
     {
       "step": "report",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "reports-index",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 1
+      "ms": 0
     }
   ]
 }
