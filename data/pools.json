@@ -1,20 +1,5 @@
 {
-  "generatedAt": "2026-11-04T23:14:36.466Z",
-  "count": 1,
-  "pools": [
-    {
-      "pair": "Bonk/PENGU",
-      "dex": "orca",
-      "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-      "pairAddress": "5nSqrR3atFk3ehv52FJaYfuJw1dD736zjUsD6j5YLux7",
-      "priceUsd": "0.000003129",
-      "liqUsd": 1607,
-      "vol24Usd": 15,
-      "ageMin": 1357,
-      "change24h": 10.17,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/5nsqrr3atfk3ehv52fjayfujw1dd736zjusd6j5ylux7"
-    }
-  ]
+  "generatedAt": "2026-11-05T03:30:15.352Z",
+  "count": 0,
+  "pools": []
 }
