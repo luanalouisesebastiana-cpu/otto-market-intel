@@ -1,34 +1,20 @@
 {
-  "generatedAt": "2026-11-05T23:53:07.697Z",
-  "count": 2,
+  "generatedAt": "2026-11-06T04:08:22.302Z",
+  "count": 1,
   "pools": [
     {
       "pair": "Zhdun/USDC",
       "dex": "pumpfun",
       "mint": "9d2DpBARkhyGUn7AusgPRpDh3rDanYpTKb9GRvTdpump",
       "pairAddress": "HwFBL9AfbHZcRU3ZJR484Rd8jaTpoUtWNixoCx2KwL9N",
-      "priceUsd": "0.000005880",
+      "priceUsd": "0.000006696",
       "liqUsd": 0,
-      "vol24Usd": 126919,
-      "ageMin": 446,
-      "change24h": 25.65,
+      "vol24Usd": 128333,
+      "ageMin": 701,
+      "change24h": 43.07,
       "risk": "LOW-LIQ",
       "riskColor": "red",
       "url": "https://dexscreener.com/solana/hwfbl9afbhzcru3zjr484rd8jatpoutwnixocx2kwl9n"
-    },
-    {
-      "pair": "GBuk/USDC",
-      "dex": "pumpfun",
-      "mint": "9XoSWfK7ymz3r4FofpcWgz8gLHyE4ne5WZTcoznipump",
-      "pairAddress": "EG25UEozc7pFjSw7G6Gyoq57Mg8ZNzzQSP98wWj9fbHz",
-      "priceUsd": "0.000006341",
-      "liqUsd": 0,
-      "vol24Usd": 244331,
-      "ageMin": 585,
-      "change24h": 30.84,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/eg25ueozc7pfjsw7g6gyoq57mg8znzzqsp98wwj9fbhz"
     }
   ]
 }

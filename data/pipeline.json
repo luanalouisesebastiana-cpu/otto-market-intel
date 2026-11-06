@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-05T23:53:24.932Z",
+  "generatedAt": "2026-11-06T04:08:40.713Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 4
+      "ms": 5
     },
     {
       "step": "portfolio",
@@ -16,12 +16,12 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 5228
+      "ms": 7413
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 664
+      "ms": 1393
     },
     {
       "step": "health",
@@ -31,12 +31,12 @@
     {
       "step": "positions",
       "ok": true,
-      "ms": 46
+      "ms": 129
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 37
+      "ms": 57
     },
     {
       "step": "arb",
@@ -46,12 +46,12 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 277
+      "ms": 239
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "signals",
@@ -62,18 +62,18 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 256
+      "ms": 663
     },
     {
       "step": "journal",
       "ok": false,
-      "ms": 1,
+      "ms": 2,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 272
+      "ms": 470
     },
     {
       "step": "execute",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 289
+      "ms": 227
     },
     {
       "step": "trackrecord",
@@ -103,12 +103,12 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 51
+      "ms": 140
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16348
+      "ms": 16890
     },
     {
       "step": "alerts",
@@ -153,7 +153,7 @@
     {
       "step": "report",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "reports-index",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 0
+      "ms": 1
     }
   ]
 }
