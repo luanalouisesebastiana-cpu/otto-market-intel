@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-07T16:38:24.242Z",
+  "generatedAt": "2026-11-07T20:29:34.099Z",
   "live": {
     "decisions": 1,
     "enters": 1,
@@ -27,9 +27,9 @@
   "backtest": [
     {
       "asset": "BTC",
-      "equity": 1.14,
+      "equity": 1.142,
       "maxDD": 13.4,
-      "winRate": 0.000925925925925926
+      "winRate": 0.0009263547938860583
     },
     {
       "asset": "ETH",

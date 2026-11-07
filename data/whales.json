@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-07T16:37:18.556Z",
+  "generatedAt": "2026-11-07T20:29:27.005Z",
   "thresholdUsd": 100000,
   "whales": [],
-  "scanned": 50,
-  "note": ""
+  "scanned": 40,
+  "note": "JUP: Cannot read properties of undefined (reading 'slice'); "
 }
