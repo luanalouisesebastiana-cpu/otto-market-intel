@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-07T10:41:01.160Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-07T16:38:23.489Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "BBOX/USDC",
+      "dex": "meteoradbc",
+      "mint": "DphvrnuA1g7b9zRvSWdUxwfMj5sFS6Szy8C8rGuHr4VM",
+      "pairAddress": "m4wMduK4Nw9BhakpBT9SjDu6dZZKxSYZY2rzGLFrLYS",
+      "priceUsd": "0.00001801",
+      "liqUsd": 0,
+      "vol24Usd": 31891,
+      "ageMin": 274,
+      "change24h": 259,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/m4wmduk4nw9bhakpbt9sjdu6dzzkxsyzy2rzglfrlys"
+    }
+  ]
 }
