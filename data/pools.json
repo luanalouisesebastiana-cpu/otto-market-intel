@@ -1,48 +1,5 @@
 {
-  "generatedAt": "2026-11-08T10:37:44.892Z",
-  "count": 3,
-  "pools": [
-    {
-      "pair": "SI/USDC",
-      "dex": "pumpfun",
-      "mint": "BsyxcPyr4TPU3BpKhQhnDHXJpgyBJPSGyKZuNiiQpump",
-      "pairAddress": "EYGNwBKURpmHNHzg6xn7Vwop7bqYXBXgaQHRDaEP7aSE",
-      "priceUsd": "0.000008441",
-      "liqUsd": 0,
-      "vol24Usd": 28890,
-      "ageMin": 6,
-      "change24h": 31.97,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/eygnwbkurpmhnhzg6xn7vwop7bqyxbxgaqhrdaep7ase"
-    },
-    {
-      "pair": "fiat/USDC",
-      "dex": "pumpfun",
-      "mint": "AKeCyQBKmKRTekyvv5eC4sTkrrMwcPdzMYqxzGbQPUTS",
-      "pairAddress": "GnTfRKJbPFgyaQQShibMQ1RncJQueSGPU1aQzFenxPo8",
-      "priceUsd": "0.00002603",
-      "liqUsd": 0,
-      "vol24Usd": 67563,
-      "ageMin": 12,
-      "change24h": 476,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/gntfrkjbpfgyaqqshibmq1rncjquesgpu1aqzfenxpo8"
-    },
-    {
-      "pair": "BBOX/USDC",
-      "dex": "meteoradbc",
-      "mint": "DphvrnuA1g7b9zRvSWdUxwfMj5sFS6Szy8C8rGuHr4VM",
-      "pairAddress": "m4wMduK4Nw9BhakpBT9SjDu6dZZKxSYZY2rzGLFrLYS",
-      "priceUsd": "0.00002567",
-      "liqUsd": 0,
-      "vol24Usd": 40481,
-      "ageMin": 1353,
-      "change24h": 412,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/m4wmduk4nw9bhakpbt9sjdu6dzzkxsyzy2rzglfrlys"
-    }
-  ]
+  "generatedAt": "2026-11-08T16:47:20.930Z",
+  "count": 0,
+  "pools": []
 }

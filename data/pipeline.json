@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-08T10:37:54.395Z",
+  "generatedAt": "2026-11-08T16:47:38.628Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 3
+      "ms": 4
     },
     {
       "step": "portfolio",
@@ -16,27 +16,27 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 3424
+      "ms": 6145
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 313
+      "ms": 544
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 18
+      "ms": 45
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 37
+      "ms": 40
     },
     {
       "step": "arb",
@@ -46,23 +46,23 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 287
+      "ms": 377
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "signals",
       "ok": false,
-      "ms": 1,
+      "ms": 2,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "tracker",
       "ok": true,
-      "ms": 470
+      "ms": 477
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 387
+      "ms": 296
     },
     {
       "step": "execute",
@@ -88,12 +88,12 @@
     {
       "step": "payout",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "backtest",
       "ok": true,
-      "ms": 336
+      "ms": 333
     },
     {
       "step": "trackrecord",
@@ -108,22 +108,22 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 1
+      "ms": 4
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 138
+      "ms": 89
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 8158
+      "ms": 16484
     },
     {
       "step": "alerts",
@@ -133,7 +133,7 @@
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "referral",
