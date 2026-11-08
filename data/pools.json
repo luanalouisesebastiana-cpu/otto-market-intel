@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-08T16:47:20.930Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-08T20:52:41.288Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "OIL/USDC",
+      "dex": "meteoradbc",
+      "mint": "AvBYPEXu8uLFWioJBGpcmdWgRsrc9aDsSnxVijEMmoon",
+      "pairAddress": "Gn2YgBaQgt8cucD7EhbztKXPYSR3DTVJD8RrWsTMxPQy",
+      "priceUsd": "0.00004465",
+      "liqUsd": 0,
+      "vol24Usd": 31730,
+      "ageMin": 1083,
+      "change24h": 793,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/gn2ygbaqgt8cucd7ehbztkxpysr3dtvjd8rrwstmxpqy"
+    }
+  ]
 }
