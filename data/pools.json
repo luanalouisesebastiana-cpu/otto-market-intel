@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T00:17:37.732Z",
+  "generatedAt": "2026-11-09T06:57:01.436Z",
   "count": 1,
   "pools": [
     {
@@ -7,11 +7,11 @@
       "dex": "meteora",
       "mint": "FZxHLUGiGchY5uvvoeqh1EKiXTrGdN67WUBhUc1fLoat",
       "pairAddress": "FMxrFygUuLfiT2RbvB4sNyYh7AEw136szzg38WYBwKw6",
-      "priceUsd": "0.003105",
-      "liqUsd": 25207,
-      "vol24Usd": 1155294,
-      "ageMin": 202,
-      "change24h": 129,
+      "priceUsd": "0.002771",
+      "liqUsd": 33835,
+      "vol24Usd": 1848836,
+      "ageMin": 601,
+      "change24h": 104,
       "risk": "CAUTION",
       "riskColor": "orange",
       "url": "https://dexscreener.com/solana/fmxrfyguulfit2rbvb4snyyh7aew136szzg38wybwkw6"
