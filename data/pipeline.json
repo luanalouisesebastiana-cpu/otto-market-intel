@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T06:57:18.362Z",
+  "generatedAt": "2026-11-09T17:05:19.778Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -11,17 +11,17 @@
     {
       "step": "portfolio",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "whales",
       "ok": true,
-      "ms": 2212
+      "ms": 6035
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 801
+      "ms": 363
     },
     {
       "step": "health",
@@ -31,12 +31,12 @@
     {
       "step": "positions",
       "ok": true,
-      "ms": 12
+      "ms": 42
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 20
+      "ms": 28
     },
     {
       "step": "arb",
@@ -46,7 +46,7 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 108
+      "ms": 181
     },
     {
       "step": "riskgate",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 236
+      "ms": 614
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 197
+      "ms": 309
     },
     {
       "step": "execute",
@@ -83,7 +83,7 @@
     {
       "step": "treasury",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "payout",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 143
+      "ms": 1284
     },
     {
       "step": "trackrecord",
@@ -108,7 +108,7 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 2
+      "ms": 4
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 192
+      "ms": 85
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16140
+      "ms": 16292
     },
     {
       "step": "alerts",
@@ -133,7 +133,7 @@
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "referral",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 1
+      "ms": 0
     }
   ]
 }
