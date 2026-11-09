@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-08T20:52:42.367Z",
+  "generatedAt": "2026-11-09T00:17:38.746Z",
   "live": {
     "decisions": 1,
     "enters": 1,
@@ -27,20 +27,20 @@
   "backtest": [
     {
       "asset": "BTC",
-      "equity": 1.16,
-      "maxDD": 13.4,
+      "equity": 1.152,
+      "maxDD": 15.1,
       "winRate": 0.000925925925925926
     },
     {
       "asset": "ETH",
-      "equity": 1.107,
-      "maxDD": 21.2,
+      "equity": 1.067,
+      "maxDD": 23.7,
       "winRate": 0.0023148148148148147
     },
     {
       "asset": "SOL",
-      "equity": 1.149,
-      "maxDD": 28.7,
+      "equity": 1.13,
+      "maxDD": 31.3,
       "winRate": 0.002777777777777778
     }
   ],
