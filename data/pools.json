@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-10T07:44:03.972Z",
+  "generatedAt": "2026-11-10T15:49:05.382Z",
   "count": 1,
   "pools": [
     {
-      "pair": "SPX/USDT",
-      "dex": "orca",
-      "mint": "J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr",
-      "pairAddress": "HHhyTm9hkgrntYZT4ixNKDPq2RwESbFVXKuTpbwrKqjC",
-      "priceUsd": "0.3648",
-      "liqUsd": 10708,
-      "vol24Usd": 40159,
-      "ageMin": 1424,
-      "change24h": 9.81,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/hhhytm9hkgrntyzt4ixnkdpq2rwesbfvxkutpbwrkqjc"
+      "pair": "OBV/USDC",
+      "dex": "meteoradbc",
+      "mint": "DsR5xy3vip9sAukoW8JU63woN3nJ2RqtdLvsVrMride",
+      "pairAddress": "7M85aAWEaN1aQqXu2C5jtpYpxkaiwMSGmeKDMpLyF13E",
+      "priceUsd": "0.00001691",
+      "liqUsd": 0,
+      "vol24Usd": 29854,
+      "ageMin": 32,
+      "change24h": 218,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/7m85aawean1aqqxu2c5jtpypxkaiwmsgmekdmplyf13e"
     }
   ]
 }

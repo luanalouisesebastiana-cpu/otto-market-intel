@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T07:44:04.568Z",
+  "generatedAt": "2026-11-10T15:49:05.707Z",
   "policy": {
     "stopPct": -8,
     "note": "exit at target or -8% stop; read-only verification"
@@ -19,7 +19,7 @@
       "liveUSD": 104.35,
       "liveSource": "dexscreener",
       "pair": "SOL/USDC",
-      "liqUsd": 2191052555.54,
+      "liqUsd": 2191052564.28,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,
@@ -57,7 +57,7 @@
       "liveUSD": 77.49,
       "liveSource": "dexscreener",
       "pair": "SOL/USDC",
-      "liqUsd": 1627150100.24,
+      "liqUsd": 1627150111.75,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,
@@ -76,7 +76,7 @@
       "liveUSD": 76.064,
       "liveSource": "dexscreener",
       "pair": "SOL/USDC",
-      "liqUsd": 1597167468.79,
+      "liqUsd": 1597167476.4,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,
@@ -95,7 +95,7 @@
       "liveUSD": 1.0001,
       "liveSource": "dexscreener",
       "pair": "ERC20-USDT/USDC",
-      "liqUsd": 209901001.96,
+      "liqUsd": 209901009.76,
       "pnlPct": 0,
       "pnlSOL": 0,
       "sizeSOL": 0.0024,
