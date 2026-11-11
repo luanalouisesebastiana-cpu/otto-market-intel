@@ -1,17 +1,31 @@
 {
-  "generatedAt": "2026-11-10T21:33:54.304Z",
-  "count": 1,
+  "generatedAt": "2026-11-11T01:28:30.301Z",
+  "count": 2,
   "pools": [
+    {
+      "pair": "JUP/USDC",
+      "dex": "meteora",
+      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+      "pairAddress": "EAFXa2hgKu4J7pqYLB2oUozgyd8qKHzWPMFoEE9zEi3R",
+      "priceUsd": "0.2545",
+      "liqUsd": 1000128,
+      "vol24Usd": 108357,
+      "ageMin": 214,
+      "change24h": 1.93,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/eafxa2hgku4j7pqylb2ouozgyd8qkhzwpmfoee9zei3r"
+    },
     {
       "pair": "OBV/USDC",
       "dex": "meteoradbc",
       "mint": "DsR5xy3vip9sAukoW8JU63woN3nJ2RqtdLvsVrMride",
       "pairAddress": "7M85aAWEaN1aQqXu2C5jtpYpxkaiwMSGmeKDMpLyF13E",
-      "priceUsd": "0.000008050",
+      "priceUsd": "0.000008225",
       "liqUsd": 0,
-      "vol24Usd": 40772,
-      "ageMin": 376,
-      "change24h": 51.39,
+      "vol24Usd": 41008,
+      "ageMin": 611,
+      "change24h": 54.67,
       "risk": "LOW-LIQ",
       "riskColor": "red",
       "url": "https://dexscreener.com/solana/7m85aawean1aqqxu2c5jtpypxkaiwmsgmekdmplyf13e"
