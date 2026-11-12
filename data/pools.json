@@ -1,20 +1,5 @@
 {
-  "generatedAt": "2026-11-12T03:20:58.436Z",
-  "count": 1,
-  "pools": [
-    {
-      "pair": "mihao/USDC",
-      "dex": "meteora",
-      "mint": "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump",
-      "pairAddress": "ABwh1ofw3qxMcf3SxkoSsK2zExdYfVGoAqxmNHqWdvSq",
-      "priceUsd": "0.01959",
-      "liqUsd": 10852,
-      "vol24Usd": 867230,
-      "ageMin": 865,
-      "change24h": -7.91,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/abwh1ofw3qxmcf3sxkossk2zexdyfvgoaqxmnhqwdvsq"
-    }
-  ]
+  "generatedAt": "2026-11-12T11:34:26.406Z",
+  "count": 0,
+  "pools": []
 }
