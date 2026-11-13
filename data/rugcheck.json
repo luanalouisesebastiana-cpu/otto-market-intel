@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-13T00:17:34.000Z",
+  "generatedAt": "2026-11-13T06:59:54.320Z",
   "results": [
     {
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-      "checkedAt": "2026-11-13T00:17:17.595Z",
+      "checkedAt": "2026-11-13T06:59:37.960Z",
       "rpc": "unreachable",
       "flags": [
         {
@@ -12,16 +12,16 @@
         },
         {
           "level": "OK",
-          "msg": "Liquidity $264,092.78"
+          "msg": "Liquidity $259,453.83"
         }
       ],
       "score": 85,
       "dex": "orca",
       "pair": "Bonk/SOL",
-      "liquidityUsd": 264092.78,
-      "volume24Usd": 188009.15,
+      "liquidityUsd": 259453.83,
+      "volume24Usd": 218142.37,
       "pairCreatedAt": 1671980424000,
-      "priceChange24h": -0.62,
+      "priceChange24h": 0.44,
       "verdict": "LIKELY-SAFE"
     }
   ]
