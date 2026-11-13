@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-13T06:59:54.327Z",
+  "generatedAt": "2026-11-13T15:10:44.414Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 4
+      "ms": 3
     },
     {
       "step": "portfolio",
@@ -16,42 +16,42 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 4916
+      "ms": 3689
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 658
+      "ms": 363
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 35
+      "ms": 36
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 35
+      "ms": 42
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 198
+      "ms": 245
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "signals",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 183
+      "ms": 395
     },
     {
       "step": "journal",
@@ -73,12 +73,12 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 188
+      "ms": 537
     },
     {
       "step": "execute",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "treasury",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 194
+      "ms": 283
     },
     {
       "step": "trackrecord",
@@ -103,7 +103,7 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 4
+      "ms": 3
     },
     {
       "step": "audit",
@@ -118,17 +118,17 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 53
+      "ms": 173
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16361
+      "ms": 16376
     },
     {
       "step": "alerts",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "fulfill",
@@ -138,7 +138,7 @@
     {
       "step": "referral",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "subscribe",
@@ -148,7 +148,7 @@
     {
       "step": "trial",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "report",
@@ -158,13 +158,13 @@
     {
       "step": "reports-index",
       "ok": false,
-      "ms": 0,
+      "ms": 1,
       "error": "Cannot find module '/home/runner/work/otto-market-intel/otto-market-intel/scripts/scripts/reports-index.mjs' imported from /home/runner/work/otto-market-intel/otto-market-intel/scripts/pipeline.mjs\nDid you mean to import \"./reports-index.mjs\"?"
     },
     {
       "step": "rss",
       "ok": true,
-      "ms": 1
+      "ms": 0
     }
   ]
 }
