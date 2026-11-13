@@ -1,52 +1,52 @@
 {
-  "generatedAt": "2026-11-12T19:07:43.960Z",
+  "generatedAt": "2026-11-13T00:17:34.006Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 4
+      "ms": 5
     },
     {
       "step": "portfolio",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "whales",
       "ok": true,
-      "ms": 5775
+      "ms": 3835
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 754
+      "ms": 439
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 48
+      "ms": 35
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 52
+      "ms": 26
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 330
+      "ms": 164
     },
     {
       "step": "riskgate",
@@ -56,13 +56,13 @@
     {
       "step": "signals",
       "ok": false,
-      "ms": 11,
+      "ms": 2,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "tracker",
       "ok": true,
-      "ms": 387
+      "ms": 228
     },
     {
       "step": "journal",
@@ -73,17 +73,17 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 379
+      "ms": 166
     },
     {
       "step": "execute",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "treasury",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "payout",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 232
+      "ms": 188
     },
     {
       "step": "trackrecord",
@@ -103,27 +103,27 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 55
+      "ms": 3
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 145
+      "ms": 98
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16328
+      "ms": 16407
     },
     {
       "step": "alerts",
@@ -133,32 +133,32 @@
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "referral",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "subscribe",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "trial",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "report",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "reports-index",
       "ok": false,
-      "ms": 1,
+      "ms": 0,
       "error": "Cannot find module '/home/runner/work/otto-market-intel/otto-market-intel/scripts/scripts/reports-index.mjs' imported from /home/runner/work/otto-market-intel/otto-market-intel/scripts/pipeline.mjs\nDid you mean to import \"./reports-index.mjs\"?"
     },
     {
