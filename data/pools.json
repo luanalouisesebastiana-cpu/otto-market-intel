@@ -1,17 +1,31 @@
 {
-  "generatedAt": "2026-11-14T14:51:16.655Z",
-  "count": 1,
+  "generatedAt": "2026-11-14T19:35:19.009Z",
+  "count": 2,
   "pools": [
+    {
+      "pair": "PEGGY/USDC",
+      "dex": "pumpfun",
+      "mint": "8yHPExxnmrXsbqSvmouMD5u829HuMgkTjpcvb4BUvWqb",
+      "pairAddress": "CVWuERaMewLa9c9LqoAya9mdk8eF2tSbc28cA4pKjaDF",
+      "priceUsd": "0.00002070",
+      "liqUsd": 0,
+      "vol24Usd": 150888,
+      "ageMin": 468,
+      "change24h": 344,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/cvwueramewla9c9lqoaya9mdk8ef2tsbc28ca4pkjadf"
+    },
     {
       "pair": "STABLE/USDC",
       "dex": "pumpfun",
       "mint": "B2ZEBWb7v3E5KZ9awtJhAWsxPiVptWCBUs4SztH9pump",
       "pairAddress": "3VQbVue2GnW39X8q79A3LyApUSd53UXBSVuZWkEHmy7g",
-      "priceUsd": "0.000009943",
+      "priceUsd": "0.000006675",
       "liqUsd": 0,
-      "vol24Usd": 120687,
-      "ageMin": 754,
-      "change24h": 133,
+      "vol24Usd": 127096,
+      "ageMin": 1038,
+      "change24h": 56.74,
       "risk": "LOW-LIQ",
       "riskColor": "red",
       "url": "https://dexscreener.com/solana/3vqbvue2gnw39x8q79a3lyapusd53uxbsvuzwkehmy7g"
