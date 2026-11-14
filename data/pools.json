@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-14T01:32:14.273Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-14T07:59:36.530Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "STABLE/USDC",
+      "dex": "pumpfun",
+      "mint": "B2ZEBWb7v3E5KZ9awtJhAWsxPiVptWCBUs4SztH9pump",
+      "pairAddress": "3VQbVue2GnW39X8q79A3LyApUSd53UXBSVuZWkEHmy7g",
+      "priceUsd": "0.00001277",
+      "liqUsd": 0,
+      "vol24Usd": 109617,
+      "ageMin": 342,
+      "change24h": 200,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/3vqbvue2gnw39x8q79a3lyapusd53uxbsvuzwkehmy7g"
+    }
+  ]
 }
