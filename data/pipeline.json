@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T07:59:53.158Z",
+  "generatedAt": "2026-11-14T14:51:33.508Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -16,37 +16,37 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 3307
+      "ms": 2502
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 857
+      "ms": 572
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 71
+      "ms": 13
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 27
+      "ms": 23
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 95
+      "ms": 97
     },
     {
       "step": "riskgate",
@@ -56,13 +56,13 @@
     {
       "step": "signals",
       "ok": false,
-      "ms": 1,
+      "ms": 2,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "tracker",
       "ok": true,
-      "ms": 98
+      "ms": 165
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 170
+      "ms": 141
     },
     {
       "step": "execute",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 60
+      "ms": 361
     },
     {
       "step": "trackrecord",
@@ -103,12 +103,12 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 2
+      "ms": 4
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 66
+      "ms": 15
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16216
+      "ms": 16150
     },
     {
       "step": "alerts",
@@ -138,17 +138,17 @@
     {
       "step": "referral",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "subscribe",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "trial",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "report",
