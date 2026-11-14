@@ -1,34 +1,62 @@
 {
-  "generatedAt": "2026-11-14T19:35:19.009Z",
-  "count": 2,
+  "generatedAt": "2026-11-14T23:22:52.332Z",
+  "count": 4,
   "pools": [
     {
-      "pair": "PEGGY/USDC",
+      "pair": "PEGCOIN/USDC",
       "dex": "pumpfun",
-      "mint": "8yHPExxnmrXsbqSvmouMD5u829HuMgkTjpcvb4BUvWqb",
-      "pairAddress": "CVWuERaMewLa9c9LqoAya9mdk8eF2tSbc28cA4pKjaDF",
-      "priceUsd": "0.00002070",
+      "mint": "2Tie3KmpX86nQEAjVCddYQWxkziKgPw2E6L7t4oLpump",
+      "pairAddress": "2H4p7GP71sgTpZwX7BPQmybfM6LsS9i2kuiqLzCXPtCy",
+      "priceUsd": "0.00001379",
       "liqUsd": 0,
-      "vol24Usd": 150888,
-      "ageMin": 468,
-      "change24h": 344,
+      "vol24Usd": 43984,
+      "ageMin": 10,
+      "change24h": 214,
       "risk": "LOW-LIQ",
       "riskColor": "red",
-      "url": "https://dexscreener.com/solana/cvwueramewla9c9lqoaya9mdk8ef2tsbc28ca4pkjadf"
+      "url": "https://dexscreener.com/solana/2h4p7gp71sgtpzwx7bpqmybfm6lss9i2kuiqlzcxptcy"
     },
     {
-      "pair": "STABLE/USDC",
+      "pair": "BEAR/USDC",
       "dex": "pumpfun",
-      "mint": "B2ZEBWb7v3E5KZ9awtJhAWsxPiVptWCBUs4SztH9pump",
-      "pairAddress": "3VQbVue2GnW39X8q79A3LyApUSd53UXBSVuZWkEHmy7g",
-      "priceUsd": "0.000006675",
+      "mint": "FLTiTwvbBRZqjkwqAqAfpX4pVZuimFwx2Qi2467zpump",
+      "pairAddress": "4xEdWmAqjNWukhBmfXmmWzgvqWnRkxx4Cgzj1XiTcmrp",
+      "priceUsd": "0.00003482",
       "liqUsd": 0,
-      "vol24Usd": 127096,
-      "ageMin": 1038,
-      "change24h": 56.74,
+      "vol24Usd": 59470,
+      "ageMin": 17,
+      "change24h": 384,
       "risk": "LOW-LIQ",
       "riskColor": "red",
-      "url": "https://dexscreener.com/solana/3vqbvue2gnw39x8q79a3lyapusd53uxbsvuzwkehmy7g"
+      "url": "https://dexscreener.com/solana/4xedwmaqjnwukhbmfxmmwzgvqwnrkxx4cgzj1xitcmrp"
+    },
+    {
+      "pair": "afk/USDC",
+      "dex": "pumpfun",
+      "mint": "F3L5V1FFLrgPpNVyWZwssxJFRTmwTtE7SgRwtsupump",
+      "pairAddress": "HHV8P4Vz3Ecd7asjjjUCPWSspKh8XRXKMurwEGWTj1wK",
+      "priceUsd": "0.00002540",
+      "liqUsd": 0,
+      "vol24Usd": 102151,
+      "ageMin": 39,
+      "change24h": 487,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/hhv8p4vz3ecd7asjjjucpwsspkh8xrxkmurwegwtj1wk"
+    },
+    {
+      "pair": "bill/USDC",
+      "dex": "pumpswap",
+      "mint": "85RhcSEMy15SNhFLmSArNm7udPKXVagVgsq4YmSopump",
+      "pairAddress": "95ytGFRcBgT1d8ioAQkPtXEA6QrgJ5omgiMHnyheRxdP",
+      "priceUsd": "0.0005799",
+      "liqUsd": 80875,
+      "vol24Usd": 1782984,
+      "ageMin": 213,
+      "change24h": 877,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/95ytgfrcbgt1d8ioaqkptxea6qrgj5omgimhnyherxdp"
     }
   ]
 }
