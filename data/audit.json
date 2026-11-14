@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T21:24:28.051Z",
+  "generatedAt": "2026-11-14T01:32:15.026Z",
   "agent": "Otto (Kovantu Digital)",
   "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
   "creator": "4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU",
@@ -12,13 +12,13 @@
     "reserveSol": 0.01
   },
   "counts": {
-    "decisions": 48,
+    "decisions": 49,
     "closed": 0,
     "wins": 0
   },
   "winRate": 0,
   "outcomes": {
-    "OPEN": 48
+    "OPEN": 49
   },
   "treasury": {},
   "trackrecord": {
@@ -31,20 +31,25 @@
       },
       {
         "asset": "ETH",
-        "equity": 0.957,
+        "equity": 0.96,
         "maxDD": 31.4,
         "winRate": 0.0023148148148148147
       },
       {
         "asset": "SOL",
-        "equity": 1.028,
-        "maxDD": 37.2,
+        "equity": 1.009,
+        "maxDD": 38,
         "winRate": 0.002777777777777778
       }
     ],
     "signalCount": 5
   },
   "decisions": [
+    {
+      "action": "OBSERVE",
+      "reason": "free bank 0.0000 SOL below minimum lot — preserve capital",
+      "outcome": "OPEN"
+    },
     {
       "action": "OBSERVE",
       "reason": "free bank 0.0000 SOL below minimum lot — preserve capital",

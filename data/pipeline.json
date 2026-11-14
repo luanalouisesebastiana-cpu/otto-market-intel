@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T21:24:44.327Z",
+  "generatedAt": "2026-11-14T01:32:23.477Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -11,47 +11,47 @@
     {
       "step": "portfolio",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "whales",
       "ok": true,
-      "ms": 3773
+      "ms": 26490
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 478
+      "ms": 677
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 23
+      "ms": 62
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 46
+      "ms": 60
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 159
+      "ms": 381
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "signals",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 147
+      "ms": 284
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 170
+      "ms": 328
     },
     {
       "step": "execute",
@@ -93,17 +93,17 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 155
+      "ms": 131
     },
     {
       "step": "trackrecord",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 4
+      "ms": 1
     },
     {
       "step": "audit",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 69
+      "ms": 74
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16198
+      "ms": 8369
     },
     {
       "step": "alerts",

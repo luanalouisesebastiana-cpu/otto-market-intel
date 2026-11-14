@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T21:24:28.045Z",
+  "generatedAt": "2026-11-14T01:32:15.023Z",
   "live": {
     "decisions": 1,
     "enters": 1,
@@ -33,14 +33,14 @@
     },
     {
       "asset": "ETH",
-      "equity": 0.957,
+      "equity": 0.96,
       "maxDD": 31.4,
       "winRate": 0.0023148148148148147
     },
     {
       "asset": "SOL",
-      "equity": 1.028,
-      "maxDD": 37.2,
+      "equity": 1.009,
+      "maxDD": 38,
       "winRate": 0.002777777777777778
     }
   ],
