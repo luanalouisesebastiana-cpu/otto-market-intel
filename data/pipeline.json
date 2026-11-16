@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T21:45:17.022Z",
+  "generatedAt": "2026-11-16T01:25:48.107Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -16,12 +16,12 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 5430
+      "ms": 1829
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 342
+      "ms": 452
     },
     {
       "step": "health",
@@ -31,12 +31,12 @@
     {
       "step": "positions",
       "ok": true,
-      "ms": 12
+      "ms": 69
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 19
+      "ms": 24
     },
     {
       "step": "arb",
@@ -46,7 +46,7 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 164
+      "ms": 121
     },
     {
       "step": "riskgate",
@@ -56,13 +56,13 @@
     {
       "step": "signals",
       "ok": false,
-      "ms": 1,
+      "ms": 2,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "tracker",
       "ok": true,
-      "ms": 213
+      "ms": 290
     },
     {
       "step": "journal",
@@ -73,17 +73,17 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 178
+      "ms": 185
     },
     {
       "step": "execute",
       "ok": true,
-      "ms": 41
+      "ms": 1
     },
     {
       "step": "treasury",
       "ok": true,
-      "ms": 19
+      "ms": 1
     },
     {
       "step": "payout",
@@ -93,37 +93,37 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 130
+      "ms": 101
     },
     {
       "step": "trackrecord",
       "ok": true,
-      "ms": 41
+      "ms": 1
     },
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 58
+      "ms": 1
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 10
+      "ms": 2
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 10
+      "ms": 1
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 50
+      "ms": 16
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16546
+      "ms": 16124
     },
     {
       "step": "alerts",
@@ -138,22 +138,22 @@
     {
       "step": "referral",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "subscribe",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "trial",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "report",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "reports-index",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 0
+      "ms": 1
     }
   ]
 }
