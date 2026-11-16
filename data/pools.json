@@ -1,48 +1,20 @@
 {
-  "generatedAt": "2026-11-16T01:25:31.373Z",
-  "count": 3,
+  "generatedAt": "2026-11-16T08:11:05.551Z",
+  "count": 1,
   "pools": [
     {
-      "pair": "HOGE/USDC",
-      "dex": "pumpswap",
-      "mint": "FVzqGqRmr4UH1Fif6dewmwbJ1p4YUZCu8dcw4Efopump",
-      "pairAddress": "7CNC9gGegzEfFK8fLXiYUhdtMEeFPQZoND56U1Mxhnor",
-      "priceUsd": "0.0002550",
-      "liqUsd": 53024,
-      "vol24Usd": 1876622,
-      "ageMin": 1109,
-      "change24h": 339,
-      "risk": "PASS",
-      "riskColor": "green",
-      "url": "https://dexscreener.com/solana/7cnc9ggegzeffk8flxiyuhdtmeefpqzond56u1mxhnor"
-    },
-    {
-      "pair": "GTA/USDC",
-      "dex": "pumpswap",
-      "mint": "G9ZMir6uh66Y7viPkXAy7myA9jjE4T1YgheVUmGDpump",
-      "pairAddress": "5NopLqBDdWXeWCmZrHctgvFboozrjHJzSLwfkyTg2rqw",
-      "priceUsd": "0.0001278",
-      "liqUsd": 33934,
-      "vol24Usd": 296117,
-      "ageMin": 1195,
-      "change24h": 117,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/5noplqbddwxewcmzrhctgvfboozrjhjzslwfkytg2rqw"
-    },
-    {
-      "pair": "PANICSELL/USDC",
-      "dex": "pumpswap",
-      "mint": "82Z6CcE5g3o1jW3vgtcqr95jP4XFx8jg1SJe8ikepump",
-      "pairAddress": "78Y5n1wPDoj254zUod1C72p8cn66BDXZqeP4EV91jgiZ",
-      "priceUsd": "0.0001827",
-      "liqUsd": 40615,
-      "vol24Usd": 108008,
-      "ageMin": 1313,
-      "change24h": 210,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/78y5n1wpdoj254zuod1c72p8cn66bdxzqep4ev91jgiz"
+      "pair": "NOTFINE/USDC",
+      "dex": "pumpfun",
+      "mint": "2GkSScFbzQzJMMcFBwPYQMUc7zDH56YgbESJnmnDpump",
+      "pairAddress": "Bco2ZgCNNqwV7MAhtZJkL48EwLgJJysZdFjb2nkPE4Dv",
+      "priceUsd": "0.00001358",
+      "liqUsd": 0,
+      "vol24Usd": 21210,
+      "ageMin": 40,
+      "change24h": 197,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/bco2zgcnnqwv7mahtzjkl48ewlgjjyszdfjb2nkpe4dv"
     }
   ]
 }

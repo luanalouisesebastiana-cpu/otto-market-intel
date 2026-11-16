@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T01:25:48.107Z",
+  "generatedAt": "2026-11-16T08:11:23.019Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -16,12 +16,12 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 1829
+      "ms": 5756
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 452
+      "ms": 653
     },
     {
       "step": "health",
@@ -31,12 +31,12 @@
     {
       "step": "positions",
       "ok": true,
-      "ms": 69
+      "ms": 23
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 24
+      "ms": 43
     },
     {
       "step": "arb",
@@ -46,7 +46,7 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 121
+      "ms": 359
     },
     {
       "step": "riskgate",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 290
+      "ms": 496
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 185
+      "ms": 360
     },
     {
       "step": "execute",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 101
+      "ms": 94
     },
     {
       "step": "trackrecord",
@@ -103,7 +103,7 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "step": "audit",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 16
+      "ms": 121
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16124
+      "ms": 16375
     },
     {
       "step": "alerts",
@@ -138,7 +138,7 @@
     {
       "step": "referral",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "subscribe",
@@ -148,12 +148,12 @@
     {
       "step": "trial",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "report",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "reports-index",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 1
+      "ms": 0
     }
   ]
 }
