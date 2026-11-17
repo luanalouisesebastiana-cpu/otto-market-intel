@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-17T01:57:32.916Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-17T10:05:51.320Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "BOBO/USDC",
+      "dex": "pumpfun",
+      "mint": "3Us5kPR1BL5XpiBR9QiXVtS2CgfLgahenzh9qKtNpump",
+      "pairAddress": "AaPdmdQktzZ9HxvD5i7MyCFnGDyDwN1bvFekLrrEzBZE",
+      "priceUsd": "0.00003268",
+      "liqUsd": 0,
+      "vol24Usd": 53792,
+      "ageMin": 480,
+      "change24h": 428,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/aapdmdqktzz9hxvd5i7mycfngdydwn1bvfeklrrezbze"
+    }
+  ]
 }
