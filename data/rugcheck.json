@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-16T18:28:35.160Z",
+  "generatedAt": "2026-11-17T01:57:50.717Z",
   "results": [
     {
       "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-      "checkedAt": "2026-11-16T18:28:18.892Z",
+      "checkedAt": "2026-11-17T01:57:34.323Z",
       "rpc": "unreachable",
       "flags": [
         {
@@ -12,16 +12,16 @@
         },
         {
           "level": "OK",
-          "msg": "Liquidity $29,613,887.48"
+          "msg": "Liquidity $29,738,124.6"
         }
       ],
       "score": 85,
       "dex": "meteora",
       "pair": "Bonk/JUP",
-      "liquidityUsd": 29613887.48,
-      "volume24Usd": 213518.31,
+      "liquidityUsd": 29738124.6,
+      "volume24Usd": 340801.31,
       "pairCreatedAt": 1706713333000,
-      "priceChange24h": 485982,
+      "priceChange24h": 488725,
       "verdict": "LIKELY-SAFE"
     }
   ]

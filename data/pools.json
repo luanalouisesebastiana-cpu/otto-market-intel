@@ -1,33 +1,5 @@
 {
-  "generatedAt": "2026-11-16T18:28:17.287Z",
-  "count": 2,
-  "pools": [
-    {
-      "pair": "BOBO/USDC",
-      "dex": "meteoradbc",
-      "mint": "4Ukp7Q68NhudLJfoRSY9BvjzQRvJFhPXR1W4vQ8v8tNd",
-      "pairAddress": "3zs5JUtMuxM5AEtPZz19agzUZbtMk1KDUjb5YdHTwZ9E",
-      "priceUsd": "0.00003854",
-      "liqUsd": 0,
-      "vol24Usd": 50039,
-      "ageMin": 192,
-      "change24h": 842,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/3zs5jutmuxm5aetpzz19agzuzbtmk1kdujb5ydhtwz9e"
-    },
-    {
-      "pair": "TURN/USDT",
-      "dex": "meteora",
-      "mint": "qay6c14bea8Y2ebCYwDpNtMqxEE27WZFJELKPQ6cGTA",
-      "pairAddress": "94JawktYvUpahkwhcjeQbAqhQzs5hu2zQswA3qsR5E2n",
-      "priceUsd": "0.0001756",
-      "liqUsd": 47426,
-      "vol24Usd": 1586,
-      "ageMin": 848,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/94jawktyvupahkwhcjeqbaqhqzs5hu2zqswa3qsr5e2n"
-    }
-  ]
+  "generatedAt": "2026-11-17T01:57:32.916Z",
+  "count": 0,
+  "pools": []
 }
