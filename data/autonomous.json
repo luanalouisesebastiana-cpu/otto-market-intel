@@ -1,5 +1,5 @@
 {
-  "cycle": "2026-11-18T17:59:40.489Z",
+  "cycle": "2026-11-18T23:59:32.576Z",
   "decision": "OBSERVE",
   "reason": "free bank 0.0000 SOL below minimum lot — preserve capital",
   "chosen": null,
@@ -9,18 +9,18 @@
   "top": {
     "symbol": "SOL",
     "score": 1,
-    "liq": 17891051.39,
-    "vol": 87983850.2
+    "liq": 18129284.69,
+    "vol": 80350828.71
   },
   "macro": {
     "bitcoin": {
-      "usd": 63048
+      "usd": 63102
     },
     "ethereum": {
-      "usd": 1767.22
+      "usd": 1776.96
     },
     "solana": {
-      "usd": 73.46
+      "usd": 73.65
     }
   },
   "validation": [
