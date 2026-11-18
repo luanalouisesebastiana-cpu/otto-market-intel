@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-17T19:09:45.712Z",
+  "generatedAt": "2026-11-18T01:36:05.721Z",
   "count": 1,
   "pools": [
     {
-      "pair": "BOBO/USDC",
+      "pair": "PUP/USDC",
       "dex": "pumpfun",
-      "mint": "3Us5kPR1BL5XpiBR9QiXVtS2CgfLgahenzh9qKtNpump",
-      "pairAddress": "AaPdmdQktzZ9HxvD5i7MyCFnGDyDwN1bvFekLrrEzBZE",
-      "priceUsd": "0.00001729",
+      "mint": "47rwZk5dPpw6ti7uAbWNw5Znf8WTPLAPjujQJw5Tpump",
+      "pairAddress": "HUqHPeJZ6ZauBUSGgrBCCrdENks2vbZfKxCka77mfCie",
+      "priceUsd": "0.000005397",
       "liqUsd": 0,
-      "vol24Usd": 68880,
-      "ageMin": 1024,
-      "change24h": 179,
+      "vol24Usd": 14390,
+      "ageMin": 2,
+      "change24h": 14.51,
       "risk": "LOW-LIQ",
       "riskColor": "red",
-      "url": "https://dexscreener.com/solana/aapdmdqktzz9hxvd5i7mycfngdydwn1bvfeklrrezbze"
+      "url": "https://dexscreener.com/solana/huqhpejz6zaubusggrbccrdenks2vbzfkxcka77mfcie"
     }
   ]
 }
