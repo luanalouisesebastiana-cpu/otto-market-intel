@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T09:06:04.459Z",
+  "generatedAt": "2026-11-18T17:59:40.003Z",
   "count": 1,
   "pools": [
     {
@@ -10,7 +10,7 @@
       "priceUsd": "0.02776",
       "liqUsd": 111,
       "vol24Usd": 0,
-      "ageMin": 300,
+      "ageMin": 833,
       "change24h": -0.51,
       "risk": "LOW-LIQ",
       "riskColor": "red",
