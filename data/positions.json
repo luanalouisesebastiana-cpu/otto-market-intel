@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T06:23:12.707Z",
+  "generatedAt": "2026-11-19T15:55:57.343Z",
   "risk": {
     "stopPct": 8,
     "targetPct": 3
@@ -38,14 +38,14 @@
       "livePrice": 104.35,
       "entry": 104.35,
       "pnlPct": 0,
-      "liquidity": 2191052533.47,
+      "liquidity": 2191052546.4,
       "change24h": null,
       "action": "HOLD",
       "status": "OPEN"
     }
   ],
   "stats": {
-    "totalDecisions": 67,
+    "totalDecisions": 68,
     "enters": 1
   }
 }
