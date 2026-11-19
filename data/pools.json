@@ -1,34 +1,5 @@
 {
-  "generatedAt": "2026-11-19T15:55:57.718Z",
-  "count": 2,
-  "pools": [
-    {
-      "pair": "DCTY/USDC",
-      "dex": "meteora",
-      "mint": "9hjBLBrc7WZW2H8UQvBAvG5WiTZotXUv2Bdcn4f4pump",
-      "pairAddress": "F7jNbQWivmiBDjzHDxQq32oWLW6cju4CdGyVw9RZV6tX",
-      "priceUsd": "0.01553",
-      "liqUsd": 67405,
-      "vol24Usd": 1397694,
-      "ageMin": 1263,
-      "change24h": 10.48,
-      "risk": "PASS",
-      "riskColor": "green",
-      "url": "https://dexscreener.com/solana/f7jnbqwivmibdjzhdxqq32owlw6cju4cdgyvw9rzv6tx"
-    },
-    {
-      "pair": "DCTY/USDC",
-      "dex": "meteora",
-      "mint": "9hjBLBrc7WZW2H8UQvBAvG5WiTZotXUv2Bdcn4f4pump",
-      "pairAddress": "DmACYGgeSHEAyPrHERcRdHP3hFGMgSBdNE5Y4CXfQg7i",
-      "priceUsd": "0.01578",
-      "liqUsd": 65032,
-      "vol24Usd": 792892,
-      "ageMin": 1383,
-      "change24h": 45.51,
-      "risk": "PASS",
-      "riskColor": "green",
-      "url": "https://dexscreener.com/solana/dmacyggesheayprhercrdhp3hfgmgsbdne5y4cxfqg7i"
-    }
-  ]
+  "generatedAt": "2026-11-19T22:50:16.971Z",
+  "count": 0,
+  "pools": []
 }
