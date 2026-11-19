@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-18T23:59:31.626Z",
+  "generatedAt": "2026-11-19T06:23:12.893Z",
   "count": 1,
   "pools": [
     {
-      "pair": "POPCAT/HIKIKOMORI",
+      "pair": "DCTY/USDC",
       "dex": "meteora",
-      "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-      "pairAddress": "Dfvkqaz5getd72RBuCn4rvan2yyekhswwQV8vvhXK1Ff",
-      "priceUsd": "0.02779",
-      "liqUsd": 111,
-      "vol24Usd": 0,
-      "ageMin": 1193,
-      "change24h": -0.42,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/dfvkqaz5getd72rbucn4rvan2yyekhswwqv8vvhxk1ff"
+      "mint": "9hjBLBrc7WZW2H8UQvBAvG5WiTZotXUv2Bdcn4f4pump",
+      "pairAddress": "F7jNbQWivmiBDjzHDxQq32oWLW6cju4CdGyVw9RZV6tX",
+      "priceUsd": "0.01330",
+      "liqUsd": 59773,
+      "vol24Usd": 516955,
+      "ageMin": 690,
+      "change24h": -5.34,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/f7jnbqwivmibdjzhdxqq32owlw6cju4cdgyvw9rzv6tx"
     }
   ]
 }
