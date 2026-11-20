@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-20T03:47:14.018Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-20T12:19:53.768Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "Rudy/USDC",
+      "dex": "pumpfun",
+      "mint": "GbNgCwgELhnwtjbUuWdie64ZPmStWC8SrPFHXZZipump",
+      "pairAddress": "FbcN1PmdJ6TygcXR2HwnVVpLppwoF7y8gYvnKUfq9KwF",
+      "priceUsd": "0.00001643",
+      "liqUsd": 0,
+      "vol24Usd": 107157,
+      "ageMin": 103,
+      "change24h": 261,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/fbcn1pmdj6tygcxr2hwnvvplppwof7y8gyvnkufq9kwf"
+    }
+  ]
 }
