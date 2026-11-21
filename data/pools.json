@@ -1,5 +1,62 @@
 {
-  "generatedAt": "2026-11-21T08:47:00.452Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-21T16:29:11.264Z",
+  "count": 4,
+  "pools": [
+    {
+      "pair": "SOL/USDC",
+      "dex": "meteora",
+      "mint": "So11111111111111111111111111111111111111112",
+      "pairAddress": "8yb6CZ6aLUFoSqfk4CQ5MT84myFACAGrAngTxJNsue8S",
+      "priceUsd": "70.20",
+      "liqUsd": 100054,
+      "vol24Usd": 949,
+      "ageMin": 8,
+      "change24h": 12519028,
+      "risk": "NO-VOL",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/8yb6cz6alufosqfk4cq5mt84myfacagrangtxjnsue8s"
+    },
+    {
+      "pair": "USDC/SOL",
+      "dex": "meteora",
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pairAddress": "AdmoAEv4VKu2nUwYt8Ps59SoPnF53yFxQgZD6sFwMZF5",
+      "priceUsd": "1.000029",
+      "liqUsd": 100086,
+      "vol24Usd": 2375,
+      "ageMin": 23,
+      "change24h": 0.09,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/admoaev4vku2nuwyt8ps59sopnf53yfxqgzd6sfwmzf5"
+    },
+    {
+      "pair": "USDC/USDT",
+      "dex": "meteora",
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pairAddress": "Fpr8EzktEQKA2PMw2t4Pbo3iGCJbasUJ516gGpFmNpui",
+      "priceUsd": "1.0020",
+      "liqUsd": 99826,
+      "vol24Usd": 2475,
+      "ageMin": 360,
+      "change24h": 0.02,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/fpr8ezkteqka2pmw2t4pbo3igcjbasuj516ggpfmnpui"
+    },
+    {
+      "pair": "USDT/USDC",
+      "dex": "meteora",
+      "mint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+      "pairAddress": "2BDqjWftjXUDUKQnbtJG8bQSHkY1mXhgvoWSmJ5HEDQe",
+      "priceUsd": "0.9980",
+      "liqUsd": 99629,
+      "vol24Usd": 3529,
+      "ageMin": 410,
+      "change24h": -0.01,
+      "risk": "PASS",
+      "riskColor": "green",
+      "url": "https://dexscreener.com/solana/2bdqjwftjxudukqnbtjg8bqshky1mxhgvowsmj5hedqe"
+    }
+  ]
 }
