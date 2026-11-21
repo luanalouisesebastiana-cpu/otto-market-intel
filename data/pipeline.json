@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-20T20:36:33.481Z",
+  "generatedAt": "2026-11-21T01:44:13.085Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 5
+      "ms": 4
     },
     {
       "step": "portfolio",
@@ -16,37 +16,37 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 1966
+      "ms": 2055
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 589
+      "ms": 653
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 14
+      "ms": 35
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 25
+      "ms": 20
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 125
+      "ms": 83
     },
     {
       "step": "riskgate",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 384
+      "ms": 239
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 639
+      "ms": 184
     },
     {
       "step": "execute",
@@ -88,12 +88,12 @@
     {
       "step": "payout",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "backtest",
       "ok": true,
-      "ms": 124
+      "ms": 109
     },
     {
       "step": "trackrecord",
@@ -108,37 +108,37 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 4
+      "ms": 2
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 13
+      "ms": 34
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16268
+      "ms": 16200
     },
     {
       "step": "alerts",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "referral",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "subscribe",

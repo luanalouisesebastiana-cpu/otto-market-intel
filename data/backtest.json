@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T20:36:17.187Z",
+  "generatedAt": "2026-11-21T01:43:56.838Z",
   "strategy": {
     "targetPct": 3,
     "stopPct": -8,
@@ -11,79 +11,79 @@
       "wins": 1,
       "losses": 0,
       "winRate": 0.000462962962962963,
-      "totalRet": -27.3,
-      "equity": 0.748,
-      "maxDD": 33.7,
+      "totalRet": -25.9,
+      "equity": 0.758,
+      "maxDD": 33.5,
       "log": [
         {
           "i": 2150,
-          "entry": 61997.97,
-          "ret": -0.4,
-          "outcome": "hold",
-          "equity": 0.794
-        },
-        {
-          "i": 2151,
-          "entry": 61749.56,
-          "ret": -0.37,
-          "outcome": "hold",
-          "equity": 0.791
-        },
-        {
-          "i": 2152,
-          "entry": 61520.21,
-          "ret": 0.48,
-          "outcome": "hold",
-          "equity": 0.795
-        },
-        {
-          "i": 2153,
-          "entry": 61818.49,
-          "ret": -0.23,
-          "outcome": "hold",
-          "equity": 0.793
-        },
-        {
-          "i": 2154,
-          "entry": 61679.26,
-          "ret": -3.69,
-          "outcome": "hold",
-          "equity": 0.764
-        },
-        {
-          "i": 2155,
           "entry": 59402.03,
           "ret": 0.09,
           "outcome": "hold",
-          "equity": 0.764
+          "equity": 0.766
+        },
+        {
+          "i": 2151,
+          "entry": 59454.73,
+          "ret": -0.61,
+          "outcome": "hold",
+          "equity": 0.761
+        },
+        {
+          "i": 2152,
+          "entry": 59093.25,
+          "ret": -1.14,
+          "outcome": "hold",
+          "equity": 0.752
+        },
+        {
+          "i": 2153,
+          "entry": 58416.65,
+          "ret": 0.15,
+          "outcome": "hold",
+          "equity": 0.753
+        },
+        {
+          "i": 2154,
+          "entry": 58502.26,
+          "ret": -0.35,
+          "outcome": "hold",
+          "equity": 0.751
+        },
+        {
+          "i": 2155,
+          "entry": 58299.95,
+          "ret": 1.07,
+          "outcome": "hold",
+          "equity": 0.759
         },
         {
           "i": 2156,
-          "entry": 59454.73,
-          "ret": -0.61,
+          "entry": 58922.5,
+          "ret": 0.23,
           "outcome": "hold",
           "equity": 0.76
         },
         {
           "i": 2157,
-          "entry": 59093.25,
-          "ret": -1.14,
+          "entry": 59056.19,
+          "ret": -0.4,
           "outcome": "hold",
-          "equity": 0.751
+          "equity": 0.757
         },
         {
           "i": 2158,
-          "entry": 58416.65,
-          "ret": 0.15,
+          "entry": 58817.93,
+          "ret": 0.18,
           "outcome": "hold",
-          "equity": 0.752
+          "equity": 0.759
         },
         {
           "i": 2159,
-          "entry": 58502.26,
-          "ret": -0.54,
+          "entry": 58926.04,
+          "ret": -0.06,
           "outcome": "hold",
-          "equity": 0.748
+          "equity": 0.758
         }
       ]
     },
@@ -92,79 +92,79 @@
       "wins": 2,
       "losses": 0,
       "winRate": 0.000925925925925926,
-      "totalRet": -43,
-      "equity": 0.63,
-      "maxDD": 44,
+      "totalRet": -40.8,
+      "equity": 0.645,
+      "maxDD": 43.6,
       "log": [
         {
           "i": 2150,
-          "entry": 1755.39,
-          "ret": -0.48,
-          "outcome": "hold",
-          "equity": 0.693
-        },
-        {
-          "i": 2151,
-          "entry": 1746.98,
-          "ret": -0.48,
-          "outcome": "hold",
-          "equity": 0.69
-        },
-        {
-          "i": 2152,
-          "entry": 1738.59,
-          "ret": 0.8,
-          "outcome": "hold",
-          "equity": 0.695
-        },
-        {
-          "i": 2153,
-          "entry": 1752.42,
-          "ret": -0.64,
-          "outcome": "hold",
-          "equity": 0.691
-        },
-        {
-          "i": 2154,
-          "entry": 1741.13,
-          "ret": -5.09,
-          "outcome": "hold",
-          "equity": 0.656
-        },
-        {
-          "i": 2155,
           "entry": 1652.54,
           "ret": -0.56,
           "outcome": "hold",
-          "equity": 0.652
+          "equity": 0.655
         },
         {
-          "i": 2156,
+          "i": 2151,
           "entry": 1643.32,
           "ret": -0.88,
           "outcome": "hold",
-          "equity": 0.646
+          "equity": 0.649
         },
         {
-          "i": 2157,
+          "i": 2152,
           "entry": 1628.87,
           "ret": -0.62,
           "outcome": "hold",
-          "equity": 0.642
+          "equity": 0.645
         },
         {
-          "i": 2158,
+          "i": 2153,
           "entry": 1618.7,
           "ret": -0.74,
+          "outcome": "hold",
+          "equity": 0.64
+        },
+        {
+          "i": 2154,
+          "entry": 1606.77,
+          "ret": -0.47,
           "outcome": "hold",
           "equity": 0.637
         },
         {
-          "i": 2159,
-          "entry": 1606.77,
-          "ret": -1.11,
+          "i": 2155,
+          "entry": 1599.22,
+          "ret": 1.15,
           "outcome": "hold",
-          "equity": 0.63
+          "equity": 0.644
+        },
+        {
+          "i": 2156,
+          "entry": 1617.57,
+          "ret": 0.13,
+          "outcome": "hold",
+          "equity": 0.645
+        },
+        {
+          "i": 2157,
+          "entry": 1619.74,
+          "ret": -0.01,
+          "outcome": "hold",
+          "equity": 0.645
+        },
+        {
+          "i": 2158,
+          "entry": 1619.51,
+          "ret": 0.05,
+          "outcome": "hold",
+          "equity": 0.645
+        },
+        {
+          "i": 2159,
+          "entry": 1620.33,
+          "ret": -0.05,
+          "outcome": "hold",
+          "equity": 0.645
         }
       ]
     },
@@ -173,79 +173,79 @@
       "wins": 4,
       "losses": 0,
       "winRate": 0.001851851851851852,
-      "totalRet": -31.9,
-      "equity": 0.696,
-      "maxDD": 46.8,
+      "totalRet": -32.1,
+      "equity": 0.695,
+      "maxDD": 47.1,
       "log": [
         {
           "i": 2150,
-          "entry": 72.37,
-          "ret": -0.92,
-          "outcome": "hold",
-          "equity": 0.738
-        },
-        {
-          "i": 2151,
-          "entry": 71.7,
-          "ret": -0.85,
-          "outcome": "hold",
-          "equity": 0.731
-        },
-        {
-          "i": 2152,
-          "entry": 71.1,
-          "ret": 0.25,
-          "outcome": "hold",
-          "equity": 0.733
-        },
-        {
-          "i": 2153,
-          "entry": 71.27,
-          "ret": -0.45,
-          "outcome": "hold",
-          "equity": 0.73
-        },
-        {
-          "i": 2154,
-          "entry": 70.95,
-          "ret": -3.76,
+          "entry": 68.28,
+          "ret": 1.62,
           "outcome": "hold",
           "equity": 0.702
         },
         {
-          "i": 2155,
-          "entry": 68.28,
-          "ret": 1.62,
-          "outcome": "hold",
-          "equity": 0.714
-        },
-        {
-          "i": 2156,
+          "i": 2151,
           "entry": 69.39,
           "ret": -0.28,
           "outcome": "hold",
-          "equity": 0.712
+          "equity": 0.7
         },
         {
-          "i": 2157,
+          "i": 2152,
           "entry": 69.19,
           "ret": -0.45,
           "outcome": "hold",
-          "equity": 0.708
+          "equity": 0.697
         },
         {
-          "i": 2158,
+          "i": 2153,
           "entry": 68.87,
           "ret": -1.07,
           "outcome": "hold",
-          "equity": 0.701
+          "equity": 0.689
+        },
+        {
+          "i": 2154,
+          "entry": 68.14,
+          "ret": -1.11,
+          "outcome": "hold",
+          "equity": 0.682
+        },
+        {
+          "i": 2155,
+          "entry": 67.38,
+          "ret": 2.34,
+          "outcome": "hold",
+          "equity": 0.697
+        },
+        {
+          "i": 2156,
+          "entry": 68.96,
+          "ret": 0.39,
+          "outcome": "hold",
+          "equity": 0.7
+        },
+        {
+          "i": 2157,
+          "entry": 69.23,
+          "ret": -0.68,
+          "outcome": "hold",
+          "equity": 0.695
+        },
+        {
+          "i": 2158,
+          "entry": 68.76,
+          "ret": 0.13,
+          "outcome": "hold",
+          "equity": 0.696
         },
         {
           "i": 2159,
-          "entry": 68.14,
-          "ret": -0.7,
+          "entry": 68.85,
+          "ret": -0.19,
           "outcome": "hold",
-          "equity": 0.696
+          "equity": 0.695
         }
       ]
     }
