@@ -14,7 +14,7 @@
       "status": "OPEN",
       "sourceScore": null,
       "livePrice": 104.35,
-      "liveLiq": 2191052572.97,
+      "liveLiq": 2191052581.79,
       "pnlPct": 0
     },
     {
@@ -29,12 +29,12 @@
       "status": "OPEN",
       "sourceScore": null,
       "livePrice": 104.35,
-      "liveLiq": 2191052572.97,
+      "liveLiq": 2191052581.79,
       "pnlPct": 0
     }
   ],
   "closed": [],
-  "cycle": 71,
+  "cycle": 72,
   "equity": [
     {
       "t": "2026-11-02T21:04:11.413Z",
@@ -319,11 +319,15 @@
     {
       "t": "2026-11-21T01:43:56.219Z",
       "v": 100
+    },
+    {
+      "t": "2026-11-21T08:47:00.256Z",
+      "v": 100
     }
   ],
   "startedAt": "2026-11-02T21:04:11.389Z",
   "stats": {
-    "cycle": 71,
+    "cycle": 72,
     "open": 2,
     "closed": 0,
     "winRate": 0,
