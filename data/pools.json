@@ -1,5 +1,20 @@
 {
-  "generatedAt": "2026-11-22T17:06:14.424Z",
-  "count": 0,
-  "pools": []
+  "generatedAt": "2026-11-22T22:27:17.044Z",
+  "count": 1,
+  "pools": [
+    {
+      "pair": "STABULL/USDC",
+      "dex": "pumpfun",
+      "mint": "GpNdHv2HUqW4LvB6oCC7aFMi1f8bzJ92vFp1Aw9fpump",
+      "pairAddress": "6USYaZRwuR19STKrnhAJ1mpx2s7cbUMCsaEDpp2AqQQ4",
+      "priceUsd": "0.00003499",
+      "liqUsd": 0,
+      "vol24Usd": 287489,
+      "ageMin": 104,
+      "change24h": 361,
+      "risk": "LOW-LIQ",
+      "riskColor": "red",
+      "url": "https://dexscreener.com/solana/6usyazrwur19stkrnhaj1mpx2s7cbumcsaedpp2aqqq4"
+    }
+  ]
 }

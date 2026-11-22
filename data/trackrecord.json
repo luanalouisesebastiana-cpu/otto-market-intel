@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T17:06:15.421Z",
+  "generatedAt": "2026-11-22T22:27:17.771Z",
   "live": {
     "decisions": 1,
     "enters": 1,
@@ -39,7 +39,7 @@
     },
     {
       "asset": "SOL",
-      "equity": 0.708,
+      "equity": 0.688,
       "maxDD": 48.6,
       "winRate": 0.0023148148148148147
     }
