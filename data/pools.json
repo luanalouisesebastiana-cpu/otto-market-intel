@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T22:27:17.044Z",
+  "generatedAt": "2026-11-23T02:57:17.198Z",
   "count": 1,
   "pools": [
     {
@@ -7,11 +7,11 @@
       "dex": "pumpfun",
       "mint": "GpNdHv2HUqW4LvB6oCC7aFMi1f8bzJ92vFp1Aw9fpump",
       "pairAddress": "6USYaZRwuR19STKrnhAJ1mpx2s7cbUMCsaEDpp2AqQQ4",
-      "priceUsd": "0.00003499",
+      "priceUsd": "0.000007401",
       "liqUsd": 0,
-      "vol24Usd": 287489,
-      "ageMin": 104,
-      "change24h": 361,
+      "vol24Usd": 321933,
+      "ageMin": 374,
+      "change24h": -2.53,
       "risk": "LOW-LIQ",
       "riskColor": "red",
       "url": "https://dexscreener.com/solana/6usyazrwur19stkrnhaj1mpx2s7cbumcsaedpp2aqqq4"

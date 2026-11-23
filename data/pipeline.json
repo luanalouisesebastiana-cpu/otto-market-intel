@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T22:27:26.125Z",
+  "generatedAt": "2026-11-23T02:57:34.940Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -16,37 +16,37 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 23604
+      "ms": 6817
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 697
+      "ms": 598
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 54
+      "ms": 2
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 71
+      "ms": 73
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 31
+      "ms": 54
     },
     {
       "step": "arb",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "pools",
       "ok": true,
-      "ms": 153
+      "ms": 388
     },
     {
       "step": "riskgate",
@@ -62,28 +62,28 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 330
+      "ms": 539
     },
     {
       "step": "journal",
       "ok": false,
-      "ms": 2,
+      "ms": 1,
       "error": "The requested module './riskgate.mjs' does not provide an export named 'evaluate'"
     },
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 214
+      "ms": 418
     },
     {
       "step": "execute",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "treasury",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "payout",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 172
+      "ms": 298
     },
     {
       "step": "trackrecord",
@@ -108,7 +108,7 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 74
+      "ms": 126
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 8265
+      "ms": 16340
     },
     {
       "step": "alerts",
@@ -138,7 +138,7 @@
     {
       "step": "referral",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "subscribe",
@@ -148,7 +148,7 @@
     {
       "step": "trial",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "report",
