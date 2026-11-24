@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T06:36:13.271Z",
+  "generatedAt": "2026-11-24T18:18:43.924Z",
   "agent": "Otto (Kovantu Digital)",
   "wallet": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
   "creator": "4jHgP6hDvcW5TU9pqf5HPdLnJD5hdTfFtZkawhJWEHjU",
@@ -12,7 +12,7 @@
     "reserveSol": 0.01
   },
   "counts": {
-    "decisions": 85,
+    "decisions": 86,
     "closed": 0,
     "wins": 0
   },
@@ -31,13 +31,13 @@
       },
       {
         "asset": "ETH",
-        "equity": 0.642,
+        "equity": 0.632,
         "maxDD": 45.1,
         "winRate": 0.001851851851851852
       },
       {
         "asset": "SOL",
-        "equity": 0.691,
+        "equity": 0.671,
         "maxDD": 48.6,
         "winRate": 0.002777777777777778
       }
