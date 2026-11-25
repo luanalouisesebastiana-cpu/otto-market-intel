@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T18:19:00.671Z",
+  "generatedAt": "2026-11-25T02:40:36.403Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -11,32 +11,32 @@
     {
       "step": "portfolio",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "whales",
       "ok": true,
-      "ms": 7014
+      "ms": 5239
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 53
+      "ms": 656
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 40
+      "ms": 47
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 19
+      "ms": 46
     },
     {
       "step": "arb",
@@ -46,7 +46,7 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 111
+      "ms": 244
     },
     {
       "step": "riskgate",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 599
+      "ms": 307
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 870
+      "ms": 402
     },
     {
       "step": "execute",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 262
+      "ms": 207
     },
     {
       "step": "trackrecord",
@@ -103,37 +103,37 @@
     {
       "step": "leaderboard",
       "ok": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "step": "audit",
       "ok": true,
-      "ms": 3
+      "ms": 2
     },
     {
       "step": "position",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 47
+      "ms": 138
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16693
+      "ms": 16619
     },
     {
       "step": "alerts",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "referral",
@@ -164,7 +164,7 @@
     {
       "step": "rss",
       "ok": true,
-      "ms": 0
+      "ms": 1
     }
   ]
 }
