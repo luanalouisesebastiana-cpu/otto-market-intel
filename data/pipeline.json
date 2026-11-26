@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T03:06:47.866Z",
+  "generatedAt": "2026-11-26T12:20:28.004Z",
   "ok": 29,
   "total": 32,
   "results": [
@@ -11,32 +11,32 @@
     {
       "step": "portfolio",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "whales",
       "ok": true,
-      "ms": 46001
+      "ms": 6495
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 621
+      "ms": 643
     },
     {
       "step": "health",
       "ok": true,
-      "ms": 2
+      "ms": 1
     },
     {
       "step": "positions",
       "ok": true,
-      "ms": 56
+      "ms": 85
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 33
+      "ms": 30
     },
     {
       "step": "arb",
@@ -46,12 +46,12 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 220
+      "ms": 196
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "signals",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 374
+      "ms": 292
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 227
+      "ms": 203
     },
     {
       "step": "execute",
@@ -93,7 +93,7 @@
     {
       "step": "backtest",
       "ok": true,
-      "ms": 413
+      "ms": 136
     },
     {
       "step": "trackrecord",
@@ -108,7 +108,7 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 1
+      "ms": 3
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 29
+      "ms": 32
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 8223
+      "ms": 16314
     },
     {
       "step": "alerts",
@@ -133,12 +133,12 @@
     {
       "step": "fulfill",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "referral",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "subscribe",
