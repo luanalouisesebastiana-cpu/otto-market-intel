@@ -1,48 +1,20 @@
 {
-  "generatedAt": "2026-11-26T12:20:11.008Z",
-  "count": 3,
+  "generatedAt": "2026-11-26T21:46:43.740Z",
+  "count": 1,
   "pools": [
     {
-      "pair": "PNP/USDC",
+      "pair": "USDC/SOL",
       "dex": "meteora",
-      "mint": "8p5r57jYPKWZa3oWENFMvxbHytebHmeavqwxJ1R7P8Z1",
-      "pairAddress": "DsGAYcpuDf5Q2Tu6CGB9xxiUi9j78H6YJSfiV91CZhuv",
-      "priceUsd": "0.0001890",
-      "liqUsd": 24471,
-      "vol24Usd": 322482,
-      "ageMin": 540,
-      "change24h": 853,
-      "risk": "CAUTION",
-      "riskColor": "orange",
-      "url": "https://dexscreener.com/solana/dsgaycpudf5q2tu6cgb9xxiui9j78h6yjsfiv91czhuv"
-    },
-    {
-      "pair": "hedged/USDC",
-      "dex": "meteoradbc",
-      "mint": "9YUVArgU8oJEkabSHYSMdejdFAmaLubEEzqfKQZdLy3Y",
-      "pairAddress": "BeR5LYNRm7rw6A7HdpNSguwiWU18CdcKcdhzApoweLcU",
-      "priceUsd": "0.000004042",
-      "liqUsd": 0,
-      "vol24Usd": 53336,
-      "ageMin": 847,
-      "change24h": 0.13,
+      "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "pairAddress": "J6pMhTprAtg6973MdNgafMV5jrqxrLtdGpt1MqKUChF2",
+      "priceUsd": "1.00010",
+      "liqUsd": 897,
+      "vol24Usd": 1516,
+      "ageMin": 142,
+      "change24h": -0.02,
       "risk": "LOW-LIQ",
       "riskColor": "red",
-      "url": "https://dexscreener.com/solana/ber5lynrm7rw6a7hdpnsguwiwu18cdckcdhzapowelcu"
-    },
-    {
-      "pair": "DRD/USDC",
-      "dex": "meteoradbc",
-      "mint": "7qkxiVHZtK7uLqnXDa1RUuVcpV4fbUd62uH5p61Ljupx",
-      "pairAddress": "7bHrsHJXgNhUoQxL9rX6TYwfYjNQputVC39HXkDqAsE",
-      "priceUsd": "0.00005422",
-      "liqUsd": 0,
-      "vol24Usd": 52324,
-      "ageMin": 1024,
-      "change24h": 946,
-      "risk": "LOW-LIQ",
-      "riskColor": "red",
-      "url": "https://dexscreener.com/solana/7bhrshjxgnhuoqxl9rx6tywfyjnqputvc39hxkdqase"
+      "url": "https://dexscreener.com/solana/j6pmhtpratg6973mdngafmv5jrqxrltdgpt1mqkuchf2"
     }
   ]
 }
