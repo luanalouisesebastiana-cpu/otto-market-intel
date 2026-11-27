@@ -6,21 +6,21 @@
   "priceUsd": "1.00",
   "receiver": "EzG1xfdgX5RtSB79WVEkFMvGCq8bUVrG53zRK5TvY5NK",
   "usdcMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-  "generatedAt": "2026-11-27T08:40:57.822Z",
+  "generatedAt": "2026-11-27T18:29:30.814Z",
   "memoRequired": "REPORT",
   "note": "Self-service report generated from the live scan. Verified on-chain via public Solana RPC.",
   "macro": {
     "bitcoin": {
-      "usd": 61669,
-      "change24hPct": 1.6805398910770237
+      "usd": 59784,
+      "change24hPct": -1.3804300802179685
     },
     "ethereum": {
-      "usd": 1727.83,
-      "change24hPct": 2.299790422693389
+      "usd": 1666.28,
+      "change24hPct": -1.8846638199240664
     },
     "solana": {
-      "usd": 73.09,
-      "change24hPct": 3.104791116281268
+      "usd": 71.71,
+      "change24hPct": 0.5792299114879719
     }
   },
   "filters": {
@@ -35,8 +35,8 @@
       "pool": "Raydium",
       "address": "Eocz7H8FZVBHiwG9EXzZqgn6Nia3msn1Rs3ugyADF1zi",
       "priceUsd": 104.35,
-      "liquidityUsd": 2191052616.99,
-      "volume24hUsd": 308621.25,
+      "liquidityUsd": 2191052629.44,
+      "volume24hUsd": 301233.91,
       "change24hPct": null,
       "slippageEstPct": 0.0,
       "suggestedSizeSol": 0.008,
@@ -50,8 +50,8 @@
       "pool": "Raydium",
       "address": "FqQKCJYCQgMpK67YoNSvhfwqKeB3bguugkxe3fBR7Pzk",
       "priceUsd": 77.49,
-      "liquidityUsd": 1627150133.42,
-      "volume24hUsd": 187539.06,
+      "liquidityUsd": 1627154126.58,
+      "volume24hUsd": 153503.36,
       "change24hPct": null,
       "slippageEstPct": 0.01,
       "suggestedSizeSol": 0.008,
@@ -65,8 +65,8 @@
       "pool": "Raydium",
       "address": "7DYVdkbhQ5ZgeJNhVBBDnvhbfoJeGrF46EGeDaohT6Hu",
       "priceUsd": 76.064,
-      "liquidityUsd": 1597167495.06,
-      "volume24hUsd": 187552.1,
+      "liquidityUsd": 1597167501.43,
+      "volume24hUsd": 164539.27,
       "change24hPct": null,
       "slippageEstPct": 0.01,
       "suggestedSizeSol": 0.008,
@@ -80,8 +80,8 @@
       "pool": "Raydium",
       "address": "35aFe6FhR7CnbLJE5ma8c93YJ2pkrURCTYv2GvVTAack",
       "priceUsd": 74.23,
-      "liquidityUsd": 1558700615.36,
-      "volume24hUsd": 405297.41,
+      "liquidityUsd": 1558700633.95,
+      "volume24hUsd": 409232.92,
       "change24hPct": null,
       "slippageEstPct": 0.01,
       "suggestedSizeSol": 0.008,
@@ -95,8 +95,8 @@
       "pool": "Raydium",
       "address": "GpA2BZdjHhyKvEgAeRsMcFHzrEghynDYHukRKgdkHYeU",
       "priceUsd": 1.0003,
-      "liquidityUsd": 309902290.86,
-      "volume24hUsd": 187539.06,
+      "liquidityUsd": 309902297.22,
+      "volume24hUsd": 164526.23,
       "change24hPct": null,
       "slippageEstPct": 0.03,
       "suggestedSizeSol": 0.008,
@@ -110,8 +110,8 @@
       "pool": "Raydium",
       "address": "84v1GRvXaDLe6iiP6sH9iApdHxmkMm8vN5JGftdQAsiB",
       "priceUsd": 1.0003,
-      "liquidityUsd": 309893200.08,
-      "volume24hUsd": 187539.06,
+      "liquidityUsd": 309893204.24,
+      "volume24hUsd": 171527.87,
       "change24hPct": null,
       "slippageEstPct": 0.03,
       "suggestedSizeSol": 0.008,
@@ -125,8 +125,8 @@
       "pool": "Raydium",
       "address": "98iRASsTVPhA8W7CyRy3TgqAYfjwCaZxMAyRNadnJTKn",
       "priceUsd": 1.0002,
-      "liquidityUsd": 309872460.11,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 309872452.27,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.03,
       "suggestedSizeSol": 0.008,
@@ -140,8 +140,8 @@
       "pool": "Raydium",
       "address": "FLyQCUQ2x8TqaGdjnthdXHzmMtFM7NuTdVbcZLKNqjqR",
       "priceUsd": 1.0002,
-      "liquidityUsd": 309871375.54,
-      "volume24hUsd": 187539.06,
+      "liquidityUsd": 309871379.7,
+      "volume24hUsd": 171527.87,
       "change24hPct": null,
       "slippageEstPct": 0.03,
       "suggestedSizeSol": 0.008,
@@ -155,8 +155,8 @@
       "pool": "Raydium",
       "address": "Evddv6Ax6hqSy1JvhXGyEeKNTuLce84Szd1AJP1Mtbmm",
       "priceUsd": 1.0001,
-      "liquidityUsd": 309720959.18,
-      "volume24hUsd": 308643.5,
+      "liquidityUsd": 309720971.63,
+      "volume24hUsd": 301228.44,
       "change24hPct": null,
       "slippageEstPct": 0.03,
       "suggestedSizeSol": 0.008,
@@ -170,8 +170,8 @@
       "pool": "Raydium",
       "address": "FvDV6BQZdQgaeMBe7mXyygEEyUVTqgw88s3KsjPcsjvW",
       "priceUsd": 1.0003,
-      "liquidityUsd": 219665069.03,
-      "volume24hUsd": 311420.38,
+      "liquidityUsd": 219665081.37,
+      "volume24hUsd": 303021.08,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -181,12 +181,12 @@
     },
     {
       "rank": 11,
-      "pair": "USDC-SOL/USDC",
+      "pair": "SOL-USD1/USDC",
       "pool": "Raydium",
-      "address": "3LBeot8BcUMXHXga6vEvt3ZBHfgEA15hea8PNHP4q7aG",
+      "address": "H9ovqQrPt7n9xLzXdYrSvAVUz1S9zHCPnGrqHivmK615",
       "priceUsd": 1.0002,
-      "liquidityUsd": 209930907.78,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 209930901.01,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -196,12 +196,12 @@
     },
     {
       "rank": 12,
-      "pair": "SOL-USD1/USDC",
+      "pair": "USDC-SOL/USDC",
       "pool": "Raydium",
-      "address": "H9ovqQrPt7n9xLzXdYrSvAVUz1S9zHCPnGrqHivmK615",
+      "address": "3LBeot8BcUMXHXga6vEvt3ZBHfgEA15hea8PNHP4q7aG",
       "priceUsd": 1.0002,
-      "liquidityUsd": 209930894.77,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 209930888.49,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -215,8 +215,8 @@
       "pool": "Raydium",
       "address": "2rHzy4NDndHh2RQtQV7jm1ZFTjnCViH4eX8WFdJdJcKg",
       "priceUsd": 1.0001,
-      "liquidityUsd": 209876353.92,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 209876360.15,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -230,8 +230,8 @@
       "pool": "Raydium",
       "address": "HWet7ME3AVTUvB3SFU8rrogfLiiLrCt6FcwgThokNCrX",
       "priceUsd": 1.0003,
-      "liquidityUsd": 209863438.39,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 209863444.63,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -245,8 +245,8 @@
       "pool": "Raydium",
       "address": "76btuKbGN7TJmdPkzjVq4jcgsecExHVv1HJzgTgFSzvh",
       "priceUsd": 1.0001,
-      "liquidityUsd": 209820374.9,
-      "volume24hUsd": 195544.96,
+      "liquidityUsd": 209820381.14,
+      "volume24hUsd": 171528.19,
       "change24hPct": null,
       "slippageEstPct": 0.05,
       "suggestedSizeSol": 0.008,
@@ -256,14 +256,44 @@
     },
     {
       "rank": 16,
+      "pair": "SLX/USDC",
+      "pool": "Raydium",
+      "address": "96hYwc6qX7Nf4dMKwerAeSunY6EmpWLJyjx1Uu72VGXf",
+      "priceUsd": 0.0311,
+      "liquidityUsd": 31072334.45,
+      "volume24hUsd": 227900.75,
+      "change24hPct": -0.02,
+      "slippageEstPct": 0.32,
+      "suggestedSizeSol": 0.008,
+      "stopLossPct": -8,
+      "reason": "passes all risk filters",
+      "verdict": "APPROVED"
+    },
+    {
+      "rank": 17,
       "pair": "JitoSOL/USDC",
       "pool": "Orca",
       "address": "5hWJUNTtEtKmKgDXpthJXXRRmJrz5vJ7uJzrUNVdrwLg",
-      "priceUsd": 96.037,
-      "liquidityUsd": 257817.13,
-      "volume24hUsd": 314162.21,
-      "change24hPct": 3.29,
-      "slippageEstPct": 38.79,
+      "priceUsd": 94.082,
+      "liquidityUsd": 254461.59,
+      "volume24hUsd": 502408.61,
+      "change24hPct": 0.57,
+      "slippageEstPct": 39.3,
+      "suggestedSizeSol": 0.008,
+      "stopLossPct": -8,
+      "reason": "passes all risk filters",
+      "verdict": "APPROVED"
+    },
+    {
+      "rank": 18,
+      "pair": "mSOL/USDC",
+      "pool": "Orca",
+      "address": "AqJ5JYNb7ApkJwvbuXxPnTtKeuizjvC1s2fkp382y9LC",
+      "priceUsd": 101.69,
+      "liquidityUsd": 123721.74,
+      "volume24hUsd": 130549.68,
+      "change24hPct": 0.54,
+      "slippageEstPct": 80.83,
       "suggestedSizeSol": 0.008,
       "stopLossPct": -8,
       "reason": "passes all risk filters",
@@ -273,35 +303,27 @@
   "rejected": [
     {
       "pair": "SOL/USDC",
-      "reason": "vol24h $48.64 <= $100000"
-    },
-    {
-      "pair": "SOL-USDC/USDC",
-      "reason": "vol24h $36.26 <= $100000"
+      "reason": "vol24h $49.48 <= $100000"
     },
     {
       "pair": "SOLO/USDC",
-      "reason": "vol24h $6082.07 <= $100000"
+      "reason": "vol24h $4171.39 <= $100000"
     },
     {
       "pair": "stSOL/USDC",
-      "reason": "vol24h $10274.48 <= $100000"
+      "reason": "vol24h $14559.94 <= $100000"
     },
     {
       "pair": "SCS/USDC",
-      "reason": "vol24h $4543.23 <= $100000"
-    },
-    {
-      "pair": "mSOL/USDC",
-      "reason": "vol24h $84321.91 <= $100000"
+      "reason": "vol24h $2660.29 <= $100000"
     },
     {
       "pair": "SOLANGELES/USDC",
-      "reason": "vol24h $3799.36 <= $100000"
+      "reason": "vol24h $3886.47 <= $100000"
     },
     {
       "pair": "PLAY/USDC",
-      "reason": "liquidity $45685.64 <= $50000; vol24h $68.34 <= $100000"
+      "reason": "liquidity $44307.09 <= $50000; vol24h $79.28 <= $100000"
     }
   ],
   "policy": {
