@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-27T22:11:36.317Z",
+  "generatedAt": "2026-11-28T03:53:45.854Z",
   "ok": 29,
   "total": 32,
   "results": [
     {
       "step": "intel",
       "ok": true,
-      "ms": 4
+      "ms": 5
     },
     {
       "step": "portfolio",
@@ -16,12 +16,12 @@
     {
       "step": "whales",
       "ok": true,
-      "ms": 7969
+      "ms": 15669
     },
     {
       "step": "perp",
       "ok": true,
-      "ms": 565
+      "ms": 552
     },
     {
       "step": "health",
@@ -31,12 +31,12 @@
     {
       "step": "positions",
       "ok": true,
-      "ms": 94
+      "ms": 13
     },
     {
       "step": "paper",
       "ok": true,
-      "ms": 30
+      "ms": 20
     },
     {
       "step": "arb",
@@ -46,12 +46,12 @@
     {
       "step": "pools",
       "ok": true,
-      "ms": 158
+      "ms": 151
     },
     {
       "step": "riskgate",
       "ok": true,
-      "ms": 1
+      "ms": 0
     },
     {
       "step": "signals",
@@ -62,7 +62,7 @@
     {
       "step": "tracker",
       "ok": true,
-      "ms": 420
+      "ms": 152
     },
     {
       "step": "journal",
@@ -73,7 +73,7 @@
     {
       "step": "autonomous",
       "ok": true,
-      "ms": 308
+      "ms": 211
     },
     {
       "step": "execute",
@@ -88,12 +88,12 @@
     {
       "step": "payout",
       "ok": true,
-      "ms": 0
+      "ms": 1
     },
     {
       "step": "backtest",
       "ok": true,
-      "ms": 579
+      "ms": 225
     },
     {
       "step": "trackrecord",
@@ -108,7 +108,7 @@
     {
       "step": "audit",
       "ok": true,
-      "ms": 2
+      "ms": 3
     },
     {
       "step": "position",
@@ -118,12 +118,12 @@
     {
       "step": "papertrade",
       "ok": true,
-      "ms": 270
+      "ms": 102
     },
     {
       "step": "rugcheck",
       "ok": true,
-      "ms": 16317
+      "ms": 8527
     },
     {
       "step": "alerts",
@@ -153,12 +153,12 @@
     {
       "step": "report",
       "ok": true,
-      "ms": 1
+      "ms": 2
     },
     {
       "step": "reports-index",
       "ok": false,
-      "ms": 1,
+      "ms": 0,
       "error": "Cannot find module '/home/runner/work/otto-market-intel/otto-market-intel/scripts/scripts/reports-index.mjs' imported from /home/runner/work/otto-market-intel/otto-market-intel/scripts/pipeline.mjs\nDid you mean to import \"./reports-index.mjs\"?"
     },
     {
